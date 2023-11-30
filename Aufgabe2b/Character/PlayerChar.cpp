@@ -1,4 +1,5 @@
 #include "PlayerChar.h"
+#include "../World/Map.h"
 
 namespace Char
 {

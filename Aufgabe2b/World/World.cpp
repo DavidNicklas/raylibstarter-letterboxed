@@ -23,8 +23,10 @@ namespace Game
         playerChar = new Char::PlayerChar();
         inventoryUi = new UI::InventoryUI();
 
-        //map->playerChar = playerChar;
+        // map needs the player for resetting the position
+        map->playerChar = playerChar;
 
+        // player needs map for moving on it
         playerChar->map = map;
         playerChar->SetStartPosition();
     }
@@ -33,6 +35,7 @@ namespace Game
     {
         delete map;
         delete playerChar;
+        delete inventoryUi;
     }
 
 }

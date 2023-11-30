@@ -25,7 +25,7 @@ namespace Game
         {
             GenerateMap();
             // Resets player position
-            //playerChar->SetStartPosition();
+            playerChar->SetStartPosition();
         }
     }
 

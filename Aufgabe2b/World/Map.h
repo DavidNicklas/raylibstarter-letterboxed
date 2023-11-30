@@ -3,8 +3,8 @@
 #include <memory>
 #include "raylib.h"
 #include "config.h"
-//#include "../Character/PlayerChar.h"
 #include "../Sprite.h"
+#include "../Character/PlayerChar.h"
 
 namespace Game
 {
@@ -30,7 +30,7 @@ namespace Game
         float centerY;
         int map[mapWidth][mapHeight];
 
-        //Char::PlayerChar* playerChar = nullptr;
+        Char::PlayerChar* playerChar;
 
     private:
         int startRow, startCol;
@@ -47,7 +47,6 @@ namespace Game
         void GenerateStartAndEnd();
         void GenerateItems();
         void GenerateValidPath(int endRow, int endCol);
-        bool CanMoveChar(int posX, int posY);
 
     };
 

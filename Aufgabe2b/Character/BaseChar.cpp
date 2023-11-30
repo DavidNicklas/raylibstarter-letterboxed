@@ -1,4 +1,5 @@
 #include "BaseChar.h"
+#include "../World/Map.h"
 
 
 namespace Char

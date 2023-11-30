@@ -2,7 +2,11 @@
 
 #include "raylib.h"
 #include "../Sprite.h"
-#include "../World/Map.h"
+
+namespace Game
+{
+    class Map;
+}
 
 namespace Char
 {
