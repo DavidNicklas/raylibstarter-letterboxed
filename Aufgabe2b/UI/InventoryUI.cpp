@@ -30,14 +30,15 @@ namespace UI
 
     void InventoryUI::Draw()
     {
-        BeginBlendMode(BLEND_ALPHA);
         if (showInventory)
         {
+            BeginBlendMode(BLEND_ALPHA);
             DrawRectangle(0, 0, Config::ScreenWidth, Config::ScreenHeight, Fade(BROWN, 0.5f));
+            EndBlendMode();
             DrawTexture(invTex.GetTexture(), invTex.posX, invTex.posY, WHITE);
             DrawHighlightBox();
+            DrawPlayerStats();
         }
-        EndBlendMode();
     }
 
     void InventoryUI::DrawHighlightBox()
@@ -47,6 +48,8 @@ namespace UI
 
     void InventoryUI::DrawPlayerStats()
     {
-
+        DrawText(("Health: " + std::to_string(playerChar->GetHealth())).c_str(), 48, 190, 8, BLACK);
+        DrawText(("Strength: " + std::to_string(playerChar->GetStrength())).c_str(), 48, 205, 8, BLACK);
+        DrawText(("Weight: " + std::to_string(playerChar->GetCurrentWeight()) + "/" + std::to_string(playerChar->GetPortableWeight())).c_str(), 130, 205, 8, BLACK);
     }
 }

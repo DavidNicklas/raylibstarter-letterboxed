@@ -18,13 +18,13 @@ namespace Game
         void Update();
         void Draw();
 
+        void DeleteObjects();
     private:
         Game::Map* map;
         Char::PlayerChar* playerChar;
         UI::InventoryUI* inventoryUi;
 
         void CreateObjects();
-        void DeleteObjects();
     };
 
 }

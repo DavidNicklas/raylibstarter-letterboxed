@@ -38,6 +38,8 @@ int main()
         EndDrawing();
     }
 
+    // Delete objects from heat
+    game.DeleteObjects();
     CloseWindow();
 
     return EXIT_SUCCESS;

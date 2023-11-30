@@ -4,7 +4,6 @@
 #include "../Exceptions/OutOfRange.h"
 #include "../Exceptions/EquipmentError.h"
 #include "../Items/BaseItem.h"
-#include "../UI/InventoryUI.h"
 
 namespace Inventory
 {

@@ -30,7 +30,7 @@ namespace Game
         float centerY;
         int map[mapWidth][mapHeight];
 
-        Char::PlayerChar* playerChar;
+        Char::PlayerChar* playerChar = nullptr;
 
     private:
         int startRow, startCol;

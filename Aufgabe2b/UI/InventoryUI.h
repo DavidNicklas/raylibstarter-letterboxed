@@ -2,7 +2,7 @@
 
 #include "config.h"
 #include "../Sprite.h"
-#include "../GameObject.h"
+#include "../Character/PlayerChar.h"
 
 namespace UI
 {
@@ -13,7 +13,7 @@ namespace UI
         void Update();
         void Draw();
 
-        bool ShowInventory() const { return this->showInventory; }
+        Char::PlayerChar* playerChar = nullptr;
 
     private:
         bool showInventory = false;

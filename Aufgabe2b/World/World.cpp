@@ -26,6 +26,9 @@ namespace Game
         // map needs the player for resetting the position
         map->playerChar = playerChar;
 
+        // inventory need player for drawing stats
+        inventoryUi->playerChar = playerChar;
+
         // player needs map for moving on it
         playerChar->map = map;
         playerChar->SetStartPosition();
