@@ -1,23 +1,23 @@
 #include "PlayerChar.h"
-#include "config.h"
-
 
 namespace Char
 {
 
-    PlayerChar::PlayerChar(int posX, int posY)
+    PlayerChar::PlayerChar()
     {
         this->playerSprite.ChangeTexture("../../assets/graphics/bear.png");
-        this->SetPosition(posX, posY);
     }
 
     void PlayerChar::Update()
     {
+        // Inventory Input
         if (IsKeyPressed(KEY_E))
         {
             if (!inInventory) inInventory = true;
             else inInventory = false;
         }
+
+        if (!inInventory) Move();
     }
 
     void PlayerChar::Draw()
@@ -25,28 +25,54 @@ namespace Char
         DrawTexture(playerSprite.GetTexture(), playerSprite.posX, playerSprite.posY, WHITE);
     }
 
-    void PlayerChar::Move(Direction dir)
+    void PlayerChar::SetStartPosition()
     {
-        if (!inInventory)
+        this->playerSprite.posX = this->map->centerX + static_cast<float>(this->map->GetStartCol() * Config::TileSize);
+        this->playerSprite.posY = this->map->centerY + static_cast<float>(this->map->GetStartRow() * Config::TileSize);
+
+        this->arrayPosX = this->map->GetStartCol();
+        this->arrayPosY = this->map->GetStartRow();
+    }
+
+    void PlayerChar::Move()
+    {
+        if (IsKeyPressed(KEY_A))
         {
-            switch (dir)
+            direction = Direction::LEFT;
+            if (CanMove(direction))
             {
-                case Direction::LEFT:
-                    playerSprite.posX -= Config::TileSize;
-                    arrayPosX--;
-                    break;
-                case Direction::RIGHT:
-                    playerSprite.posX += Config::TileSize;
-                    arrayPosX++;
-                    break;
-                case Direction::UP:
-                    playerSprite.posY -= Config::TileSize;
-                    arrayPosY--;
-                    break;
-                case Direction::DOWN:
-                    playerSprite.posY += Config::TileSize;
-                    arrayPosY++;
-                    break;
+                playerSprite.posX -= Config::TileSize;
+                arrayPosX--;
+            }
+        }
+
+        else if (IsKeyPressed(KEY_D))
+        {
+            direction = Direction::RIGHT;
+            if (CanMove(direction))
+            {
+                playerSprite.posX += Config::TileSize;
+                arrayPosX++;
+            }
+        }
+
+        else if (IsKeyPressed(KEY_W))
+        {
+            direction = Direction::UP;
+            if (CanMove(direction))
+            {
+                playerSprite.posY -= Config::TileSize;
+                arrayPosY--;
+            }
+        }
+
+        else if (IsKeyPressed(KEY_S))
+        {
+            direction = Direction::DOWN;
+            if (CanMove(direction))
+            {
+                playerSprite.posY += Config::TileSize;
+                arrayPosY++;
             }
         }
     }
@@ -56,14 +82,16 @@ namespace Char
         // going through normal inventory
         for (int i = 0; i < inventory.GetCapacity(); ++i)
         {
-            this->totalWeight += (int)inventory.itemContainer[i]->GetWeight();
+            this->totalWeight += (int) inventory.itemContainer[i]->GetWeight();
         }
         //going through equipment slots
         for (int i = 0; i < inventory.GetEquipmentSlots(); ++i)
         {
-            if (inventory.equipmentContainer[i] != nullptr) this->totalWeight += (int)inventory.equipmentContainer[i]->GetWeight();
+            if (inventory.equipmentContainer[i] != nullptr)
+                this->totalWeight += (int) inventory.equipmentContainer[i]->GetWeight();
         }
 
         return totalWeight;
     }
+
 }

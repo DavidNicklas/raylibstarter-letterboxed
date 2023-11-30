@@ -5,29 +5,34 @@ namespace Game
 
     void World::Update()
     {
-        for (const auto& object : objects)
-        {
-            object->Update();
-        }
+        map->Update();
+        playerChar->Update();
+        inventoryUi->Update();
     }
 
     void World::Draw()
     {
-        for (const auto& object : objects)
-        {
-            object->Draw();
-        }
+        map->Draw();
+        playerChar->Draw();
+        inventoryUi->Draw();
     }
 
     void World::CreateObjects()
     {
-        ObjectType map = std::make_shared<Map>();
-        ObjectType menu = std::make_shared<UI::Menu>();
-        ObjectType inventoryUI = std::make_shared<UI::InventoryUI>();
+        map = new Map();
+        playerChar = new Char::PlayerChar();
+        inventoryUi = new UI::InventoryUI();
 
-        objects.push_back(map);
-        objects.push_back(menu);
-        objects.push_back(inventoryUI);
+        //map->playerChar = playerChar;
+
+        playerChar->map = map;
+        playerChar->SetStartPosition();
+    }
+
+    void World::DeleteObjects()
+    {
+        delete map;
+        delete playerChar;
     }
 
 }

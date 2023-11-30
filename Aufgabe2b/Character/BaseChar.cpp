@@ -4,23 +4,6 @@
 namespace Char
 {
 
-    Vector2 BaseChar::GetPos()
-    {
-        Vector2 posVector;
-        posVector.x = (float)playerSprite.posX;
-        posVector.y = (float)playerSprite.posY;
-        return posVector;
-    }
-
-    Vector2 BaseChar::GetArrayPos()
-    {
-        Vector2 posVector;
-        posVector.x = (float)arrayPosX;
-        posVector.y = (float)arrayPosY;
-        return posVector;
-    }
-
-
     void BaseChar::SetPosition(int x, int y)
     {
         this->playerSprite.posX = x;
@@ -31,6 +14,26 @@ namespace Char
     {
         this->arrayPosX = x;
         this->arrayPosY = y;
+    }
+
+    bool BaseChar::CanMove(Direction direction)
+    {
+        switch (direction)
+        {
+            case Direction::LEFT:
+                if (map->map[arrayPosX - 1][arrayPosY] != Game::TileState::BLOCKED && arrayPosX - 1 >= 0) return true;
+                break;
+            case Direction::RIGHT:
+                if (map->map[arrayPosX + 1][arrayPosY] != Game::TileState::BLOCKED && arrayPosX + 1 < map->mapWidth) return true;
+                break;
+            case Direction::UP:
+                if (map->map[arrayPosX][arrayPosY - 1] != Game::TileState::BLOCKED && arrayPosY - 1 >= 0) return true;
+                break;
+            case Direction::DOWN:
+                if (map->map[arrayPosX][arrayPosY + 1] != Game::TileState::BLOCKED && arrayPosY + 1 < map->mapHeight) return true;
+                break;
+        }
+        return false;
     }
 
 }

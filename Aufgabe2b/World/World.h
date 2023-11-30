@@ -5,11 +5,10 @@
 #include "Map.h"
 #include "../UI/Menu.h"
 #include "../UI/InventoryUI.h"
+#include "../Character/PlayerChar.h"
 
 namespace Game
 {
-
-    typedef std::shared_ptr<GameObject> ObjectType;
 
     class World
     {
@@ -20,9 +19,12 @@ namespace Game
         void Draw();
 
     private:
-        std::vector<ObjectType> objects;
+        Game::Map* map;
+        Char::PlayerChar* playerChar;
+        UI::InventoryUI* inventoryUi;
 
         void CreateObjects();
+        void DeleteObjects();
     };
 
 }

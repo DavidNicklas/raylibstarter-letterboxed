@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 #include "../Sprite.h"
-
+#include "../World/Map.h"
 
 namespace Char
 {
@@ -12,15 +12,17 @@ namespace Char
     class BaseChar
     {
     public:
-        virtual void Move(Direction dir) = 0;
+        virtual void Move() = 0;
+        virtual void SetStartPosition() = 0;
+        bool CanMove(Direction direction);
 
         // Position of Player is implemented by Sprite
         Sprite playerSprite = Sprite();
 
-        Vector2 GetPos();
-        Vector2 GetArrayPos();
         void SetPosition(int x, int y);
         void SetArrayPosition(int x, int y);
+
+        Game::Map* map = nullptr;
 
     protected:
         // Is needed to move player correctly

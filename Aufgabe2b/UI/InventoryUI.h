@@ -7,11 +7,11 @@
 namespace UI
 {
 
-    class InventoryUI : public GameObject
+    class InventoryUI
     {
     public:
-        void Update() override;
-        void Draw() override;
+        void Update();
+        void Draw();
 
         bool ShowInventory() const { return this->showInventory; }
 

@@ -3,8 +3,7 @@
 #include <memory>
 #include "raylib.h"
 #include "config.h"
-#include "../GameObject.h"
-#include "../Character/PlayerChar.h"
+//#include "../Character/PlayerChar.h"
 #include "../Sprite.h"
 
 namespace Game
@@ -12,15 +11,18 @@ namespace Game
 
     enum TileState {NONE, BLOCKED, PASSABLE, START, EXIT, ITEM};
 
-    class Map : public GameObject
+    class Map
     {
     public:
         Map();
         ~Map() { ClearMap(); }
-        void Update() override;
-        void Draw() override;
+        void Update();
+        void Draw();
 
         void GenerateMap();
+
+        int GetStartRow() const { return startRow; }
+        int GetStartCol() const { return startCol; }
 
         static const int mapWidth = 29;
         static const int mapHeight = 16;
@@ -28,10 +30,9 @@ namespace Game
         float centerY;
         int map[mapWidth][mapHeight];
 
-    private:
-        std::shared_ptr<Char::PlayerChar> player;
-        Char::Direction playerDirection;
+        //Char::PlayerChar* playerChar = nullptr;
 
+    private:
         int startRow, startCol;
         int endRow, endCol;
 

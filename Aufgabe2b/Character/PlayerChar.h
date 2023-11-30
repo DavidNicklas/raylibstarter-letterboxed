@@ -12,16 +12,18 @@ namespace Char
     class PlayerChar : public BaseChar
     {
     public:
-        PlayerChar(int posX, int posY);
+        PlayerChar();
 
         void Update();
         void Draw();
+
+        void SetStartPosition() override;
+        void Move() override;
 
         void PickUpItem();
         void DropItem();
         void EquipItem();
 
-        void Move(Direction dir) override;
 
         Inventory::Inventory<std::shared_ptr<Items::BaseItem>, 10> inventory;
 

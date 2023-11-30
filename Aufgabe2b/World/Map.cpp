@@ -15,10 +15,6 @@ namespace Game
         centerX = Config::ScreenWidth / 2 - ((Config::TileSize * mapWidth) / 2);
         centerY = Config::ScreenHeight / 2 - ((Config::TileSize * mapHeight) / 2);
         GenerateMap();
-        // set player positions for drawing and movement
-        player = std::make_shared<Char::PlayerChar>(centerX + static_cast<float>(startCol * Config::TileSize),
-                                                    centerY + static_cast<float>(startRow * Config::TileSize));
-        player->SetArrayPosition(startCol, startRow);
     }
 
     /**** CORE-FUNCTIONS ****/
@@ -29,16 +25,7 @@ namespace Game
         {
             GenerateMap();
             // Resets player position
-            player = std::make_shared<Char::PlayerChar>(centerX + static_cast<float>(startCol * Config::TileSize),
-                                                        centerY + static_cast<float>(startRow * Config::TileSize));
-            player->SetArrayPosition(startCol, startRow);
-        }
-
-        player->Update();
-
-        if (CanMoveChar((int)player->GetArrayPos().x, (int)player->GetArrayPos().y))
-        {
-            player->Move(playerDirection);
+            //playerChar->SetStartPosition();
         }
     }
 
@@ -74,7 +61,6 @@ namespace Game
             }
         }
 
-        player->Draw();
         DrawRectangleLinesEx({centerX, centerY, Config::TileSize * mapWidth, Config::TileSize * mapHeight}, 2, DARKBROWN);
     }
     //================================================================================================================//
@@ -187,43 +173,5 @@ namespace Game
         map[endCol][endRow] = TileState::EXIT;
     }
     //================================================================================================================//
-
-    /* Returns true if player can move in desired direction, player->Move functions needs this information */
-    bool Map::CanMoveChar(int posX, int posY)
-    {
-        if (IsKeyPressed(KEY_A))
-        {
-            if (map[posX - 1][posY] != TileState::BLOCKED && posX - 1 >= 0)
-            {
-                playerDirection = Char::Direction::LEFT;
-                return true;
-            }
-        }
-        else if (IsKeyPressed(KEY_D))
-        {
-            if (map[posX + 1][posY] != TileState::BLOCKED && posX + 1 < mapWidth)
-            {
-                playerDirection = Char::Direction::RIGHT;
-                return true;
-            }
-        }
-        else if (IsKeyPressed(KEY_W))
-        {
-            if (map[posX][posY - 1] != TileState::BLOCKED && posY - 1 >= 0)
-            {
-                playerDirection = Char::Direction::UP;
-                return true;
-            }
-        }
-        else if (IsKeyPressed(KEY_S))
-        {
-            if (map[posX][posY + 1] != TileState::BLOCKED && posY + 1 < mapHeight)
-            {
-                playerDirection = Char::Direction::DOWN;
-                return true;
-            }
-        }
-        return false;
-    }
 
 }
