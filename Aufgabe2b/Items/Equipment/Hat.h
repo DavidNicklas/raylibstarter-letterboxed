@@ -10,7 +10,9 @@ namespace Items
     public:
         Hat()
         {
-            SetWeight(2);
+            texture.ChangeTexture("../../assets/graphics/sleepingHat.png");
+
+            SetWeight(5);
             SetCost(40);
             SetName("Sleeping Hat");
             SetDesc("A nice hat, which fits well for sleep. Gives you +3 strength");
@@ -18,9 +20,6 @@ namespace Items
             SetItemType(ItemType::EQUIPPABLE);
             SetEquipmentSlot(DesiredEquipmentSlot::HAT);
         }
-
-        void Update() override {}
-        void Draw() override {}
     };
 
 }

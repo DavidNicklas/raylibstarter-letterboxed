@@ -1,10 +1,16 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 #include "raylib.h"
 #include "config.h"
 #include "../Sprite.h"
 #include "../Character/PlayerChar.h"
+#include "../Items/Coffee.h"
+#include "../Items/Equipment/Hat.h"
+#include "../Items/Equipment/Shoes.h"
+#include "../Items/Equipment/Honey.h"
+#include "../Items/Steak.h"
 
 namespace Game
 {
@@ -38,6 +44,19 @@ namespace Game
 
         int itemsOnMap, maxItemsOnMap;
 
+        struct ItemTile
+        {
+            std::shared_ptr<Items::BaseItem> item;
+            ItemTile() = default;
+            ItemTile(int x, int y) : x(x), y(y), item(nullptr) {}
+            int x;
+            int y;
+        };
+
+        ItemTile itemTiles[mapWidth][mapHeight]; // stores all item tiles on the map
+
+        //std::vector<ItemTile> itemTiles; // stores all item tiles on the map
+
         Sprite grassTile = Sprite(0, 0, "../../assets/graphics/grassTile.png");
         Sprite treeTile = Sprite(0, 0, "../../assets/graphics/treeTile.png");
         Sprite startTile = Sprite(0, 0, "../../assets/graphics/startTile.png");
@@ -46,6 +65,7 @@ namespace Game
         void ClearMap();
         void GenerateStartAndEnd();
         void GenerateItems();
+        void RandomizeItem(int col, int row, int randomValue);
         void GenerateValidPath(int endRow, int endCol);
 
     };

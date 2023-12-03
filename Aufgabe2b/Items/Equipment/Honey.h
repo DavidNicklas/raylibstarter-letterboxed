@@ -10,8 +10,10 @@ namespace Items
     public:
         Honey()
         {
-            SetWeight(3);
-            SetCost(4);
+            texture.ChangeTexture("../../assets/graphics/honey.png");
+
+            SetWeight(4);
+            SetCost(10);
             SetName("Honey");
             SetDesc("A sweet dip. Gives you +4 strength");
             SetStrength(4);

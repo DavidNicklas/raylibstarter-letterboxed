@@ -11,7 +11,7 @@ namespace Game
         endCol = 0;
         endRow = 0;
         itemsOnMap = 0;
-        maxItemsOnMap = 6;
+        maxItemsOnMap = 8;
         centerX = Config::ScreenWidth / 2 - ((Config::TileSize * mapWidth) / 2);
         centerY = Config::ScreenHeight / 2 - ((Config::TileSize * mapHeight) / 2);
         GenerateMap();
@@ -55,7 +55,8 @@ namespace Game
                         DrawTexture(exitTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         break;
                     case TileState::ITEM:
-                        DrawRectangleRec(tileRec, PURPLE);
+                        DrawTexture(grassTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
+                        if (itemTiles[i][j].item != nullptr) DrawTexture(itemTiles[i][j].item->texture.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         break;
                 }
             }
@@ -130,8 +131,25 @@ namespace Game
             if (map[col][row] == TileState::PASSABLE)
             {
                 map[col][row] = TileState::ITEM;
+                int randomItem = GetRandomValue(0, 4);
+                RandomizeItem(col, row, randomItem);
                 itemsOnMap++;
             }
+        }
+    }
+
+    /* Creates a random item on the current ITEM tile and puts it in the container for all item tiles */
+    void Map::RandomizeItem(int col, int row, int randomValue)
+    {
+        itemTiles[col][row].x = col;
+        itemTiles[col][row].y = row;
+        switch (randomValue)
+        {
+            case 0: itemTiles[col][row].item = std::make_shared<Items::Coffee>(); break;
+            case 1: itemTiles[col][row].item = std::make_shared<Items::Hat>(); break;
+            case 2: itemTiles[col][row].item = std::make_shared<Items::Shoes>(); break;
+            case 3: itemTiles[col][row].item = std::make_shared<Items::Honey>(); break;
+            case 4: itemTiles[col][row].item = std::make_shared<Items::Steak>(); break;
         }
     }
 

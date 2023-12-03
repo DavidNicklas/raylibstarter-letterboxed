@@ -19,6 +19,7 @@ namespace Char
         void SetStartPosition() override;
         void Move() override;
 
+        bool PlayerOnItemTile();
         void PickUpItem();
         void DropItem();
         void EquipItem();

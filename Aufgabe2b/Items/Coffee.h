@@ -8,13 +8,16 @@ namespace Items
     class Coffee : public BaseItem
     {
     public:
-        Coffee();
+        Coffee()
+        {
+            texture.ChangeTexture("../../assets/graphics/coffee.png");
 
-        void Update() override {};
-        void Draw() override {};
-
-    private:
-
+            SetWeight(1);
+            SetCost(3);
+            SetName("Coffee");
+            SetDesc("If you are tired, this coffee gives you a huge kick");
+            SetItemType(ItemType::NOT_EQUIPPABLE);
+        }
     };
 
 }

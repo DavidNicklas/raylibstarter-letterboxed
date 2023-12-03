@@ -2,7 +2,7 @@
 
 #include <string>
 #include "raylib.h"
-#include "../GameObject.h"
+#include "../Sprite.h"
 
 namespace Items
 {
@@ -10,9 +10,11 @@ namespace Items
     enum ItemType {EQUIPPABLE, NOT_EQUIPPABLE};
     enum DesiredEquipmentSlot {HAT, HONEY, SHOES};
 
-    class BaseItem : public GameObject
+    class BaseItem
     {
     public:
+        Sprite texture;
+
         void SetWeight(float weight) { this->weight = weight; }
         float GetWeight() { return this->weight; }
 

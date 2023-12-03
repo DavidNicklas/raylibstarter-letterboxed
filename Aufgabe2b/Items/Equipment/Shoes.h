@@ -10,7 +10,9 @@ namespace Items
     public:
         Shoes()
         {
-            SetWeight(6);
+            texture.ChangeTexture("../../assets/graphics/boots.png");
+
+            SetWeight(7);
             SetCost(85);
             SetName("Sneakers");
             SetDesc("Comfort for your feet. Gives you +5 strength");
