@@ -11,7 +11,7 @@ namespace Game
         endCol = 0;
         endRow = 0;
         itemsOnMap = 0;
-        maxItemsOnMap = 8;
+        maxItemsOnMap = 25;
         centerX = Config::ScreenWidth / 2 - ((Config::TileSize * mapWidth) / 2);
         centerY = Config::ScreenHeight / 2 - ((Config::TileSize * mapHeight) / 2);
         GenerateMap();
