@@ -106,8 +106,17 @@ namespace Char
 
     void PlayerChar::PickUpItem()
     {
-        std::cout << "Picked up Item" << std::endl;
-        map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE;
+        try
+        {
+            inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);
+            std::cout << "Picked up Item" << std::endl; //TODO Debug
+            std::cout << inventory.numberOfItems << std::endl; // TODO Debug
+            map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE; // only resets tile to passable if item was added (because of exception it jumps directly into catch block)
+        }
+        catch (Error::InventoryFull &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
     }
 
 }

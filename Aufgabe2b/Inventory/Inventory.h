@@ -21,10 +21,10 @@ namespace Inventory
         T& GetItem(int slot);
 
         int GetCapacity() { return this->capacity; }
+        int numberOfItems; // stores the current number of items in the inventory
 
     private:
         int capacity; // number of normal items you can store in the inventory
-        int numberOfItems; // stores the current number of items in the inventory
 
     // Equipment slots
     private:

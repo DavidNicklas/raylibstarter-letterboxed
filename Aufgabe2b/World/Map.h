@@ -15,6 +15,15 @@
 namespace Game
 {
 
+    struct ItemTile
+    {
+        std::shared_ptr<Items::BaseItem> item;
+        ItemTile() = default;
+        ItemTile(int x, int y) : x(x), y(y), item(nullptr) {}
+        int x;
+        int y;
+    };
+
     enum TileState {NONE, BLOCKED, PASSABLE, START, EXIT, ITEM};
 
     class Map
@@ -37,25 +46,13 @@ namespace Game
         int map[mapWidth][mapHeight];
 
         Char::PlayerChar* playerChar = nullptr;
+        ItemTile itemTiles[mapWidth][mapHeight]; // stores all item tiles on the map
 
     private:
         int startRow, startCol;
         int endRow, endCol;
 
         int itemsOnMap, maxItemsOnMap;
-
-        struct ItemTile
-        {
-            std::shared_ptr<Items::BaseItem> item;
-            ItemTile() = default;
-            ItemTile(int x, int y) : x(x), y(y), item(nullptr) {}
-            int x;
-            int y;
-        };
-
-        ItemTile itemTiles[mapWidth][mapHeight]; // stores all item tiles on the map
-
-        //std::vector<ItemTile> itemTiles; // stores all item tiles on the map
 
         Sprite grassTile = Sprite(0, 0, "../../assets/graphics/grassTile.png");
         Sprite treeTile = Sprite(0, 0, "../../assets/graphics/treeTile.png");
