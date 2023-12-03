@@ -5,6 +5,11 @@
 #include "../Inventory/Inventory.hpp"
 #include "../Items/BaseItem.h"
 
+namespace UI
+{
+    class InventoryUI;
+}
+
 namespace Char
 {
 
@@ -32,11 +37,16 @@ namespace Char
 
         Inventory::Inventory<std::shared_ptr<Items::BaseItem>, 10> inventory;
 
+        UI::InventoryUI* inventoryUi = nullptr;
+
     private:
         int strength = 10; // Defines the weight, the player can carry in his inventory
         int totalWeight = 0; // Defines the current weight of all his items in his inventory
         int portableWeight = strength * 2; // Defines the weight he can max carry
         int health = 20;
+
+        std::shared_ptr<Items::BaseItem> markedForDropItem = nullptr;
+        void DropItemOnGround();
 
         void CalculateTotalWeight();
 

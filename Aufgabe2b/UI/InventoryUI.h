@@ -10,14 +10,18 @@ namespace UI
     class InventoryUI
     {
     public:
+        InventoryUI() { selectedInventorySlot = 0; showInventory = false; }
+
         void Update();
         void Draw();
 
         Char::PlayerChar* playerChar = nullptr;
 
+        int GetSelectedInventorySlot() { return this->selectedInventorySlot; }
+
     private:
-        bool showInventory = false;
-        int selectedInventorySlot = 0;
+        bool showInventory;
+        int selectedInventorySlot;
 
         Sprite invTex = Sprite(0, 0, "../../assets/graphics/inventoryScreen.png");
 

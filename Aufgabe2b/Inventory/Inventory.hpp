@@ -29,6 +29,19 @@ namespace Inventory
     }
 
     template<typename T, int size>
+    T Inventory<T, size>::RemoveItem(int slot)
+    {
+        if (slot >= 0 && slot < capacity && itemContainer[slot] != nullptr)
+        {
+            T removedItem = itemContainer[slot];
+            itemContainer[slot] = nullptr;
+            numberOfItems--;
+            return removedItem;
+        }
+        else throw Error::OutOfRange(__FILE__, __FUNCTION__, __LINE__);
+    }
+
+    template<typename T, int size>
     void Inventory<T, size>::EquipItem(T item)
     {
         if (item->GetItemType() == Items::ItemType::EQUIPPABLE) // check if item can be equipped

@@ -1,5 +1,6 @@
 #include "PlayerChar.h"
 #include "../World/Map.h"
+#include "../UI/InventoryUI.h"
 
 namespace Char
 {
@@ -18,9 +19,10 @@ namespace Char
             else inInventory = false;
         }
 
-        if (!inInventory && totalWeight < portableWeight) Move(); //TODO noch ergänzen dass man nur bewegen darf wenn gewicht kleiner ist
+        if (!inInventory && totalWeight < portableWeight) Move();
 
         if (PlayerOnItemTile()) PickUpItem();
+        if (IsKeyPressed(KEY_BACKSPACE)) DropItem();
 
     }
 
@@ -47,6 +49,7 @@ namespace Char
             if (CanMove(direction))
             {
                 playerSprite.posX -= Config::TileSize;
+                DropItemOnGround();
                 arrayPosX--;
             }
         }
@@ -57,6 +60,7 @@ namespace Char
             if (CanMove(direction))
             {
                 playerSprite.posX += Config::TileSize;
+                DropItemOnGround();
                 arrayPosX++;
             }
         }
@@ -67,6 +71,7 @@ namespace Char
             if (CanMove(direction))
             {
                 playerSprite.posY -= Config::TileSize;
+                DropItemOnGround();
                 arrayPosY--;
             }
         }
@@ -77,6 +82,7 @@ namespace Char
             if (CanMove(direction))
             {
                 playerSprite.posY += Config::TileSize;
+                DropItemOnGround();
                 arrayPosY++;
             }
         }
@@ -122,12 +128,37 @@ namespace Char
 
     void PlayerChar::DropItem()
     {
+        if (map->map[arrayPosX][arrayPosY] == Game::TileState::PASSABLE)
+        {
+            try
+            {
+                // safe the item temporarily and then drop it on the ground when the player moves
+                // otherwise, the player instantly picks the item back up
+                markedForDropItem = inventory.RemoveItem(inventoryUi->GetSelectedInventorySlot());
+                totalWeight -= (int)markedForDropItem->GetWeight();
+            }
+            catch (Error::OutOfRange& e)
+            {
+                std::cout << e.what() << std::endl;
+            }
+        }
+        else std::cout << "Can not drop item. Tile already has an item on it." << std::endl;
+    }
 
+    void PlayerChar::DropItemOnGround()
+    {
+        if (markedForDropItem != nullptr)
+        {
+            map->map[arrayPosX][arrayPosY] = Game::TileState::ITEM;
+            map->itemTiles[arrayPosX][arrayPosY].item = markedForDropItem;
+            markedForDropItem = nullptr;
+        }
     }
 
     void PlayerChar::EquipItem()
     {
 
     }
+
 
 }

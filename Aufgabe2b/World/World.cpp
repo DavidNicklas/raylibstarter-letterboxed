@@ -29,8 +29,9 @@ namespace Game
         // inventory need player for drawing stats
         inventoryUi->playerChar = playerChar;
 
-        // player needs map for moving on it
+        // player needs map for moving on it and inventoryUI for dropping items
         playerChar->map = map;
+        playerChar->inventoryUi = inventoryUi;
         playerChar->SetStartPosition();
     }
 

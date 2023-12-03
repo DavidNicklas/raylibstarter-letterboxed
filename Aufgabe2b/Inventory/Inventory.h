@@ -19,6 +19,7 @@ namespace Inventory
 
         void AddItem(T item);
         T& GetItem(int slot);
+        T RemoveItem(int slot);
 
         int GetCapacity() { return this->capacity; }
         int GetCurrentNumberOfItems() { return this->numberOfItems; }
