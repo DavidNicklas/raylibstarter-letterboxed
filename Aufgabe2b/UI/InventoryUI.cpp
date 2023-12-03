@@ -8,26 +8,43 @@ namespace UI
         if (IsKeyPressed(KEY_E))
         {
             if (!showInventory) showInventory = true;
-            else showInventory = false;
+            else
+            {
+                showInventory = false;
+                // Reset the box to first slot
+                highlightBox.posX = 0;
+                highlightBox.posY = 0;
+                selectedInventorySlot = 0;
+            }
         }
 
         if (showInventory)
         {
-            if (IsKeyPressed(KEY_D) && highlightBox.posX < (int) highlightBoxOffset.x * 4)
+            if (IsKeyPressed(KEY_D) && selectedInventorySlot < 9)
             {
-                highlightBox.posX += (int) highlightBoxOffset.x;
+                highlightBox.posX += (int)highlightBoxOffset.x;
+
+                // If player is at inv slot 4, push the box one below and at the beginning of the inv
+                if (selectedInventorySlot == 4)
+                {
+                    highlightBox.posY += (int)highlightBoxOffset.y;
+                    highlightBox.posX = 0;
+                }
+
+                selectedInventorySlot++;
             }
-            if (IsKeyPressed(KEY_A) && highlightBox.posX > 0)
+            if (IsKeyPressed(KEY_A) && selectedInventorySlot > 0)
             {
-                highlightBox.posX -= (int) highlightBoxOffset.x;
-            }
-            if (IsKeyPressed(KEY_W) && highlightBox.posY > 0)
-            {
-                highlightBox.posY -= (int) highlightBoxOffset.y;
-            }
-            if (IsKeyPressed(KEY_S) && highlightBox.posY < (int) highlightBoxOffset.y)
-            {
-                highlightBox.posY += (int) highlightBoxOffset.y;
+                highlightBox.posX -= (int)highlightBoxOffset.x;
+
+                // If player is at inv slot 5, push the box upwards and at the end of the inv
+                if (selectedInventorySlot == 5)
+                {
+                    highlightBox.posY -= (int)highlightBoxOffset.y;
+                    highlightBox.posX += (int)highlightBoxOffset.x * 5;
+                }
+
+                selectedInventorySlot--;
             }
         }
     }

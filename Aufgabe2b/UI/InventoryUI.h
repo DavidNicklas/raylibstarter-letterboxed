@@ -17,16 +17,19 @@ namespace UI
 
     private:
         bool showInventory = false;
+        int selectedInventorySlot = 0;
 
         Sprite invTex = Sprite(0, 0, "../../assets/graphics/inventoryScreen.png");
-        Sprite highlightBox = Sprite(0, 0, "../../assets/graphics/invHighlightBox.png");
 
         void DrawPlayerStats();
         void DrawItems();
 
+        // The box that shows which slot is currently highlighted
+        Sprite highlightBox = Sprite(0, 0, "../../assets/graphics/invHighlightBox.png");
         void DrawHighlightBox();
         Vector2 highlightBoxOffset = {44, 50};
 
+        // Those vectors are needed to draw the items at the right position in the inventory
         Vector2 slot0Pos = {227, 61};
         Vector2 slot1Pos = {slot0Pos.x + (1 * highlightBoxOffset.x), slot0Pos.y};
         Vector2 slot2Pos = {slot0Pos.x + (2 * highlightBoxOffset.x), slot0Pos.y};

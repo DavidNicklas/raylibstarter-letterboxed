@@ -38,7 +38,7 @@ namespace Char
         int portableWeight = strength * 2; // Defines the weight he can max carry
         int health = 20;
 
-        int CalculateTotalWeight();
+        void CalculateTotalWeight();
 
         bool inInventory = false;
     };

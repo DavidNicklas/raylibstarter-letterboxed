@@ -18,14 +18,16 @@ namespace Char
             else inInventory = false;
         }
 
-        if (!inInventory) Move();
+        if (!inInventory && totalWeight < portableWeight) Move(); //TODO noch ergänzen dass man nur bewegen darf wenn gewicht kleiner ist
 
         if (PlayerOnItemTile()) PickUpItem();
+
     }
 
     void PlayerChar::Draw()
     {
         DrawTexture(playerSprite.GetTexture(), playerSprite.posX, playerSprite.posY, WHITE);
+        if (totalWeight > portableWeight) DrawText("You carry to many items.",  50, 0, 30, RED);
     }
 
     void PlayerChar::SetStartPosition()
@@ -80,12 +82,12 @@ namespace Char
         }
     }
 
-    int PlayerChar::CalculateTotalWeight()
+    void PlayerChar::CalculateTotalWeight()
     {
         // going through normal inventory
         for (int i = 0; i < inventory.GetCapacity(); ++i)
         {
-            this->totalWeight += (int) inventory.itemContainer[i]->GetWeight();
+            if (inventory.GetItem(i)) this->totalWeight += (int) inventory.GetItem(i)->GetWeight();
         }
         //going through equipment slots
         for (int i = 0; i < inventory.GetEquipmentSlots(); ++i)
@@ -93,8 +95,6 @@ namespace Char
             if (inventory.equipmentContainer[i] != nullptr)
                 this->totalWeight += (int) inventory.equipmentContainer[i]->GetWeight();
         }
-
-        return totalWeight;
     }
 
     /* Checks if the player is standing on a tile which carries an item */
@@ -109,6 +109,7 @@ namespace Char
         try
         {
             inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);
+            CalculateTotalWeight();
             std::cout << "Picked up Item" << std::endl; //TODO Debug
             std::cout << inventory.GetCurrentNumberOfItems() << std::endl; // TODO Debug
             map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE; // only resets tile to passable if item was added (because of exception it jumps directly into catch block)
@@ -117,6 +118,16 @@ namespace Char
         {
             std::cout << e.what() << std::endl;
         }
+    }
+
+    void PlayerChar::DropItem()
+    {
+
+    }
+
+    void PlayerChar::EquipItem()
+    {
+
     }
 
 }
