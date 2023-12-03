@@ -33,8 +33,8 @@ namespace Game
 
         int itemsOnMap, maxItemsOnMap;
 
-        Sprite grassTile = Sprite(0, 0, "../../assets/graphics/grassTile.png");
-        Sprite treeTile = Sprite(0, 0, "../../assets/graphics/treeTile.png");
+        Sprite sprite_grassTile = Sprite(0, 0, "../../assets/graphics/sprite_grassTile.png");
+        Sprite sprite_treeTile = Sprite(0, 0, "../../assets/graphics/sprite_treeTile.png");
 
         void ClearMap();
         void GenerateStartAndEnd();

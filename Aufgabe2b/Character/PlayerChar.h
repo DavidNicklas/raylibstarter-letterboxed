@@ -16,7 +16,7 @@ namespace Char
     class PlayerChar : public BaseChar
     {
     public:
-        PlayerChar();
+        PlayerChar(Texture2D newTexture);
 
         void Update();
         void Draw();

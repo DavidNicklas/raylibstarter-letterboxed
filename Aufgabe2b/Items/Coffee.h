@@ -8,9 +8,9 @@ namespace Items
     class Coffee : public BaseItem
     {
     public:
-        Coffee()
+        Coffee(Texture2D newTexture)
         {
-            texture.ChangeTexture("../../assets/graphics/coffee.png");
+            texture.ChangeTexture(newTexture);
 
             SetWeight(1);
             SetCost(3);

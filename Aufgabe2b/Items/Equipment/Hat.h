@@ -8,9 +8,9 @@ namespace Items
     class Hat : public EquippableItem
     {
     public:
-        Hat()
+        Hat(Texture2D newTexture)
         {
-            texture.ChangeTexture("../../assets/graphics/sleepingHat.png");
+            texture.ChangeTexture(newTexture);
 
             SetWeight(5);
             SetCost(40);

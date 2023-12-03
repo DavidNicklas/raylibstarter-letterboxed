@@ -8,9 +8,9 @@ namespace Items
     class Shoes : public EquippableItem
     {
     public:
-        Shoes()
+        Shoes(Texture2D newTexture)
         {
-            texture.ChangeTexture("../../assets/graphics/boots.png");
+            texture.ChangeTexture(newTexture);
 
             SetWeight(7);
             SetCost(85);
@@ -20,7 +20,6 @@ namespace Items
             SetItemType(ItemType::EQUIPPABLE);
             SetEquipmentSlot(DesiredEquipmentSlot::SHOES);
         }
-
     };
 
 }

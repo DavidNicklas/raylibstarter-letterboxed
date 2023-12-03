@@ -8,9 +8,9 @@ namespace Items
     class Honey : public EquippableItem
     {
     public:
-        Honey()
+        Honey(Texture2D newTexture)
         {
-            texture.ChangeTexture("../../assets/graphics/honey.png");
+            texture.ChangeTexture(newTexture);
 
             SetWeight(4);
             SetCost(10);
@@ -20,7 +20,6 @@ namespace Items
             SetItemType(ItemType::EQUIPPABLE);
             SetEquipmentSlot(DesiredEquipmentSlot::HONEY);
         }
-
     };
 
 }

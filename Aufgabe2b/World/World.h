@@ -24,6 +24,8 @@ namespace Game
         Char::PlayerChar* playerChar;
         UI::InventoryUI* inventoryUi;
 
+        Texture2D playerTex = LoadTexture("../../assets/graphics/bear.png");
+
         void CreateObjects();
     };
 

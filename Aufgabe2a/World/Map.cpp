@@ -33,10 +33,10 @@ namespace Game
                 switch (map[i][j])
                 {
                     case TileState::BLOCKED:
-                        DrawTexture(treeTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
+                        DrawTexture(sprite_treeTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         break;
                     case TileState::PASSABLE:
-                        DrawTexture(grassTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
+                        DrawTexture(sprite_grassTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         break;
                     case TileState::START:
                         DrawRectangleRec(tileRec, RED);

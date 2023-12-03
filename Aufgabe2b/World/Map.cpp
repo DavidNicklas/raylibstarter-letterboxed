@@ -43,19 +43,19 @@ namespace Game
                 switch (map[i][j])
                 {
                     case TileState::BLOCKED:
-                        DrawTexture(treeTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
+                        DrawTexture(sprite_treeTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         break;
                     case TileState::PASSABLE:
-                        DrawTexture(grassTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
+                        DrawTexture(sprite_grassTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         break;
                     case TileState::START:
-                        DrawTexture(startTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
+                        DrawTexture(sprite_startTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         break;
                     case TileState::EXIT:
-                        DrawTexture(exitTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
+                        DrawTexture(sprite_exitTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         break;
                     case TileState::ITEM:
-                        DrawTexture(grassTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
+                        DrawTexture(sprite_grassTile.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         if (itemTiles[i][j].item != nullptr) DrawTexture(itemTiles[i][j].item->texture.GetTexture(), (int)tileRec.x, (int)tileRec.y, WHITE);
                         break;
                 }
@@ -145,11 +145,11 @@ namespace Game
         itemTiles[col][row].y = row;
         switch (randomValue)
         {
-            case 0: itemTiles[col][row].item = std::make_shared<Items::Coffee>(); break;
-            case 1: itemTiles[col][row].item = std::make_shared<Items::Hat>(); break;
-            case 2: itemTiles[col][row].item = std::make_shared<Items::Shoes>(); break;
-            case 3: itemTiles[col][row].item = std::make_shared<Items::Honey>(); break;
-            case 4: itemTiles[col][row].item = std::make_shared<Items::Steak>(); break;
+            case 0: itemTiles[col][row].item = std::make_shared<Items::Coffee>(sprite_coffee.GetTexture()); break;
+            case 1: itemTiles[col][row].item = std::make_shared<Items::Hat>(sprite_hat.GetTexture()); break;
+            case 2: itemTiles[col][row].item = std::make_shared<Items::Shoes>(sprite_shoes.GetTexture()); break;
+            case 3: itemTiles[col][row].item = std::make_shared<Items::Honey>(sprite_honey.GetTexture()); break;
+            case 4: itemTiles[col][row].item = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
         }
     }
 

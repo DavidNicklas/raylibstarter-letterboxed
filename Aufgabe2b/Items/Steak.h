@@ -8,9 +8,9 @@ namespace Items
     class Steak : public BaseItem
     {
     public:
-        Steak()
+        Steak(Texture2D newTexture)
         {
-            texture.ChangeTexture("../../assets/graphics/steak.png");
+            texture.ChangeTexture(newTexture);
 
             SetWeight(2);
             SetCost(5);

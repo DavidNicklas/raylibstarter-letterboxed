@@ -20,7 +20,7 @@ namespace Game
     void World::CreateObjects()
     {
         map = new Map();
-        playerChar = new Char::PlayerChar();
+        playerChar = new Char::PlayerChar(playerTex);
         inventoryUi = new UI::InventoryUI();
 
         // map needs the player for resetting the position

@@ -54,10 +54,16 @@ namespace Game
 
         int itemsOnMap, maxItemsOnMap;
 
-        Sprite grassTile = Sprite(0, 0, "../../assets/graphics/grassTile.png");
-        Sprite treeTile = Sprite(0, 0, "../../assets/graphics/treeTile.png");
-        Sprite startTile = Sprite(0, 0, "../../assets/graphics/startTile.png");
-        Sprite exitTile = Sprite(0, 0, "../../assets/graphics/exitTile.png");
+        Sprite sprite_grassTile = Sprite(0, 0, "../../assets/graphics/grassTile.png");
+        Sprite sprite_treeTile = Sprite(0, 0, "../../assets/graphics/treeTile.png");
+        Sprite sprite_startTile = Sprite(0, 0, "../../assets/graphics/startTile.png");
+        Sprite sprite_exitTile = Sprite(0, 0, "../../assets/graphics/exitTile.png");
+
+        Sprite sprite_coffee = Sprite(0, 0, "../../assets/graphics/coffee.png");
+        Sprite sprite_steak = Sprite(0, 0, "../../assets/graphics/steak.png");
+        Sprite sprite_hat = Sprite(0, 0, "../../assets/graphics/sleepingHat.png");
+        Sprite sprite_honey = Sprite(0, 0, "../../assets/graphics/honey.png");
+        Sprite sprite_shoes = Sprite(0, 0, "../../assets/graphics/boots.png");
 
         void ClearMap();
         void GenerateStartAndEnd();

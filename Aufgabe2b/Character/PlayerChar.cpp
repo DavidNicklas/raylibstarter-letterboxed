@@ -5,9 +5,9 @@
 namespace Char
 {
 
-    PlayerChar::PlayerChar()
+    PlayerChar::PlayerChar(Texture2D newTexture)
     {
-        this->playerSprite.ChangeTexture("../../assets/graphics/bear.png");
+        this->playerSprite.ChangeTexture(newTexture);
     }
 
     void PlayerChar::Update()
