@@ -15,8 +15,12 @@ namespace Inventory
     {
         if (numberOfItems < capacity)
         {
-            itemContainer[numberOfItems] = item;
-            numberOfItems++;
+            int emptySlot = GetFirstEmptySlot();
+            if (emptySlot != -1)
+            {
+                itemContainer[emptySlot] = item;
+                numberOfItems++;
+            }
         }
         else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
     }
@@ -95,5 +99,14 @@ namespace Inventory
         else throw Error::OutOfRange(__FILE__, __FUNCTION__, __LINE__);
     }
 
+    template<typename T, int size>
+    int Inventory<T, size>::GetFirstEmptySlot()
+    {
+        for (int i = 0; i < GetCapacity(); ++i)
+        {
+            if (itemContainer[i] == nullptr) return i;
+        }
+        return -1; // if there is no empty slot return -1
+    }
 
 }

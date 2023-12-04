@@ -19,17 +19,22 @@ namespace Char
             else inInventory = false;
         }
 
-        if (!inInventory && totalWeight < portableWeight) Move();
-
-        if (PlayerOnItemTile()) PickUpItem();
-        if (IsKeyPressed(KEY_BACKSPACE)) DropItem();
-
+        if (inInventory)
+        {
+            if (IsKeyPressed(KEY_ENTER)) EquipItem();
+            if (IsKeyPressed(KEY_BACKSPACE)) DropItem();
+        }
+        else
+        {
+            if (totalWeight < portableWeight) Move();
+            if (PlayerOnItemTile()) PickUpItem();
+        }
     }
 
     void PlayerChar::Draw()
     {
         DrawTexture(playerSprite.GetTexture(), playerSprite.posX, playerSprite.posY, WHITE);
-        if (totalWeight > portableWeight) DrawText("You carry to many items.",  50, 0, 30, RED);
+        if (totalWeight > portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
     }
 
     void PlayerChar::SetStartPosition()
@@ -91,15 +96,14 @@ namespace Char
     void PlayerChar::CalculateTotalWeight()
     {
         // going through normal inventory
-        for (int i = 0; i < inventory.GetCapacity(); ++i)
+        for (int i = 0; i < inventory.GetCurrentNumberOfItems(); ++i)
         {
-            if (inventory.GetItem(i)) this->totalWeight += (int) inventory.GetItem(i)->GetWeight();
+            if (inventory.GetItem(i)) this->totalWeight += (int)inventory.GetItem(i)->GetWeight();
         }
         //going through equipment slots
         for (int i = 0; i < inventory.GetEquipmentSlots(); ++i)
         {
-            if (inventory.equipmentContainer[i] != nullptr)
-                this->totalWeight += (int) inventory.equipmentContainer[i]->GetWeight();
+            if (inventory.equipmentContainer[i] != nullptr) this->totalWeight += (int)inventory.equipmentContainer[i]->GetWeight();
         }
     }
 
@@ -110,12 +114,14 @@ namespace Char
         else return false;
     }
 
+    //TODO there is still a problem, if you drop an item which is not the last slot. If you pick an item up again, it will override the last one
     void PlayerChar::PickUpItem()
     {
         try
         {
             inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);
-            CalculateTotalWeight();
+            totalWeight += (int)map->itemTiles[arrayPosX][arrayPosY].item->GetWeight();
+            map->itemTiles[arrayPosX][arrayPosY].item = nullptr;
             std::cout << "Picked up Item" << std::endl; //TODO Debug
             std::cout << inventory.GetCurrentNumberOfItems() << std::endl; // TODO Debug
             map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE; // only resets tile to passable if item was added (because of exception it jumps directly into catch block)
@@ -126,6 +132,7 @@ namespace Char
         }
     }
 
+    //TODO still a bug if you drop two items on the same tile
     void PlayerChar::DropItem()
     {
         if (map->map[arrayPosX][arrayPosY] == Game::TileState::PASSABLE)
@@ -137,7 +144,7 @@ namespace Char
                 markedForDropItem = inventory.RemoveItem(inventoryUi->GetSelectedInventorySlot());
                 totalWeight -= (int)markedForDropItem->GetWeight();
             }
-            catch (Error::OutOfRange& e)
+            catch (Error::OutOfRange &e)
             {
                 std::cout << e.what() << std::endl;
             }
@@ -149,16 +156,35 @@ namespace Char
     {
         if (markedForDropItem != nullptr)
         {
+            // if there is still an item marked, place it on the map after player has moved
             map->map[arrayPosX][arrayPosY] = Game::TileState::ITEM;
             map->itemTiles[arrayPosX][arrayPosY].item = markedForDropItem;
+            // clear the marked item and free it for the next
             markedForDropItem = nullptr;
         }
     }
 
     void PlayerChar::EquipItem()
     {
-
+        try
+        {
+            std::shared_ptr<Items::BaseItem> temporaryItem = inventory.GetItem(inventoryUi->GetSelectedInventorySlot());
+            inventory.EquipItem(temporaryItem);
+            std::shared_ptr<Items::EquippableItem> equippableItem = std::dynamic_pointer_cast<Items::EquippableItem>(temporaryItem);
+            if (equippableItem != nullptr)
+            {
+                this->strength += equippableItem->GetAdditionalStrength();
+                this->portableWeight = strength * 2;
+            }
+        }
+        catch (Error::InventoryFull& e)
+        {
+            std::cout << e.what() << std::endl;
+        }
+        catch (Error::EquipmentError& e)
+        {
+            std::cout << e.what() << std::endl;
+        }
     }
-
 
 }

@@ -30,7 +30,7 @@ namespace Items
         void SetItemType(ItemType type) { this->itemType = type; }
         ItemType GetItemType() { return this->itemType; }
 
-        void SetEquipmentSlot(DesiredEquipmentSlot slot) { this->desiredSlot = slot; }
+        virtual void SetEquipmentSlot(DesiredEquipmentSlot slot) { this->desiredSlot = slot; }
         DesiredEquipmentSlot GetDesiredEquipmentSlot() { return this->desiredSlot; }
 
     protected:

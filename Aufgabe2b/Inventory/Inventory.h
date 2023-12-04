@@ -23,6 +23,7 @@ namespace Inventory
 
         int GetCapacity() { return this->capacity; }
         int GetCurrentNumberOfItems() { return this->numberOfItems; }
+        int GetFirstEmptySlot();
 
     private:
         int numberOfItems; // stores the current number of items in the inventory
