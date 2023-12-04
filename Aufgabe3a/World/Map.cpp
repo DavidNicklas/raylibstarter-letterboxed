@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "../UI/InventoryUI.h"
 
 
 namespace Game
@@ -21,7 +22,7 @@ namespace Game
     //================================================================================================================//
     void Map::Update()
     {
-        if (IsKeyPressed(KEY_G) && !playerChar->inInventory)
+        if (IsKeyPressed(KEY_G) && !playerChar->inventoryUi->ShowInventory())
         {
             GenerateMap();
             // Resets player position

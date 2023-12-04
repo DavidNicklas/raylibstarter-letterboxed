@@ -162,7 +162,7 @@ namespace Inventory
                 // if both slots have an item, swap them
                 if (itemContainer[j] != nullptr && itemContainer[j + 1] != nullptr)
                 {
-                    if (itemContainer[j]->GetName() < itemContainer[j + 1]->GetName())
+                    if (itemContainer[j]->GetName() > itemContainer[j + 1]->GetName())
                     {
                         T temporaryItem = itemContainer[j];
                         itemContainer[j] = itemContainer[j + 1];

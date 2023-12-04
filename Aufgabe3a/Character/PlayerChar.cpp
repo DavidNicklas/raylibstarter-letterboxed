@@ -12,25 +12,11 @@ namespace Char
 
     void PlayerChar::Update()
     {
-        // Inventory Input
-        if (IsKeyPressed(KEY_E))
+        if (inventoryUi->ShowInventory())
         {
-            if (!inInventory) inInventory = true;
-            else inInventory = false;
-        }
-
-        if (inInventory)
-        {
-            if (IsKeyPressed(KEY_ENTER)) EquipItem();
+            if (IsKeyPressed(KEY_ENTER) && !inventoryUi->ShowSortMenu()) EquipItem();
             if (IsKeyPressed(KEY_BACKSPACE)) DropItem();
-            if (IsKeyPressed(KEY_P))
-            {
-                inventory.SortForWeight();
-                for (int i = 0; i < inventory.GetCurrentNumberOfItems(); ++i)
-                {
-                    std::cout << inventory.GetItem(i)->GetWeight() << std::endl;
-                }
-            }
+            if (inventoryUi->ShowSortMenu() && IsKeyPressed(KEY_ENTER)) SortItems();
         }
         else
         {
@@ -201,6 +187,16 @@ namespace Char
             {
                 std::cout << e.what() << std::endl;
             }
+        }
+    }
+
+    void PlayerChar::SortItems()
+    {
+        switch (inventoryUi->GetCurrentSortButton())
+        {
+            case UI::CurrentSortButton::WEIGHT: inventory.SortForWeight(); break;
+            case UI::CurrentSortButton::NAME: inventory.SortForName(); break;
+            case UI::CurrentSortButton::COST: inventory.SortForCost(); break;
         }
     }
 

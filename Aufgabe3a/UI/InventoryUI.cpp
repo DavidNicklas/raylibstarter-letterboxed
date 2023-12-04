@@ -3,6 +3,14 @@
 namespace UI
 {
 
+    InventoryUI::InventoryUI()
+    {
+        selectedInventorySlot = 0;
+        showInventory = false;
+        showSortMenu = false;
+        currentSortButton = CurrentSortButton::WEIGHT;
+    }
+
     void InventoryUI::Update()
     {
         if (IsKeyPressed(KEY_E))
@@ -11,6 +19,7 @@ namespace UI
             else
             {
                 showInventory = false;
+                showSortMenu = false;
                 // Reset the box to first slot
                 highlightBox.posX = 0;
                 highlightBox.posY = 0;
@@ -20,32 +29,15 @@ namespace UI
 
         if (showInventory)
         {
-            if (IsKeyPressed(KEY_D) && selectedInventorySlot < 9)
+            if (IsKeyPressed(KEY_P))
             {
-                highlightBox.posX += (int)highlightBoxOffset.x;
-
-                // If player is at inv slot 4, push the box one below and at the beginning of the inv
-                if (selectedInventorySlot == 4)
-                {
-                    highlightBox.posY += (int)highlightBoxOffset.y;
-                    highlightBox.posX = 0;
-                }
-
-                selectedInventorySlot++;
+                if (!showSortMenu) showSortMenu = true;
+                else showSortMenu = false;
             }
-            if (IsKeyPressed(KEY_A) && selectedInventorySlot > 0)
-            {
-                highlightBox.posX -= (int)highlightBoxOffset.x;
 
-                // If player is at inv slot 5, push the box upwards and at the end of the inv
-                if (selectedInventorySlot == 5)
-                {
-                    highlightBox.posY -= (int)highlightBoxOffset.y;
-                    highlightBox.posX += (int)highlightBoxOffset.x * 5;
-                }
+            if (!showSortMenu) NavigateInventory();
+            else NavigateSortMenu();
 
-                selectedInventorySlot--;
-            }
         }
     }
 
@@ -53,15 +45,64 @@ namespace UI
     {
         if (showInventory)
         {
+            // Draw inv background tex
             BeginBlendMode(BLEND_ALPHA);
             DrawRectangle(0, 0, Config::ScreenWidth, Config::ScreenHeight, Fade(BROWN, 0.5f));
             EndBlendMode();
+
             DrawTexture(invTex.GetTexture(), invTex.posX, invTex.posY, WHITE);
+            if (showSortMenu) DrawSortMenu();
+
             DrawHighlightBox();
             DrawPlayerStats();
             DrawItems();
             DrawEquipmentItems();
             DrawTexture(equipmentSlotKeys.GetTexture(), equipmentSlotKeys.posX, equipmentSlotKeys.posY, WHITE);
+
+        }
+    }
+
+    void InventoryUI::NavigateInventory()
+    {
+        if (IsKeyPressed(KEY_D) && selectedInventorySlot < 9)
+        {
+            highlightBox.posX += (int) highlightBoxOffset.x;
+
+            // If player is at inv slot 4, push the box one below and at the beginning of the inv
+            if (selectedInventorySlot == 4)
+            {
+                highlightBox.posY += (int) highlightBoxOffset.y;
+                highlightBox.posX = 0;
+            }
+
+            selectedInventorySlot++;
+        }
+        if (IsKeyPressed(KEY_A) && selectedInventorySlot > 0)
+        {
+            highlightBox.posX -= (int) highlightBoxOffset.x;
+
+            // If player is at inv slot 5, push the box upwards and at the end of the inv
+            if (selectedInventorySlot == 5)
+            {
+                highlightBox.posY -= (int) highlightBoxOffset.y;
+                highlightBox.posX += (int) highlightBoxOffset.x * 5;
+            }
+
+            selectedInventorySlot--;
+        }
+    }
+
+    void InventoryUI::NavigateSortMenu()
+    {
+        if (IsKeyPressed(KEY_D))
+        {
+            if (currentSortButton == CurrentSortButton::NAME) currentSortButton = CurrentSortButton::COST;
+            if (currentSortButton == CurrentSortButton::WEIGHT) currentSortButton = CurrentSortButton::NAME;
+        }
+        if (IsKeyPressed(KEY_A))
+        {
+            if (currentSortButton == CurrentSortButton::NAME) currentSortButton = CurrentSortButton::WEIGHT;
+            if (currentSortButton == CurrentSortButton::COST) currentSortButton = CurrentSortButton::NAME;
         }
     }
 
@@ -142,6 +183,18 @@ namespace UI
         if (playerChar->inventory.equipmentContainer[2] != nullptr)
         {
             DrawTextureEx(playerChar->inventory.equipmentContainer[2]->texture.GetTexture(), shoesPos, 0, 1.9, WHITE);
+        }
+    }
+
+    void InventoryUI::DrawSortMenu()
+    {
+        DrawTexture(invSortMenu.GetTexture(), 0, 0, WHITE);
+
+        switch (currentSortButton)
+        {
+            case CurrentSortButton::WEIGHT: DrawTexture(weightHighlight.GetTexture(), 0, 0, WHITE); break;
+            case CurrentSortButton::NAME: DrawTexture(nameHighlight.GetTexture(), 0, 0, WHITE); break;
+            case CurrentSortButton::COST: DrawTexture(costHighlight.GetTexture(), 0, 0, WHITE); break;
         }
     }
 }

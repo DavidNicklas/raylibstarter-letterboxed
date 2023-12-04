@@ -12,6 +12,11 @@
 #include "../Items/Equipment/Honey.h"
 #include "../Items/Steak.h"
 
+namespace UI
+{
+    class InventoryUI;
+}
+
 namespace Game
 {
 

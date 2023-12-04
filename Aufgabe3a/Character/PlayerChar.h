@@ -39,7 +39,6 @@ namespace Char
         Inventory::Inventory<std::shared_ptr<Items::BaseItem>, 10> inventory;
 
         UI::InventoryUI* inventoryUi = nullptr;
-        bool inInventory = false;
 
     private:
         int strength = 10; // Defines the weight, the player can carry in his inventory
@@ -49,6 +48,7 @@ namespace Char
 
         std::shared_ptr<Items::BaseItem> markedForDropItem = nullptr;
         void DropItemOnGround();
+        void SortItems();
 
         void CalculateTotalWeight();
 

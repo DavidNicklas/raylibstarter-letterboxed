@@ -7,10 +7,12 @@
 namespace UI
 {
 
+    enum CurrentSortButton {WEIGHT, NAME, COST};
+
     class InventoryUI
     {
     public:
-        InventoryUI() { selectedInventorySlot = 0; showInventory = false; }
+        InventoryUI();
 
         void Update();
         void Draw();
@@ -18,17 +20,30 @@ namespace UI
         Char::PlayerChar* playerChar = nullptr;
 
         int GetSelectedInventorySlot() { return this->selectedInventorySlot; }
+        bool ShowInventory() { return this->showInventory; }
+        bool ShowSortMenu() { return this->showSortMenu; }
+        CurrentSortButton GetCurrentSortButton() { return this->currentSortButton; }
 
     private:
         bool showInventory;
+        bool showSortMenu;
         int selectedInventorySlot;
+        CurrentSortButton currentSortButton;
 
         Sprite invTex = Sprite(0, 0, "../../assets/graphics/inventoryScreen.png");
         Sprite equipmentSlotKeys = Sprite(0, 0, "../../assets/graphics/EquipmentSlotKeyBinds.png");
 
+        Sprite invSortMenu = Sprite(0, 0, "../../assets/graphics/Inventory/inventorySortWindow.png");
+        Sprite weightHighlight = Sprite(0, 0, "../../assets/graphics/Inventory/weightHighlight.png");
+        Sprite nameHighlight = Sprite(0, 0, "../../assets/graphics/Inventory/nameHighlight.png");
+        Sprite costHighlight = Sprite(0, 0, "../../assets/graphics/Inventory/costHighlight.png");
+
+        void NavigateInventory(); // logic for navigating threw inventory
+        void NavigateSortMenu(); // logic for navigating threw sort menu
         void DrawPlayerStats();
         void DrawItems();
         void DrawEquipmentItems();
+        void DrawSortMenu();
 
         // The box that shows which slot is currently highlighted
         Sprite highlightBox = Sprite(0, 0, "../../assets/graphics/invHighlightBox.png");
