@@ -60,6 +60,8 @@ namespace UI
             DrawHighlightBox();
             DrawPlayerStats();
             DrawItems();
+            DrawEquipmentItems();
+            DrawTexture(equipmentSlotKeys.GetTexture(), equipmentSlotKeys.posX, equipmentSlotKeys.posY, WHITE);
         }
     }
 
@@ -124,6 +126,22 @@ namespace UI
         catch (Error::InventoryFull& e)
         {
             std::cout << e.what() << std::endl;
+        }
+    }
+
+    void InventoryUI::DrawEquipmentItems()
+    {
+        if (playerChar->inventory.equipmentContainer[0] != nullptr)
+        {
+            DrawTextureEx(playerChar->inventory.equipmentContainer[0]->texture.GetTexture(), hatPos, 0, 1.9, WHITE);
+        }
+        if (playerChar->inventory.equipmentContainer[1] != nullptr)
+        {
+            DrawTextureEx(playerChar->inventory.equipmentContainer[1]->texture.GetTexture(), honeyPos, 0, 1.9, WHITE);
+        }
+        if (playerChar->inventory.equipmentContainer[2] != nullptr)
+        {
+            DrawTextureEx(playerChar->inventory.equipmentContainer[2]->texture.GetTexture(), shoesPos, 0, 1.9, WHITE);
         }
     }
 }

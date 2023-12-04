@@ -6,7 +6,7 @@
 
 void CheckFullscreen()
 {
-    if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_ENTER))
+    if (IsKeyDown(KEY_LEFT_ALT) && IsKeyPressed(KEY_F))
     {
         if (IsWindowFullscreen())
         {

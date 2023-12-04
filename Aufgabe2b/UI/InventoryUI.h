@@ -24,9 +24,11 @@ namespace UI
         int selectedInventorySlot;
 
         Sprite invTex = Sprite(0, 0, "../../assets/graphics/inventoryScreen.png");
+        Sprite equipmentSlotKeys = Sprite(0, 0, "../../assets/graphics/EquipmentSlotKeyBinds.png");
 
         void DrawPlayerStats();
         void DrawItems();
+        void DrawEquipmentItems();
 
         // The box that shows which slot is currently highlighted
         Sprite highlightBox = Sprite(0, 0, "../../assets/graphics/invHighlightBox.png");
@@ -45,7 +47,9 @@ namespace UI
         Vector2 slot8Pos = {slot0Pos.x + (3 * highlightBoxOffset.x), slot0Pos.y + highlightBoxOffset.y};
         Vector2 slot9Pos = {slot0Pos.x + (4 * highlightBoxOffset.x), slot0Pos.y + highlightBoxOffset.y};
 
-
+        Vector2 hatPos = {56, 127};
+        Vector2 honeyPos = {109, 127};
+        Vector2 shoesPos = {164, 127};
     };
 
 }

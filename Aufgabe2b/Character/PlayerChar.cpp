@@ -166,24 +166,28 @@ namespace Char
 
     void PlayerChar::EquipItem()
     {
-        try
+        if (inventory.GetItem(inventoryUi->GetSelectedInventorySlot()) != nullptr)
         {
-            std::shared_ptr<Items::BaseItem> temporaryItem = inventory.GetItem(inventoryUi->GetSelectedInventorySlot());
-            inventory.EquipItem(temporaryItem);
-            std::shared_ptr<Items::EquippableItem> equippableItem = std::dynamic_pointer_cast<Items::EquippableItem>(temporaryItem);
-            if (equippableItem != nullptr)
+            try
             {
-                this->strength += equippableItem->GetAdditionalStrength();
-                this->portableWeight = strength * 2;
+                std::shared_ptr<Items::BaseItem> temporaryItem = inventory.GetItem(inventoryUi->GetSelectedInventorySlot());
+                inventory.EquipItem(temporaryItem);
+                // make a dynamic cast to get the strength attribute
+                std::shared_ptr<Items::EquippableItem> equippableItem = std::dynamic_pointer_cast<Items::EquippableItem>(temporaryItem);
+                if (equippableItem != nullptr)
+                {
+                    this->strength += equippableItem->GetAdditionalStrength();
+                    this->portableWeight = strength * 2;
+                }
             }
-        }
-        catch (Error::InventoryFull& e)
-        {
-            std::cout << e.what() << std::endl;
-        }
-        catch (Error::EquipmentError& e)
-        {
-            std::cout << e.what() << std::endl;
+            catch (Error::InventoryFull& e)
+            {
+                std::cout << e.what() << std::endl;
+            }
+            catch (Error::EquipmentError& e)
+            {
+                std::cout << e.what() << std::endl;
+            }
         }
     }
 
