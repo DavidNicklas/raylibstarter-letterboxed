@@ -23,6 +23,14 @@ namespace Char
         {
             if (IsKeyPressed(KEY_ENTER)) EquipItem();
             if (IsKeyPressed(KEY_BACKSPACE)) DropItem();
+            if (IsKeyPressed(KEY_P))
+            {
+                inventory.SortForWeight();
+                for (int i = 0; i < inventory.GetCurrentNumberOfItems(); ++i)
+                {
+                    std::cout << inventory.GetItem(i)->GetWeight() << std::endl;
+                }
+            }
         }
         else
         {
@@ -35,6 +43,12 @@ namespace Char
     {
         DrawTexture(playerSprite.GetTexture(), playerSprite.posX, playerSprite.posY, WHITE);
         if (totalWeight > portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
+    }
+
+    void PlayerChar::ResetPlayerStats()
+    {
+        SetStartPosition();
+        this->totalWeight = 0;
     }
 
     void PlayerChar::SetStartPosition()
@@ -114,7 +128,6 @@ namespace Char
         else return false;
     }
 
-    //TODO there is still a problem, if you drop an item which is not the last slot. If you pick an item up again, it will override the last one
     void PlayerChar::PickUpItem()
     {
         try

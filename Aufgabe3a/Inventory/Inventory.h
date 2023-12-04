@@ -20,10 +20,16 @@ namespace Inventory
         void AddItem(T item);
         T& GetItem(int slot);
         T RemoveItem(int slot);
+        void ResetInventory();
 
         int GetCapacity() { return this->capacity; }
         int GetCurrentNumberOfItems() { return this->numberOfItems; }
         int GetFirstEmptySlot();
+
+        // Sort algorithms, using bubblesort
+        void SortForWeight();
+        void SortForName();
+        void SortForCost();
 
     private:
         int numberOfItems; // stores the current number of items in the inventory

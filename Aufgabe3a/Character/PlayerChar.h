@@ -21,6 +21,7 @@ namespace Char
         void Update();
         void Draw();
 
+        void ResetPlayerStats() override;
         void SetStartPosition() override;
         void Move() override;
 

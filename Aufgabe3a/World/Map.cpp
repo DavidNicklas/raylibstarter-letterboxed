@@ -25,7 +25,8 @@ namespace Game
         {
             GenerateMap();
             // Resets player position
-            playerChar->SetStartPosition();
+            playerChar->ResetPlayerStats();
+            playerChar->inventory.ResetInventory();
         }
     }
 

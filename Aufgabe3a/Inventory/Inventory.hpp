@@ -46,6 +46,21 @@ namespace Inventory
     }
 
     template<typename T, int size>
+    void Inventory<T, size>::ResetInventory()
+    {
+        for (int i = 0; i < capacity; ++i)
+        {
+            itemContainer[i] = nullptr;
+            numberOfItems = 0;
+        }
+
+        for (int i = 0; i < equipmentSlots; ++i)
+        {
+            equipmentContainer[i] = nullptr;
+        }
+    }
+
+    template<typename T, int size>
     void Inventory<T, size>::EquipItem(T item)
     {
         if (item->GetItemType() == Items::ItemType::EQUIPPABLE) // check if item can be equipped
@@ -107,6 +122,88 @@ namespace Inventory
             if (itemContainer[i] == nullptr) return i;
         }
         return -1; // if there is no empty slot return -1
+    }
+
+    /*** SORT-ALGORITHM ***/
+    template<typename T, int size>
+    void Inventory<T, size>::SortForWeight()
+    {
+        for (int i = capacity; i > 1; --i)
+        {
+            for (int j = 0; j < i - 1; ++j)
+            {
+                // if both slots have an item, swap them
+                if (itemContainer[j] != nullptr && itemContainer[j + 1] != nullptr)
+                {
+                    if (itemContainer[j]->GetWeight() < itemContainer[j + 1]->GetWeight())
+                    {
+                        T temporaryItem = itemContainer[j];
+                        itemContainer[j] = itemContainer[j + 1];
+                        itemContainer[j + 1] = temporaryItem;
+                    }
+                }
+                // if the current slot does not contain an item, but the next one does, put the item one slot further
+                else if (itemContainer[j] == nullptr && itemContainer[j + 1] != nullptr)
+                {
+                    itemContainer[j] = itemContainer[j + 1];
+                    itemContainer[j + 1] = nullptr;
+                }
+            }
+        }
+    }
+
+    template<typename T, int size>
+    void Inventory<T, size>::SortForName()
+    {
+        for (int i = capacity; i > 1; --i)
+        {
+            for (int j = 0; j < i - 1; ++j)
+            {
+                // if both slots have an item, swap them
+                if (itemContainer[j] != nullptr && itemContainer[j + 1] != nullptr)
+                {
+                    if (itemContainer[j]->GetName() < itemContainer[j + 1]->GetName())
+                    {
+                        T temporaryItem = itemContainer[j];
+                        itemContainer[j] = itemContainer[j + 1];
+                        itemContainer[j + 1] = temporaryItem;
+                    }
+                }
+                // if the current slot does not contain an item, but the next one does, put the item one slot further
+                else if (itemContainer[j] == nullptr && itemContainer[j + 1] != nullptr)
+                {
+                    itemContainer[j] = itemContainer[j + 1];
+                    itemContainer[j + 1] = nullptr;
+                }
+            }
+        }
+    }
+
+    template<typename T, int size>
+    void Inventory<T, size>::SortForCost()
+    {
+        for (int i = capacity; i > 1; --i)
+        {
+            for (int j = 0; j < i - 1; ++j)
+            {
+                // if both slots have an item, swap them
+                if (itemContainer[j] != nullptr && itemContainer[j + 1] != nullptr)
+                {
+                    if (itemContainer[j]->GetCost() < itemContainer[j + 1]->GetCost())
+                    {
+                        T temporaryItem = itemContainer[j];
+                        itemContainer[j] = itemContainer[j + 1];
+                        itemContainer[j + 1] = temporaryItem;
+                    }
+                }
+                // if the current slot does not contain an item, but the next one does, put the item one slot further
+                else if (itemContainer[j] == nullptr && itemContainer[j + 1] != nullptr)
+                {
+                    itemContainer[j] = itemContainer[j + 1];
+                    itemContainer[j + 1] = nullptr;
+                }
+            }
+        }
     }
 
 }

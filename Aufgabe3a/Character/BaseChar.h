@@ -17,6 +17,7 @@ namespace Char
     {
     public:
         virtual void Move() = 0;
+        virtual void ResetPlayerStats() = 0;
         virtual void SetStartPosition() = 0;
         bool CanMove(Direction direction);
 
