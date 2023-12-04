@@ -14,8 +14,8 @@ namespace Items
 
             SetWeight(7);
             SetCost(85);
-            SetName("Sneakers");
-            SetDesc("Comfort for your feet. Gives you +5 strength");
+            SetName("Boots");
+            SetDesc("Comfort for your feet. +5 strength");
             SetStrength(5);
             SetItemType(ItemType::EQUIPPABLE);
             SetEquipmentSlot(DesiredEquipmentSlot::SHOES);

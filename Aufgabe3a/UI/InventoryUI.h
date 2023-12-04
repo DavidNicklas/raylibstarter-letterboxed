@@ -30,6 +30,8 @@ namespace UI
         int selectedInventorySlot;
         CurrentSortButton currentSortButton;
 
+        std::shared_ptr<Items::BaseItem> selectedItem = nullptr; // stores the current item which is selected in the inventory
+
         Sprite invTex = Sprite(0, 0, "../../assets/graphics/inventoryScreen.png");
         Sprite equipmentSlotKeys = Sprite(0, 0, "../../assets/graphics/EquipmentSlotKeyBinds.png");
 
@@ -42,6 +44,7 @@ namespace UI
         void NavigateSortMenu(); // logic for navigating threw sort menu
         void DrawPlayerStats();
         void DrawItems();
+        void DrawItemsInfo();
         void DrawEquipmentItems();
         void DrawSortMenu();
 

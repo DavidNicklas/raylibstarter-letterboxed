@@ -15,7 +15,7 @@ namespace Items
             SetWeight(1);
             SetCost(3);
             SetName("Coffee");
-            SetDesc("If you are tired, this coffee gives you a huge kick");
+            SetDesc("Good if you are tired");
             SetItemType(ItemType::NOT_EQUIPPABLE);
         }
     };

@@ -24,6 +24,7 @@ namespace UI
                 highlightBox.posX = 0;
                 highlightBox.posY = 0;
                 selectedInventorySlot = 0;
+                selectedItem = nullptr;
             }
         }
 
@@ -56,6 +57,7 @@ namespace UI
             DrawHighlightBox();
             DrawPlayerStats();
             DrawItems();
+            DrawItemsInfo();
             DrawEquipmentItems();
             DrawTexture(equipmentSlotKeys.GetTexture(), equipmentSlotKeys.posX, equipmentSlotKeys.posY, WHITE);
 
@@ -76,6 +78,8 @@ namespace UI
             }
 
             selectedInventorySlot++;
+            // if there is an item on the slot, store it in the selectedItem
+            if (playerChar->inventory.itemContainer[selectedInventorySlot] != nullptr) selectedItem = playerChar->inventory.itemContainer[selectedInventorySlot];
         }
         if (IsKeyPressed(KEY_A) && selectedInventorySlot > 0)
         {
@@ -89,6 +93,8 @@ namespace UI
             }
 
             selectedInventorySlot--;
+            // if there is an item on the slot, store it in the selectedItem
+            if (playerChar->inventory.itemContainer[selectedInventorySlot] != nullptr) selectedItem = playerChar->inventory.itemContainer[selectedInventorySlot];
         }
     }
 
@@ -119,6 +125,20 @@ namespace UI
                   std::to_string(playerChar->GetPortableWeight())).c_str(), 130, 205, 8, BLACK);
     }
 
+    void InventoryUI::DrawItemsInfo()
+    {
+        if (selectedItem != nullptr)
+        {
+            DrawText(("Info: " + selectedItem->GetDesc()).c_str(), 230, 175, 8, BLACK);
+            DrawText(("Name: " + selectedItem->GetName()).c_str(), 230, 188, 8, BLACK);
+            DrawText(("Weight: " + std::to_string((int)selectedItem->GetWeight())).c_str(), 230, 201, 8, BLACK);
+            if (selectedItem->GetItemType() == Items::ItemType::EQUIPPABLE) DrawText("Can equip: Yes", 350, 188, 8, BLACK);
+            else DrawText("Can equip: No", 350, 188, 8, BLACK);
+            DrawText(("Cost: " + std::to_string((int)selectedItem->GetCost())).c_str(), 350, 201, 8, BLACK);
+        }
+    }
+
+    // If there is an item in a slot, it takes its texture and draws it in the inventory
     void InventoryUI::DrawItems()
     {
         try
@@ -197,4 +217,5 @@ namespace UI
             case CurrentSortButton::COST: DrawTexture(costHighlight.GetTexture(), 0, 0, WHITE); break;
         }
     }
+
 }

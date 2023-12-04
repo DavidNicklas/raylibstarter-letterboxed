@@ -15,7 +15,7 @@ namespace Items
             SetWeight(2);
             SetCost(5);
             SetName("Steak");
-            SetDesc("A delicious meal which gives you power for the day");
+            SetDesc("A delicious meal to safe proteins");
             SetItemType(ItemType::NOT_EQUIPPABLE);
         }
     };
