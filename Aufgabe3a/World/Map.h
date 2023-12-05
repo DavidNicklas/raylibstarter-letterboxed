@@ -11,6 +11,8 @@
 #include "../Items/Equipment/Shoes.h"
 #include "../Items/Equipment/Honey.h"
 #include "../Items/Steak.h"
+#include "../Items/Fish.h"
+#include "../Items/Stick.h"
 
 namespace UI
 {
@@ -69,6 +71,8 @@ namespace Game
         Sprite sprite_hat = Sprite(0, 0, "../../assets/graphics/sleepingHat.png");
         Sprite sprite_honey = Sprite(0, 0, "../../assets/graphics/honey.png");
         Sprite sprite_shoes = Sprite(0, 0, "../../assets/graphics/boots.png");
+        Sprite sprite_fish = Sprite(0, 0, "../../assets/graphics/fish.png");
+        Sprite sprite_stick = Sprite(0, 0, "../../assets/graphics/stick.png");
 
         void ClearMap();
         void GenerateStartAndEnd();

@@ -12,7 +12,7 @@ namespace Items
         {
             texture.ChangeTexture(newTexture);
 
-            SetWeight(2);
+            SetWeight(3);
             SetCost(5);
             SetName("Steak");
             SetDesc("A delicious meal to safe proteins");

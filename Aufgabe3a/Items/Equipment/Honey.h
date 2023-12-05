@@ -12,7 +12,7 @@ namespace Items
         {
             texture.ChangeTexture(newTexture);
 
-            SetWeight(4);
+            SetWeight(6);
             SetCost(10);
             SetName("Honey");
             SetDesc("A sweet dip. +4 strength");

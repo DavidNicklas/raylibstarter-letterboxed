@@ -5,17 +5,17 @@
 namespace Items
 {
 
-    class Coffee : public BaseItem
+    class Fish : public BaseItem
     {
     public:
-        Coffee(Texture2D newTexture)
+        Fish(Texture2D newTexture)
         {
             texture.ChangeTexture(newTexture);
 
-            SetWeight(2);
-            SetCost(3);
-            SetName("Coffee");
-            SetDesc("Good if you are tired");
+            SetWeight(4);
+            SetCost(8);
+            SetName("Fish");
+            SetDesc("It is good for mental health");
             SetItemType(ItemType::NOT_EQUIPPABLE);
         }
     };

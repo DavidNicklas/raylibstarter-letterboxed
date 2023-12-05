@@ -28,13 +28,15 @@ namespace Char
     void PlayerChar::Draw()
     {
         DrawTexture(playerSprite.GetTexture(), playerSprite.posX, playerSprite.posY, WHITE);
-        if (totalWeight > portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
+        if (totalWeight >= portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
     }
 
     void PlayerChar::ResetPlayerStats()
     {
         SetStartPosition();
         this->totalWeight = 0;
+        this->strength = 10;
+        this->portableWeight = strength * strengthMultiplier;
     }
 
     void PlayerChar::SetStartPosition()
@@ -162,7 +164,7 @@ namespace Char
                 if (equippableItem != nullptr)
                 {
                     this->strength += equippableItem->GetAdditionalStrength();
-                    this->portableWeight = strength * 2;
+                    this->portableWeight = strength * strengthMultiplier;
                 }
             }
             catch (Error::InventoryFull& e)

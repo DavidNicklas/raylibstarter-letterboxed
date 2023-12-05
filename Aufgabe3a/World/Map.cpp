@@ -135,7 +135,7 @@ namespace Game
             if (map[col][row] == TileState::PASSABLE)
             {
                 map[col][row] = TileState::ITEM;
-                int randomItem = GetRandomValue(0, 4);
+                int randomItem = GetRandomValue(0, 6);
                 RandomizeItem(col, row, randomItem);
                 itemsOnMap++;
             }
@@ -154,6 +154,8 @@ namespace Game
             case 2: itemTiles[col][row].item = std::make_shared<Items::Shoes>(sprite_shoes.GetTexture()); break;
             case 3: itemTiles[col][row].item = std::make_shared<Items::Honey>(sprite_honey.GetTexture()); break;
             case 4: itemTiles[col][row].item = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
+            case 5: itemTiles[col][row].item = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
+            case 6: itemTiles[col][row].item = std::make_shared<Items::Stick>(sprite_stick.GetTexture()); break;
         }
     }
 
@@ -202,7 +204,7 @@ namespace Game
         for (int i = 0; i < playerChar->inventory.GetCapacity(); ++i)
         {
             std::shared_ptr<Items::BaseItem> testItem = nullptr;
-            int randomValue = GetRandomValue(0, 5);
+            int randomValue = GetRandomValue(0, 6);
             switch (randomValue)
             {
                 case 0: testItem = std::make_shared<Items::Coffee>(sprite_coffee.GetTexture()); break;
@@ -210,6 +212,8 @@ namespace Game
                 case 2: testItem = std::make_shared<Items::Shoes>(sprite_shoes.GetTexture()); break;
                 case 3: testItem = std::make_shared<Items::Honey>(sprite_honey.GetTexture()); break;
                 case 4: testItem = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
+                case 5: testItem = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
+                case 6: testItem = std::make_shared<Items::Stick>(sprite_stick.GetTexture()); break;
             }
 
             try
