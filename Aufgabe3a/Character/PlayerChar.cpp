@@ -93,20 +93,6 @@ namespace Char
         }
     }
 
-    void PlayerChar::CalculateTotalWeight()
-    {
-        // going through normal inventory
-        for (int i = 0; i < inventory.GetCurrentNumberOfItems(); ++i)
-        {
-            if (inventory.GetItem(i)) this->totalWeight += (int)inventory.GetItem(i)->GetWeight();
-        }
-        //going through equipment slots
-        for (int i = 0; i < inventory.GetEquipmentSlots(); ++i)
-        {
-            if (inventory.equipmentContainer[i] != nullptr) this->totalWeight += (int)inventory.equipmentContainer[i]->GetWeight();
-        }
-    }
-
     /* Checks if the player is standing on a tile which carries an item */
     bool PlayerChar::PlayerOnItemTile()
     {

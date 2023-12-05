@@ -15,7 +15,7 @@ namespace Inventory
     {
         if (numberOfItems < capacity)
         {
-            int emptySlot = GetFirstEmptySlot();
+            int emptySlot = GetFirstEmptySlot(); // calculates the first empty slot in the array so items are filled in gaps
             if (emptySlot != -1)
             {
                 itemContainer[emptySlot] = item;

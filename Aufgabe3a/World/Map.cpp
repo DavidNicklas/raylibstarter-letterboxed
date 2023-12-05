@@ -12,7 +12,7 @@ namespace Game
         endCol = 0;
         endRow = 0;
         itemsOnMap = 0;
-        maxItemsOnMap = 10;
+        maxItemsOnMap = 50;
         centerX = Config::ScreenWidth / 2 - ((Config::TileSize * mapWidth) / 2);
         centerY = Config::ScreenHeight / 2 - ((Config::TileSize * mapHeight) / 2);
         GenerateMap();
@@ -29,6 +29,8 @@ namespace Game
             playerChar->ResetPlayerStats();
             playerChar->inventory.ResetInventory();
         }
+
+        if (IsKeyPressed(KEY_M)) FillInventoryForDemonstrationPurpose();
     }
 
     void Map::Draw()
@@ -193,5 +195,32 @@ namespace Game
         map[endCol][endRow] = TileState::EXIT;
     }
     //================================================================================================================//
+
+    void Map::FillInventoryForDemonstrationPurpose()
+    {
+        //TODO why tf kann ich nur 8 items in mein invetar machen
+        for (int i = 0; i < playerChar->inventory.GetCapacity(); ++i)
+        {
+            std::shared_ptr<Items::BaseItem> testItem = nullptr;
+            int randomValue = GetRandomValue(0, 5);
+            switch (randomValue)
+            {
+                case 0: testItem = std::make_shared<Items::Coffee>(sprite_coffee.GetTexture()); break;
+                case 1: testItem = std::make_shared<Items::Hat>(sprite_hat.GetTexture()); break;
+                case 2: testItem = std::make_shared<Items::Shoes>(sprite_shoes.GetTexture()); break;
+                case 3: testItem = std::make_shared<Items::Honey>(sprite_honey.GetTexture()); break;
+                case 4: testItem = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
+            }
+
+            try
+            {
+                playerChar->inventory.AddItem(testItem);
+            }
+            catch (Error::InventoryFull& e)
+            {
+                std::cout << e.what() << std::endl;
+            }
+        }
+    }
 
 }

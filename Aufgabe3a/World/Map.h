@@ -76,6 +76,8 @@ namespace Game
         void RandomizeItem(int col, int row, int randomValue);
         void GenerateValidPath(int endRow, int endCol);
 
+
+        void FillInventoryForDemonstrationPurpose();
     };
 
 }
