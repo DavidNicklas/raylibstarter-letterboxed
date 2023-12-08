@@ -13,6 +13,7 @@
 #include "../Items/Steak.h"
 #include "../Items/Fish.h"
 #include "../Items/Stick.h"
+#include "Tiles.h"
 
 namespace UI
 {
@@ -21,17 +22,6 @@ namespace UI
 
 namespace Game
 {
-
-    struct ItemTile
-    {
-        std::shared_ptr<Items::BaseItem> item;
-        ItemTile() = default;
-        ItemTile(int x, int y) : x(x), y(y), item(nullptr) {}
-        int x;
-        int y;
-    };
-
-    enum TileState {NONE, BLOCKED, PASSABLE, START, EXIT, ITEM};
 
     class Map
     {
@@ -61,6 +51,14 @@ namespace Game
 
         int itemsOnMap, maxItemsOnMap;
 
+        void ClearMap();
+        void GenerateStartAndEnd();
+        void GenerateItems();
+        void RandomizeItem(int col, int row, int randomValue);
+        void GenerateValidPath(int endRow, int endCol);
+
+        void FillInventoryForDemonstrationPurpose();
+
         Sprite sprite_grassTile = Sprite(0, 0, "../../assets/graphics/grassTile.png");
         Sprite sprite_treeTile = Sprite(0, 0, "../../assets/graphics/treeTile.png");
         Sprite sprite_startTile = Sprite(0, 0, "../../assets/graphics/startTile.png");
@@ -73,15 +71,6 @@ namespace Game
         Sprite sprite_shoes = Sprite(0, 0, "../../assets/graphics/boots.png");
         Sprite sprite_fish = Sprite(0, 0, "../../assets/graphics/fish.png");
         Sprite sprite_stick = Sprite(0, 0, "../../assets/graphics/stick.png");
-
-        void ClearMap();
-        void GenerateStartAndEnd();
-        void GenerateItems();
-        void RandomizeItem(int col, int row, int randomValue);
-        void GenerateValidPath(int endRow, int endCol);
-
-
-        void FillInventoryForDemonstrationPurpose();
     };
 
 }
