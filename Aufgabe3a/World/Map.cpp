@@ -12,7 +12,7 @@ namespace Game
         endCol = 0;
         endRow = 0;
         itemsOnMap = 0;
-        maxItemsOnMap = 50;
+        maxItemsOnMap = 15;
         centerX = Config::ScreenWidth / 2 - ((Config::TileSize * mapWidth) / 2);
         centerY = Config::ScreenHeight / 2 - ((Config::TileSize * mapHeight) / 2);
         GenerateMap();
@@ -162,39 +162,30 @@ namespace Game
     /* Generate a valid path from start to end */
     void Map::GenerateValidPath(int endRow, int endCol)
     {
-        // Looking for the right col
         int currentCol = endCol;
-        while (currentCol != startCol)
-        {
-            if (currentCol < startCol)
-            {
-                currentCol++;
-            }
-            else
-            {
-                currentCol--;
-            }
-            map[currentCol][endRow] = TileState::PASSABLE;
-        }
-
-        // Looking for the right row
         int currentRow = endRow;
-        while (currentRow != startRow)
+
+        while (currentRow != startRow || currentCol != startCol)
         {
-            if (currentRow < startRow)
+            if (GetRandomValue(0, 1) == 0)
             {
-                currentRow++;
+                // Move horizontally
+                if (currentCol < startCol) currentCol++;
+                else currentCol--;
             }
             else
             {
-                currentRow--;
+                // Move vertically
+                if (currentRow < startRow) currentRow++;
+                else currentRow--;
             }
-            map[startCol][currentRow] = TileState::PASSABLE;
-        }
 
-        // Reset start and exit value
-        map[startCol][startRow] = TileState::START;
-        map[endCol][endRow] = TileState::EXIT;
+            // This check is needed so start and exit won't get overwritten
+            if (map[currentCol][currentRow] != TileState::START && map[currentCol][currentRow] != TileState::EXIT)
+            {
+                map[currentCol][currentRow] = TileState::PASSABLE;
+            }
+        }
     }
     //================================================================================================================//
 

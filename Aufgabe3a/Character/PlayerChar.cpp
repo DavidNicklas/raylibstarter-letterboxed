@@ -129,7 +129,11 @@ namespace Char
                 // safe the item temporarily and then drop it on the ground when the player moves
                 // otherwise, the player instantly picks the item back up
                 markedForDropItem = inventory.RemoveItem(inventoryUi->GetSelectedInventorySlot());
-                totalWeight -= (int)markedForDropItem->GetWeight();
+                if ((totalWeight - (int)markedForDropItem->GetWeight()) >= 0)
+                {
+                    totalWeight -= (int)markedForDropItem->GetWeight();
+                }
+                else totalWeight = 0;
             }
             catch (Error::OutOfRange &e)
             {
