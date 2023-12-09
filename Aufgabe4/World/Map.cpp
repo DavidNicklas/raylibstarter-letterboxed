@@ -13,8 +13,6 @@ namespace Game
         endRow = 0;
         itemsOnMap = 0;
         maxItemsOnMap = 15;
-        centerX = Config::ScreenWidth / 2 - ((Config::TileSize * mapWidth) / 2);
-        centerY = Config::ScreenHeight / 2 - ((Config::TileSize * mapHeight) / 2);
         GenerateMap();
     }
 
@@ -39,8 +37,8 @@ namespace Game
         {
             for (int j = 0; j < mapHeight; ++j)
             {
-                Rectangle tileRec = {centerX + static_cast<float>(i * Config::TileSize),
-                                     centerY + static_cast<float>(j * Config::TileSize),
+                Rectangle tileRec = {static_cast<float>(i * Config::TileSize),
+                                     static_cast<float>(j * Config::TileSize),
                                      Config::TileSize,
                                      Config::TileSize};
 
@@ -65,8 +63,6 @@ namespace Game
                 }
             }
         }
-
-        DrawRectangleLinesEx({centerX, centerY, Config::TileSize * mapWidth, Config::TileSize * mapHeight}, 2, DARKBROWN);
     }
     //================================================================================================================//
 
@@ -94,19 +90,19 @@ namespace Game
 
         GenerateStartAndEnd();
 
-        GenerateValidPath(endRow, endCol);
-
         // Fill the rest of the map with random tiles
         for (int i = 0; i < mapWidth; ++i)
         {
             for (int j = 0; j < mapHeight; ++j)
             {
-                if (map[i][j] != TileState::START && map[i][j] != TileState::EXIT && map[i][j] != TileState::PASSABLE)
+                if (map[i][j] != TileState::START && map[i][j] != TileState::EXIT)
                 {
                     map[i][j] = GetRandomValue(TileState::PASSABLE, TileState::BLOCKED);
                 }
             }
         }
+
+        GenerateValidPath(endRow, endCol);
 
         GenerateItems();
     }
@@ -168,23 +164,40 @@ namespace Game
         {
             if (GetRandomValue(0, 1) == 0)
             {
-                // Move horizontally
-                if (currentCol < startCol) currentCol++;
-                else currentCol--;
+                // Move vertically
+                if (currentRow < startRow)
+                {
+                    if (IsTileInBounds(currentRow + 1, currentCol)) currentRow++;
+                }
+                else
+                {
+                    if (IsTileInBounds(currentRow - 1, currentCol)) currentRow--;
+                }
             }
             else
             {
-                // Move vertically
-                if (currentRow < startRow) currentRow++;
-                else currentRow--;
+                // Move horizontally
+                if (currentCol < startCol)
+                {
+                    if (IsTileInBounds(currentRow, currentCol + 1)) currentCol++;
+                }
+                else
+                {
+                    if (IsTileInBounds(currentRow, currentCol - 1)) currentCol--;
+                }
             }
 
-            // This check is needed so start and exit won't get overwritten
-            if (map[currentCol][currentRow] != TileState::START && map[currentCol][currentRow] != TileState::EXIT)
-            {
-                map[currentCol][currentRow] = TileState::PASSABLE;
-            }
+            map[currentCol][currentRow] = TileState::PASSABLE;
         }
+
+        // Reset start and exit so it doesn't get overwritten
+        map[endCol][endRow] = TileState::EXIT;
+        map[startCol][startRow] = TileState::START;
+    }
+
+    bool Map::IsTileInBounds(int row, int col)
+    {
+        return row >= 0 && row < mapHeight && col >= 0 && col < mapWidth;
     }
     //================================================================================================================//
 

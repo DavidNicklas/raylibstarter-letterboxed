@@ -15,6 +15,7 @@
 #include "../Items/Fish.h"
 #include "../Items/Stick.h"
 #include "Tiles.h"
+#include "../Algorithm/AStarPathfinding.h"
 
 namespace UI
 {
@@ -37,10 +38,8 @@ namespace Game
         int GetStartRow() const { return startRow; }
         int GetStartCol() const { return startCol; }
 
-        static const int mapWidth = 29;
-        static const int mapHeight = 16;
-        float centerX; // those are needed for drawing
-        float centerY;
+        static const int mapWidth = 30;
+        static const int mapHeight = 17;
         int map[mapWidth][mapHeight];
 
         Char::PlayerChar* playerChar = nullptr;
@@ -57,6 +56,7 @@ namespace Game
         void GenerateItems();
         void RandomizeItem(int col, int row, int randomValue);
         void GenerateValidPath(int endRow, int endCol);
+        bool IsTileInBounds(int row, int col);
 
         void FillInventoryForDemonstrationPurpose();
 
