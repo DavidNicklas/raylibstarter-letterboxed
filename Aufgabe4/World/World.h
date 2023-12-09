@@ -3,7 +3,6 @@
 #include <vector>
 #include <memory>
 #include "Map.h"
-#include "../UI/Menu.h"
 #include "../UI/InventoryUI.h"
 #include "../Character/PlayerChar.h"
 

@@ -41,8 +41,8 @@ namespace Char
 
     void PlayerChar::SetStartPosition()
     {
-        this->playerSprite.posX = this->map->centerX + static_cast<float>(this->map->GetStartCol() * Config::TileSize);
-        this->playerSprite.posY = this->map->centerY + static_cast<float>(this->map->GetStartRow() * Config::TileSize);
+        this->playerSprite.posX = this->map->GetStartCol() * Config::TileSize;
+        this->playerSprite.posY = this->map->GetStartRow() * Config::TileSize;
 
         this->arrayPosX = this->map->GetStartCol();
         this->arrayPosY = this->map->GetStartRow();
