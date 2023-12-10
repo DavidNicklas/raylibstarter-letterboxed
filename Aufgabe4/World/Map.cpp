@@ -74,7 +74,7 @@ namespace Game
             }
         }
 
-        if (path.showPath) path.DrawPath();
+        if (path.showPath) path.DrawPathLines();
     }
     //================================================================================================================//
 

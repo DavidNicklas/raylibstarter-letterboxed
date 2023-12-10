@@ -16,6 +16,7 @@ namespace Game
         std::vector<std::pair<int, int>> path;
 
         void DrawPath();
+        void DrawPathLines();
         void CreateShortestPath(std::vector<std::vector<int>>& map, std::pair<int, int> start, std::pair<int, int> goal);
 
         bool showPath;
