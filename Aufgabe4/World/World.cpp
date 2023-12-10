@@ -8,12 +8,14 @@ namespace Game
         map->Update();
         playerChar->Update();
         inventoryUi->Update();
+        menu->Update(playerChar);
     }
 
     void World::Draw()
     {
         map->Draw();
         playerChar->Draw();
+        menu->Draw();
         inventoryUi->Draw();
     }
 
@@ -22,6 +24,7 @@ namespace Game
         map = new Map();
         playerChar = new Char::PlayerChar(playerTex);
         inventoryUi = new UI::InventoryUI();
+        menu = new UI::Menu();
 
         // map needs the player for resetting the position
         map->playerChar = playerChar;
@@ -40,6 +43,7 @@ namespace Game
         delete map;
         delete playerChar;
         delete inventoryUi;
+        delete menu;
     }
 
 }

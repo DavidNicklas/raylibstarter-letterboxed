@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "../UI/InventoryUI.h"
 #include "../Character/PlayerChar.h"
+#include "../UI/Menu.h"
 
 namespace Game
 {
@@ -22,6 +23,7 @@ namespace Game
         Game::Map* map;
         Char::PlayerChar* playerChar;
         UI::InventoryUI* inventoryUi;
+        UI::Menu* menu;
 
         Texture2D playerTex = LoadTexture("../../assets/graphics/bear.png");
 
