@@ -25,11 +25,6 @@ namespace Char
         void SetStartPosition() override;
         void Move() override;
 
-        bool PlayerOnItemTile();
-        void PickUpItem();
-        void DropItem();
-        void EquipItem();
-
         // Gets for stats
         int GetStrength() const { return this->strength; }
         int GetHealth() const { return this->health; }
@@ -47,9 +42,16 @@ namespace Char
         int portableWeight = strength * strengthMultiplier; // Defines the weight he can max carry
         int health = 20;
 
+        bool PlayerOnItemTile();
+        void PickUpItem();
+        void DropItem();
+        void EquipItem();
+
         std::shared_ptr<Items::BaseItem> markedForDropItem = nullptr;
         void DropItemOnGround();
         void SortItems();
+
+        void FindShortestPath();
 
     };
 

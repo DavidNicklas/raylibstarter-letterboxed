@@ -15,7 +15,6 @@
 #include "../Items/Fish.h"
 #include "../Items/Stick.h"
 #include "Tiles.h"
-#include "../Algorithm/AStarPathfinding.h"
 
 namespace UI
 {
@@ -37,6 +36,8 @@ namespace Game
 
         int GetStartRow() const { return startRow; }
         int GetStartCol() const { return startCol; }
+        int GetEndRow() const { return endRow; }
+        int GetEndCol() const { return endCol; }
 
         static const int mapWidth = 30;
         static const int mapHeight = 17;

@@ -16,6 +16,4 @@ namespace Game
         int y;
     };
 
-    enum TileState {NONE, BLOCKED, PASSABLE, START, EXIT, ITEM};
-
 }

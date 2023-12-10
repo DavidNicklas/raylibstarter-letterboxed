@@ -1,6 +1,8 @@
 #include "PlayerChar.h"
 #include "../World/Map.h"
 #include "../UI/InventoryUI.h"
+#include "../Algorithm/AStarPathfinding.h"
+#include "../Helper.h"
 
 namespace Char
 {
@@ -8,6 +10,7 @@ namespace Char
     PlayerChar::PlayerChar(Texture2D newTexture)
     {
         this->playerSprite.ChangeTexture(newTexture);
+        showPath = false;
     }
 
     void PlayerChar::Update()
@@ -22,6 +25,7 @@ namespace Char
         {
             if (totalWeight < portableWeight) Move();
             if (PlayerOnItemTile()) PickUpItem();
+            if (IsKeyPressed(KEY_B)) showPath = true;
         }
     }
 
@@ -29,6 +33,7 @@ namespace Char
     {
         DrawTexture(playerSprite.GetTexture(), playerSprite.posX, playerSprite.posY, WHITE);
         if (totalWeight >= portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
+        if (showPath) FindShortestPath();
     }
 
     void PlayerChar::ResetPlayerStats()
@@ -37,6 +42,7 @@ namespace Char
         this->totalWeight = 0;
         this->strength = 10;
         this->portableWeight = strength * strengthMultiplier;
+        this->showPath = false;
     }
 
     void PlayerChar::SetStartPosition()
@@ -109,8 +115,6 @@ namespace Char
             inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);
             totalWeight += (int)map->itemTiles[arrayPosX][arrayPosY].item->GetWeight();
             map->itemTiles[arrayPosX][arrayPosY].item = nullptr;
-            std::cout << "Picked up Item" << std::endl; //TODO Debug
-            std::cout << inventory.GetCurrentNumberOfItems() << std::endl; // TODO Debug
             map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE; // only resets tile to passable if item was added (because of exception it jumps directly into catch block)
         }
         catch (Error::InventoryFull &e)
@@ -189,6 +193,28 @@ namespace Char
             case UI::CurrentSortButton::WEIGHT: inventory.SortForWeight(); break;
             case UI::CurrentSortButton::NAME: inventory.SortForName(); break;
             case UI::CurrentSortButton::COST: inventory.SortForCost(); break;
+        }
+    }
+
+    void PlayerChar::FindShortestPath()
+    {
+        std::vector<std::vector<int>> mapVector = ConvertToVector(this->map->map);
+        std::vector<std::pair<int, int>> path = Algorithm::AStar(mapVector, {map->GetStartCol(), map->GetStartRow()}, {map->GetEndCol(), map->GetEndRow()});
+
+        if (!path.empty())
+        {
+            for (auto node : path)
+            {
+                Rectangle destRec = { static_cast<float>(node.first * Config::TileSize),
+                                      static_cast<float>(node.second * Config::TileSize),
+                                      Config::TileSize,
+                                      Config::TileSize };
+                DrawRectangleRec(destRec, RED);
+            }
+        }
+        else
+        {
+            std::cout << "No path found" << std::endl;
         }
     }
 

@@ -3,12 +3,10 @@
 #include <string>
 #include "raylib.h"
 #include "../Sprite.h"
+#include "../Enums.h"
 
 namespace Items
 {
-
-    enum ItemType {EQUIPPABLE, NOT_EQUIPPABLE};
-    enum DesiredEquipmentSlot {HAT, HONEY, SHOES};
 
     class BaseItem
     {
