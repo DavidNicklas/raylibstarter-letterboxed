@@ -15,6 +15,7 @@
 #include "../Items/Fish.h"
 #include "../Items/Stick.h"
 #include "Tiles.h"
+#include "Path.h"
 
 namespace UI
 {
@@ -42,6 +43,7 @@ namespace Game
         static const int mapWidth = 30;
         static const int mapHeight = 17;
         int map[mapWidth][mapHeight];
+        Path path;
 
         Char::PlayerChar* playerChar = nullptr;
         ItemTile itemTiles[mapWidth][mapHeight]; // stores all item tiles on the map

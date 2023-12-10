@@ -34,9 +34,6 @@ namespace Char
         int arrayPosX;
         int arrayPosY;
         Direction direction;
-
-        bool showPath;
-        bool ShowPath() { return this->showPath; }
     };
 
 }

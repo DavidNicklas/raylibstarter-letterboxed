@@ -1,6 +1,6 @@
 #include "Map.h"
 #include "../UI/InventoryUI.h"
-
+#include "../Helper.h"
 
 namespace Game
 {
@@ -26,9 +26,19 @@ namespace Game
             // Resets player position
             playerChar->ResetPlayerStats();
             playerChar->inventory.ResetInventory();
+            // Reset path
+            path.showPath = false;
         }
 
         if (IsKeyPressed(KEY_M)) FillInventoryForDemonstrationPurpose();
+
+        if (IsKeyPressed(KEY_B) && !path.showPath)
+        {
+            path.showPath = true;
+            std::vector<std::vector<int>> mapVector = ConvertToVector(this->map);
+            path.CreateShortestPath(mapVector, {startCol, startRow}, {endCol, endRow});
+        }
+        else if (IsKeyPressed(KEY_B) && path.showPath) path.showPath = false;
     }
 
     void Map::Draw()
@@ -63,6 +73,8 @@ namespace Game
                 }
             }
         }
+
+        if (path.showPath) path.DrawPath();
     }
     //================================================================================================================//
 

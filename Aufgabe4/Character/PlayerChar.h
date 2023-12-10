@@ -51,8 +51,6 @@ namespace Char
         void DropItemOnGround();
         void SortItems();
 
-        void FindShortestPath();
-
     };
 
 }
