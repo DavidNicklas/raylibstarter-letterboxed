@@ -17,4 +17,7 @@ namespace Algorithm
     std::vector<std::pair<int, int>> AStar(const std::vector<std::vector<int>>& grid, std::pair<int, int> start, std::pair<int, int> goal);
     int CalculateHeuristic(int col, int row, int endCol, int endRow);
 
+    // TODO For test A* Function
+    bool CompareFCost(Node node1, Node node2, std::pair<int, int> goal);
+
 }

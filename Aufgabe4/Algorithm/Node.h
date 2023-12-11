@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 struct Node
 {
     Node(int col, int row, int gCost, int hCost)
@@ -14,4 +16,7 @@ struct Node
 
     // Overload the comparison operator for the priority queue
     bool operator>(const Node& other) const { return GetFCost() > other.GetFCost(); }
+
+    // TODO For test A* function
+    std::vector<Node> neighbours;
 };
