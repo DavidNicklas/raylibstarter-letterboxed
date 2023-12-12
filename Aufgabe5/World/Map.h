@@ -7,6 +7,7 @@
 #include "config.h"
 #include "../Sprite.h"
 #include "../Character/PlayerChar.h"
+#include "../Character/NonPlayerChar.h"
 #include "../Items/Coffee.h"
 #include "../Items/Equipment/Hat.h"
 #include "../Items/Equipment/Shoes.h"
@@ -46,6 +47,7 @@ namespace Game
         Path path;
 
         Char::PlayerChar* playerChar = nullptr;
+        Char::NonPlayerChar* nonPlayerChar = nullptr;
         ItemTile itemTiles[mapWidth][mapHeight]; // stores all item tiles on the map
 
     private:
@@ -57,8 +59,9 @@ namespace Game
         void ClearMap();
         void GenerateStartAndEnd();
         void GenerateItems();
-        void RandomizeItem(int col, int row, int randomValue);
+        void RandomizeItem(int col, int row);
         void GenerateValidPath(int endRow, int endCol);
+        void GenerateShortestPath();
         bool IsTileInBounds(int row, int col);
 
         void FillInventoryForDemonstrationPurpose();

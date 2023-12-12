@@ -5,18 +5,6 @@
 namespace Char
 {
 
-    void BaseChar::SetPosition(int x, int y)
-    {
-        this->playerSprite.posX = x;
-        this->playerSprite.posY = y;
-    }
-
-    void BaseChar::SetArrayPosition(int x, int y)
-    {
-        this->arrayPosX = x;
-        this->arrayPosY = y;
-    }
-
     bool BaseChar::CanMove(Direction direction)
     {
         switch (direction)
@@ -35,6 +23,15 @@ namespace Char
                 break;
         }
         return false;
+    }
+
+    void BaseChar::SetStartPosition()
+    {
+        this->playerSprite.posX = this->map->GetStartCol() * Config::TileSize;
+        this->playerSprite.posY = this->map->GetStartRow() * Config::TileSize;
+
+        this->arrayPosX = this->map->GetStartCol();
+        this->arrayPosY = this->map->GetStartRow();
     }
 
 }

@@ -23,22 +23,18 @@ namespace Game
         if (IsKeyPressed(KEY_G) && !playerChar->inventoryUi->ShowInventory())
         {
             GenerateMap();
-            // Resets player position
+            // Resets player stats
             playerChar->ResetPlayerStats();
             playerChar->inventory.ResetInventory();
+            // Reset NPC
+            nonPlayerChar->ResetPlayerStats();
             // Reset path
             path.showPath = false;
         }
 
         if (IsKeyPressed(KEY_M)) FillInventoryForDemonstrationPurpose();
 
-        if (IsKeyPressed(KEY_B) && !path.showPath)
-        {
-            path.showPath = true;
-            std::vector<std::vector<int>> mapVector = ConvertToVector(this->map);
-            path.CreateShortestPath(mapVector, {startCol, startRow}, {endCol, endRow});
-        }
-        else if (IsKeyPressed(KEY_B) && path.showPath) path.showPath = false;
+        if (IsKeyPressed(KEY_B)) path.showPath = !path.showPath;
     }
 
     void Map::Draw()
@@ -102,21 +98,23 @@ namespace Game
 
         GenerateStartAndEnd();
 
+        GenerateValidPath(endRow, endCol);
+
         // Fill the rest of the map with random tiles
         for (int i = 0; i < mapWidth; ++i)
         {
             for (int j = 0; j < mapHeight; ++j)
             {
-                if (map[i][j] != TileState::START && map[i][j] != TileState::EXIT)
+                if (map[i][j] == TileState::NONE)
                 {
                     map[i][j] = GetRandomValue(TileState::PASSABLE, TileState::BLOCKED);
                 }
             }
         }
 
-        GenerateValidPath(endRow, endCol);
-
         GenerateItems();
+
+        GenerateShortestPath();
     }
 
     void Map::GenerateStartAndEnd()
@@ -139,19 +137,20 @@ namespace Game
             int col = GetRandomValue(0, mapWidth);
             int row = GetRandomValue(0, mapHeight);
 
-            if (map[col][row] == TileState::PASSABLE)
+            if (map[col][row] == TileState::PASSABLE && map[col][row] != TileState::ITEM)
             {
                 map[col][row] = TileState::ITEM;
-                int randomItem = GetRandomValue(0, 6);
-                RandomizeItem(col, row, randomItem);
+                RandomizeItem(col, row);
                 itemsOnMap++;
             }
         }
     }
 
     /* Creates a random item on the current ITEM tile and puts it in the container for all item tiles */
-    void Map::RandomizeItem(int col, int row, int randomValue)
+    void Map::RandomizeItem(int col, int row)
     {
+        int randomValue = GetRandomValue(0, 6);
+
         itemTiles[col][row].x = col;
         itemTiles[col][row].y = row;
         switch (randomValue)
@@ -167,10 +166,10 @@ namespace Game
     }
 
     /* Generate a valid path from start to end */
-    void Map::GenerateValidPath(int endRow, int endCol)
+    void Map::GenerateValidPath(int _endRow, int _endCol)
     {
-        int currentCol = endCol;
-        int currentRow = endRow;
+        int currentCol = _endCol;
+        int currentRow = _endRow;
 
         while (currentRow != startRow || currentCol != startCol)
         {
@@ -203,8 +202,14 @@ namespace Game
         }
 
         // Reset start and exit so it doesn't get overwritten
-        map[endCol][endRow] = TileState::EXIT;
+        map[_endCol][_endRow] = TileState::EXIT;
         map[startCol][startRow] = TileState::START;
+    }
+
+    void Map::GenerateShortestPath()
+    {
+        std::vector<std::vector<int>> mapVector = ConvertToVector(this->map);
+        path.CreateShortestPath(mapVector, {startCol, startRow}, {endCol, endRow});
     }
 
     bool Map::IsTileInBounds(int row, int col)

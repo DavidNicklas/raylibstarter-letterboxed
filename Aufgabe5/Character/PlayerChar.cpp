@@ -39,15 +39,6 @@ namespace Char
         this->portableWeight = strength * strengthMultiplier;
     }
 
-    void PlayerChar::SetStartPosition()
-    {
-        this->playerSprite.posX = this->map->GetStartCol() * Config::TileSize;
-        this->playerSprite.posY = this->map->GetStartRow() * Config::TileSize;
-
-        this->arrayPosX = this->map->GetStartCol();
-        this->arrayPosY = this->map->GetStartRow();
-    }
-
     void PlayerChar::Move()
     {
         if (IsKeyPressed(KEY_A))

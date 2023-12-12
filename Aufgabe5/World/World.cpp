@@ -9,12 +9,14 @@ namespace Game
         playerChar->Update();
         inventoryUi->Update();
         menu->Update(playerChar);
+        robot->Update();
     }
 
     void World::Draw()
     {
         map->Draw();
         playerChar->Draw();
+        robot->Draw();
         menu->Draw();
         inventoryUi->Draw();
     }
@@ -23,11 +25,13 @@ namespace Game
     {
         map = new Map();
         playerChar = new Char::PlayerChar(playerTex);
+        robot = new Char::NonPlayerChar(playerTex);
         inventoryUi = new UI::InventoryUI();
         menu = new UI::Menu();
 
         // map needs the player for resetting the position
         map->playerChar = playerChar;
+        map->nonPlayerChar = robot;
 
         // inventory need player for drawing stats
         inventoryUi->playerChar = playerChar;
@@ -36,6 +40,9 @@ namespace Game
         playerChar->map = map;
         playerChar->inventoryUi = inventoryUi;
         playerChar->SetStartPosition();
+
+        robot->map = map;
+        robot->SetStartPosition();
     }
 
     void World::DeleteObjects()

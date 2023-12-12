@@ -21,9 +21,8 @@ namespace Char
         void Update();
         void Draw();
 
-        void ResetPlayerStats() override;
-        void SetStartPosition() override;
         void Move() override;
+        void ResetPlayerStats() override;
 
         // Gets for stats
         int GetStrength() const { return this->strength; }
