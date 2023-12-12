@@ -32,9 +32,9 @@ namespace Game
             path.showPath = false;
         }
 
-        if (IsKeyPressed(KEY_M)) FillInventoryForDemonstrationPurpose();
+        if (IsKeyPressed(KEY_L)) FillInventoryForDemonstrationPurpose();
 
-        if (IsKeyPressed(KEY_B)) path.showPath = !path.showPath;
+        if (IsKeyPressed(KEY_H)) path.showPath = !path.showPath;
     }
 
     void Map::Draw()

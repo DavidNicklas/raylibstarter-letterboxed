@@ -24,7 +24,7 @@ namespace Char
     private:
 
         std::vector<std::pair<int, int>> path;
-        int currentProgressOnGraph = 0;
+        int currentProgressOnGraph = 0; // stores at which index of the graph the player currently is
 
         float speed;
         bool allowMovement = false;

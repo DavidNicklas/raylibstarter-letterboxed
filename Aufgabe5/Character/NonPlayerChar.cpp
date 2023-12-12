@@ -2,6 +2,7 @@
 
 #include "NonPlayerChar.h"
 #include "../World/Map.h"
+#include "raylib.h"
 
 namespace Char
 {
@@ -14,7 +15,7 @@ namespace Char
 
     void NonPlayerChar::Update()
     {
-        if (IsKeyPressed(KEY_L)) allowMovement = !allowMovement;
+        if (IsKeyPressed(KEY_M)) allowMovement = !allowMovement;
 
         if (allowMovement) this->Move();
     }
@@ -30,15 +31,20 @@ namespace Char
         {
             if (currentProgressOnGraph < path.size() || !reachedGoal)
             {
+                // Takes the cords of the current path tile and stores is in two integer variables
                 int newCol = path[currentProgressOnGraph].first;
                 int newRow = path[currentProgressOnGraph].second;
 
+                // Moves the NPC to the new position
                 MoveTo(newCol, newRow);
 
+                // Check if the NPC has reached the goal
                 if (this->arrayPosX == this->map->GetEndCol() && this->arrayPosY == this->map->GetEndRow())
                     reachedGoal = true;
 
                 currentProgressOnGraph++;
+
+                WaitTime(0.5);
             }
         }
         else
