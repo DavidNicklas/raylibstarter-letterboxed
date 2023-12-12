@@ -19,10 +19,12 @@ namespace Char
         void ResetPlayerStats() override;
 
         void SetPath(std::vector<std::pair<int, int>> _path) { this->path = _path; }
+        void MoveTo(int col, int row);
 
     private:
+
         std::vector<std::pair<int, int>> path;
-        int currentProgressOnGraph;
+        int currentProgressOnGraph = 0;
 
         float speed;
         bool allowMovement = false;

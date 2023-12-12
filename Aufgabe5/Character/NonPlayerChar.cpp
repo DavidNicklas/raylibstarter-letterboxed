@@ -9,6 +9,7 @@ namespace Char
     NonPlayerChar::NonPlayerChar(Texture2D newTexture)
     {
         this->playerSprite.ChangeTexture(newTexture);
+        currentProgressOnGraph = 0;
     }
 
     void NonPlayerChar::Update()
@@ -27,17 +28,17 @@ namespace Char
     {
         if (!path.empty())
         {
-            if (currentProgressOnGraph < path.size() || reachedGoal)
+            if (currentProgressOnGraph < path.size() || !reachedGoal)
             {
                 int newCol = path[currentProgressOnGraph].first;
                 int newRow = path[currentProgressOnGraph].second;
 
-                this->arrayPosX = newCol;
-                this->arrayPosY = newRow;
+                MoveTo(newCol, newRow);
 
                 if (this->arrayPosX == this->map->GetEndCol() && this->arrayPosY == this->map->GetEndRow())
                     reachedGoal = true;
 
+                currentProgressOnGraph++;
             }
         }
         else
@@ -49,6 +50,21 @@ namespace Char
     void NonPlayerChar::ResetPlayerStats()
     {
         SetStartPosition();
+        path = this->map->path.path;
+        allowMovement = false;
+        reachedGoal = false;
+        currentProgressOnGraph = 0;
+    }
+
+    void NonPlayerChar::MoveTo(int col, int row)
+    {
+        if (col < arrayPosX && row == arrayPosY) this->playerSprite.posX -= Config::TileSize;
+        else if (col > arrayPosX && row == arrayPosY) this->playerSprite.posX += Config::TileSize;
+        else if (col == arrayPosX && row < arrayPosY) this->playerSprite.posY -= Config::TileSize;
+        else if (col == arrayPosX && row > arrayPosY) this->playerSprite.posY += Config::TileSize;
+
+        this->arrayPosX = col;
+        this->arrayPosY = row;
     }
 
 }

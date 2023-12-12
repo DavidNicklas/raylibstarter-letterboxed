@@ -42,6 +42,7 @@ namespace Game
         playerChar->SetStartPosition();
 
         robot->map = map;
+        robot->SetPath(map->path.path);
         robot->SetStartPosition();
     }
 
