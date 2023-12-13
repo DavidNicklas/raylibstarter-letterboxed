@@ -1,5 +1,6 @@
 #include "BaseChar.h"
 #include "../World/Map.h"
+#include "../UI/InventoryUI.h"
 
 namespace Char
 {
@@ -21,6 +22,7 @@ namespace Char
                 if (map->map[arrayPosX][arrayPosY + 1] != Game::TileState::BLOCKED && arrayPosY + 1 < map->mapHeight) return true;
                 break;
         }
+
         return false;
     }
 
@@ -52,6 +54,33 @@ namespace Char
         catch (Error::InventoryFull &e)
         {
             std::cout << e.what() << std::endl;
+        }
+    }
+
+    void BaseChar::EquipItem()
+    {
+        if (inventory.GetItem(inventoryUi->GetSelectedInventorySlot()) != nullptr)
+        {
+            try
+            {
+                std::shared_ptr<Items::BaseItem> temporaryItem = inventory.GetItem(inventoryUi->GetSelectedInventorySlot());
+                inventory.EquipItem(temporaryItem);
+                // make a dynamic cast to get the strength attribute
+                std::shared_ptr<Items::EquippableItem> equippableItem = std::dynamic_pointer_cast<Items::EquippableItem>(temporaryItem);
+                if (equippableItem != nullptr)
+                {
+                    this->strength += equippableItem->GetAdditionalStrength();
+                    this->portableWeight = strength * strengthMultiplier;
+                }
+            }
+            catch (Error::InventoryFull& e)
+            {
+                std::cout << e.what() << std::endl;
+            }
+            catch (Error::EquipmentError& e)
+            {
+                std::cout << e.what() << std::endl;
+            }
         }
     }
 

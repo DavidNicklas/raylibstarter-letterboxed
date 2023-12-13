@@ -7,6 +7,7 @@
 #include "../Character/PlayerChar.h"
 #include "../UI/Menu.h"
 #include "../Character/NonPlayerChar.h"
+#include "../UI/GameOver.h"
 
 namespace Game
 {
@@ -26,6 +27,7 @@ namespace Game
         Char::NonPlayerChar* robot;
         UI::InventoryUI* inventoryUi;
         UI::Menu* menu;
+        UI::GameOver* gameOver;
 
         Texture2D playerTex = LoadTexture("../../assets/graphics/bear.png");
 

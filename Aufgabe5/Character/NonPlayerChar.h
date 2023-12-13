@@ -26,13 +26,15 @@ namespace Char
         void UpdateCurrentPosition();
         void CheckGoalReached();
 
+        void PickUpItem() override;
+        bool PlayerOnExitTile() override;
+
         std::vector<std::pair<int, int>> path;
         int currentProgressOnGraph = 0; // stores at which index of the graph the player currently is
 
         Vector2 currentPosition;
         bool allowMovement = false;
         bool isMoving = false;
-        bool reachedGoal = false;
     };
 
 }

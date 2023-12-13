@@ -12,16 +12,19 @@ namespace Char
 
     void PlayerChar::Update()
     {
+        // Logic when inventory is shown
         if (inventoryUi->ShowInventory())
         {
             if (IsKeyPressed(KEY_ENTER) && !inventoryUi->ShowSortMenu()) EquipItem();
             if (IsKeyPressed(KEY_BACKSPACE)) DropItem();
             if (inventoryUi->ShowSortMenu() && IsKeyPressed(KEY_ENTER)) SortItems();
         }
+        // Logic when inventory is hidden
         else
         {
-            if (totalWeight < portableWeight) Move();
+            if (totalWeight < portableWeight && !this->reachedGoal) Move();
             if (PlayerOnItemTile()) PickUpItem();
+            if (PlayerOnExitTile()) this->reachedGoal = true;
         }
     }
 
@@ -122,33 +125,6 @@ namespace Char
         }
     }
 
-    void PlayerChar::EquipItem()
-    {
-        if (inventory.GetItem(inventoryUi->GetSelectedInventorySlot()) != nullptr)
-        {
-            try
-            {
-                std::shared_ptr<Items::BaseItem> temporaryItem = inventory.GetItem(inventoryUi->GetSelectedInventorySlot());
-                inventory.EquipItem(temporaryItem);
-                // make a dynamic cast to get the strength attribute
-                std::shared_ptr<Items::EquippableItem> equippableItem = std::dynamic_pointer_cast<Items::EquippableItem>(temporaryItem);
-                if (equippableItem != nullptr)
-                {
-                    this->strength += equippableItem->GetAdditionalStrength();
-                    this->portableWeight = strength * strengthMultiplier;
-                }
-            }
-            catch (Error::InventoryFull& e)
-            {
-                std::cout << e.what() << std::endl;
-            }
-            catch (Error::EquipmentError& e)
-            {
-                std::cout << e.what() << std::endl;
-            }
-        }
-    }
-
     void PlayerChar::SortItems()
     {
         switch (inventoryUi->GetCurrentSortButton())
@@ -157,6 +133,11 @@ namespace Char
             case UI::CurrentSortButton::NAME: inventory.SortForName(); break;
             case UI::CurrentSortButton::COST: inventory.SortForCost(); break;
         }
+    }
+
+    bool PlayerChar::PlayerOnExitTile()
+    {
+        return this->arrayPosX == this->map->GetEndCol() && this->arrayPosY == this->map->GetEndRow();
     }
 
 }

@@ -4,11 +4,6 @@
 #include "BaseChar.h"
 #include "../Items/BaseItem.h"
 
-namespace UI
-{
-    class InventoryUI;
-}
-
 namespace Char
 {
 
@@ -29,17 +24,16 @@ namespace Char
         int GetPortableWeight() const { return this->portableWeight; }
         int GetCurrentWeight() const { return this->totalWeight; }
 
-        UI::InventoryUI* inventoryUi = nullptr;
-
     private:
         int health = 20;
 
         void DropItem();
-        void EquipItem();
 
         std::shared_ptr<Items::BaseItem> markedForDropItem = nullptr;
         void DropItemOnGround();
         void SortItems();
+
+        bool PlayerOnExitTile() override;
 
     };
 

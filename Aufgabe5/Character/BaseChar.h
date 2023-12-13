@@ -9,11 +9,13 @@ namespace Game
 {
     class Map;
 }
+namespace UI
+{
+    class InventoryUI;
+}
 
 namespace Char
 {
-
-    enum Direction {LEFT, RIGHT, UP, DOWN};
 
     class BaseChar
     {
@@ -22,6 +24,7 @@ namespace Char
         virtual void ResetPlayerStats() = 0;
         virtual void SetStartPosition();
         bool CanMove(Direction direction);
+        bool ReachedGoal() const { return this->reachedGoal; }
 
         // Position of Player is implemented by Sprite
         Sprite playerSprite = Sprite();
@@ -29,16 +32,20 @@ namespace Char
         Game::Map* map = nullptr;
 
         Inventory::Inventory<std::shared_ptr<Items::BaseItem>, 10> inventory;
+        UI::InventoryUI* inventoryUi = nullptr;
 
     protected:
         bool PlayerOnItemTile();
-        void PickUpItem();
+        virtual bool PlayerOnExitTile() = 0;
+        virtual void PickUpItem();
+        virtual void EquipItem();
 
         // Is needed to move player correctly
-        int arrayPosX;
-        int arrayPosY;
+        int arrayPosX = 0;
+        int arrayPosY = 0;
         Direction direction;
 
+        bool reachedGoal = false; // Stores if the player has reached the exit tile
         int strength = 10; // Defines the weight, the player can carry in his inventory
         int totalWeight = 0; // Defines the current weight of all his items in his inventory
         int strengthMultiplier = 2;

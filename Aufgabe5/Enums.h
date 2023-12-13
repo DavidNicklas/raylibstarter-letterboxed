@@ -15,3 +15,10 @@ namespace Game
     enum TileState {NONE, BLOCKED, PASSABLE, START, EXIT, ITEM};
 
 }
+
+namespace Char
+{
+
+    enum Direction {LEFT, RIGHT, UP, DOWN};
+
+}

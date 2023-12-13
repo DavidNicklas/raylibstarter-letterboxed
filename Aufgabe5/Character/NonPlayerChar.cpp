@@ -18,11 +18,14 @@ namespace Char
         if (IsKeyPressed(KEY_M)) allowMovement = !allowMovement;
 
         if (allowMovement) this->Move();
+
+        if (PlayerOnExitTile()) this->reachedGoal = true;
     }
 
     void NonPlayerChar::Draw()
     {
         DrawTexture(playerSprite.GetTexture(), (int)currentPosition.x, (int)currentPosition.y, WHITE);
+        if (totalWeight >= portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
     }
 
     void NonPlayerChar::Move()
@@ -122,6 +125,16 @@ namespace Char
         BaseChar::SetStartPosition();
         this->currentPosition.x = (float) this->map->GetStartCol() * Config::TileSize;
         this->currentPosition.y = (float) this->map->GetStartRow() * Config::TileSize;
+    }
+
+    void NonPlayerChar::PickUpItem()
+    {
+        BaseChar::PickUpItem();
+    }
+
+    bool NonPlayerChar::PlayerOnExitTile()
+    {
+        return (int)currentPosition.x == this->map->GetEndCol() && (int)currentPosition.y == this->map->GetEndRow();
     }
 
 
