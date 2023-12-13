@@ -99,6 +99,7 @@ namespace Game
         GenerateStartAndEnd();
 
         GenerateValidPath(endRow, endCol);
+        GenerateItems();
 
         // Fill the rest of the map with random tiles
         for (int i = 0; i < mapWidth; ++i)
@@ -112,7 +113,6 @@ namespace Game
             }
         }
 
-        GenerateItems();
 
         GenerateShortestPath();
     }

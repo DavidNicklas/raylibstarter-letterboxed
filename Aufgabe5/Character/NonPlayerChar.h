@@ -24,13 +24,12 @@ namespace Char
 
     private:
         void UpdateCurrentPosition();
+        void CheckGoalReached();
 
         std::vector<std::pair<int, int>> path;
         int currentProgressOnGraph = 0; // stores at which index of the graph the player currently is
 
-        float speed;
         Vector2 currentPosition;
-
         bool allowMovement = false;
         bool isMoving = false;
         bool reachedGoal = false;

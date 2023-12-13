@@ -29,6 +29,7 @@ namespace Char
     {
         if (!path.empty())
         {
+            // Checks if there are still tiles open in the path
             if (currentProgressOnGraph < path.size() || !reachedGoal)
             {
                 if (!isMoving)
@@ -40,19 +41,26 @@ namespace Char
                     // Moves the NPC to the new position
                     MoveTo(newCol, newRow);
 
+                    if (PlayerOnItemTile()) PickUpItem();
+
                     currentProgressOnGraph++;
                 }
-                else UpdateCurrentPosition();
+                else if (totalWeight < portableWeight) UpdateCurrentPosition();
 
-                // Check if the NPC has reached the goal
-                if (currentPosition.x == (float)this->map->GetEndCol() * Config::TileSize && currentPosition.y == (float)this->map->GetEndRow() * Config::TileSize)
-                    reachedGoal = true;
+                CheckGoalReached();
             }
         }
         else
         {
             std::cout << "No path found" << std::endl;
         }
+    }
+
+    // Check if the NPC has reached the goal
+    void NonPlayerChar::CheckGoalReached()
+    {
+        if (currentPosition.x == (float)this->map->GetEndCol() * Config::TileSize && currentPosition.y == (float)this->map->GetEndRow() * Config::TileSize)
+            reachedGoal = true;
     }
 
     void NonPlayerChar::MoveTo(int col, int row)
@@ -95,7 +103,7 @@ namespace Char
         if (this->playerSprite.posX == currentPosition.x && this->playerSprite.posY == currentPosition.y)
             isMoving = false;
     }
-    
+
     void NonPlayerChar::ResetPlayerStats()
     {
         this->SetStartPosition();
@@ -104,6 +112,9 @@ namespace Char
         reachedGoal = false;
         currentProgressOnGraph = 0;
         isMoving = false;
+        this->totalWeight = 0;
+        this->strength = 10;
+        this->portableWeight = strength * strengthMultiplier;
     }
 
     void NonPlayerChar::SetStartPosition()
@@ -112,5 +123,6 @@ namespace Char
         this->currentPosition.x = (float) this->map->GetStartCol() * Config::TileSize;
         this->currentPosition.y = (float) this->map->GetStartRow() * Config::TileSize;
     }
+
 
 }

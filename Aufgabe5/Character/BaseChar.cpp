@@ -1,7 +1,6 @@
 #include "BaseChar.h"
 #include "../World/Map.h"
 
-
 namespace Char
 {
 
@@ -39,6 +38,21 @@ namespace Char
     {
         if (this->map->map[this->arrayPosX][this->arrayPosY] == Game::TileState::ITEM) return true;
         else return false;
+    }
+
+    void BaseChar::PickUpItem()
+    {
+        try
+        {
+            inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);
+            totalWeight += (int)map->itemTiles[arrayPosX][arrayPosY].item->GetWeight();
+            map->itemTiles[arrayPosX][arrayPosY].item = nullptr;
+            map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE; // only resets tile to passable if item was added (because of exception it jumps directly into catch block)
+        }
+        catch (Error::InventoryFull &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
     }
 
 }
