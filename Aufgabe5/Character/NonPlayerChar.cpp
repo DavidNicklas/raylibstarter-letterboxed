@@ -22,7 +22,7 @@ namespace Char
 
     void NonPlayerChar::Draw()
     {
-        DrawTexture(playerSprite.GetTexture(), playerSprite.posX, playerSprite.posY, WHITE);
+        DrawTexture(playerSprite.GetTexture(), (int)currentPosition.x, (int)currentPosition.y, WHITE);
     }
 
     void NonPlayerChar::Move()
@@ -31,20 +31,22 @@ namespace Char
         {
             if (currentProgressOnGraph < path.size() || !reachedGoal)
             {
-                // Takes the cords of the current path tile and stores is in two integer variables
-                int newCol = path[currentProgressOnGraph].first;
-                int newRow = path[currentProgressOnGraph].second;
+                if (!isMoving)
+                {
+                    // Takes the cords of the current path tile and stores is in two integer variables
+                    int newCol = path[currentProgressOnGraph].first;
+                    int newRow = path[currentProgressOnGraph].second;
 
-                // Moves the NPC to the new position
-                MoveTo(newCol, newRow);
+                    // Moves the NPC to the new position
+                    MoveTo(newCol, newRow);
+
+                    currentProgressOnGraph++;
+                }
+                else UpdateCurrentPosition();
 
                 // Check if the NPC has reached the goal
-                if (this->arrayPosX == this->map->GetEndCol() && this->arrayPosY == this->map->GetEndRow())
+                if (currentPosition.x == (float)this->map->GetEndCol() * Config::TileSize && currentPosition.y == (float)this->map->GetEndRow() * Config::TileSize)
                     reachedGoal = true;
-
-                currentProgressOnGraph++;
-
-                WaitTime(0.5);
             }
         }
         else
@@ -53,24 +55,62 @@ namespace Char
         }
     }
 
+    void NonPlayerChar::MoveTo(int col, int row)
+    {
+        // Move the target position (sprite position)
+        // Only set the target position if the character is not moving towards it
+        if (col < arrayPosX && row == arrayPosY && !isMoving)
+        {
+            this->playerSprite.posX -= Config::TileSize;
+            isMoving = true;
+        }
+        else if (col > arrayPosX && row == arrayPosY && !isMoving)
+        {
+            this->playerSprite.posX += Config::TileSize;
+            isMoving = true;
+        }
+        else if (col == arrayPosX && row < arrayPosY && !isMoving)
+        {
+            this->playerSprite.posY -= Config::TileSize;
+            isMoving = true;
+        }
+        else if (col == arrayPosX && row > arrayPosY && !isMoving)
+        {
+            this->playerSprite.posY += Config::TileSize;
+            isMoving = true;
+        }
+
+        this->arrayPosX = col;
+        this->arrayPosY = row;
+    }
+
+    // Move the character step by step
+    void NonPlayerChar::UpdateCurrentPosition()
+    {
+        if (this->playerSprite.posX < currentPosition.x) currentPosition.x -= 1;
+        else if (this->playerSprite.posX > currentPosition.x) currentPosition.x += 1;
+        else if (this->playerSprite.posY < currentPosition.y) currentPosition.y -= 1;
+        else if (this->playerSprite.posY > currentPosition.y) currentPosition.y += 1;
+
+        if (this->playerSprite.posX == currentPosition.x && this->playerSprite.posY == currentPosition.y)
+            isMoving = false;
+    }
+    
     void NonPlayerChar::ResetPlayerStats()
     {
-        SetStartPosition();
+        this->SetStartPosition();
         path = this->map->path.path;
         allowMovement = false;
         reachedGoal = false;
         currentProgressOnGraph = 0;
+        isMoving = false;
     }
 
-    void NonPlayerChar::MoveTo(int col, int row)
+    void NonPlayerChar::SetStartPosition()
     {
-        if (col < arrayPosX && row == arrayPosY) this->playerSprite.posX -= Config::TileSize;
-        else if (col > arrayPosX && row == arrayPosY) this->playerSprite.posX += Config::TileSize;
-        else if (col == arrayPosX && row < arrayPosY) this->playerSprite.posY -= Config::TileSize;
-        else if (col == arrayPosX && row > arrayPosY) this->playerSprite.posY += Config::TileSize;
-
-        this->arrayPosX = col;
-        this->arrayPosY = row;
+        BaseChar::SetStartPosition();
+        this->currentPosition.x = (float) this->map->GetStartCol() * Config::TileSize;
+        this->currentPosition.y = (float) this->map->GetStartRow() * Config::TileSize;
     }
 
 }

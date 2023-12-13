@@ -17,17 +17,22 @@ namespace Char
 
         void Move() override;
         void ResetPlayerStats() override;
+        void SetStartPosition() override;
 
         void SetPath(std::vector<std::pair<int, int>> _path) { this->path = _path; }
         void MoveTo(int col, int row);
 
     private:
+        void UpdateCurrentPosition();
 
         std::vector<std::pair<int, int>> path;
         int currentProgressOnGraph = 0; // stores at which index of the graph the player currently is
 
         float speed;
+        Vector2 currentPosition;
+
         bool allowMovement = false;
+        bool isMoving = false;
         bool reachedGoal = false;
     };
 

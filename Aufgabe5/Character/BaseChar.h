@@ -18,7 +18,7 @@ namespace Char
     public:
         virtual void Move() = 0;
         virtual void ResetPlayerStats() = 0;
-        void SetStartPosition();
+        virtual void SetStartPosition();
         bool CanMove(Direction direction);
 
         // Position of Player is implemented by Sprite
