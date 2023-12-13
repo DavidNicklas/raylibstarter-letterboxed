@@ -80,6 +80,7 @@ namespace UI
             selectedInventorySlot++;
             // if there is an item on the slot, store it in the selectedItem
             if (playerChar->inventory.itemContainer[selectedInventorySlot] != nullptr) selectedItem = playerChar->inventory.itemContainer[selectedInventorySlot];
+            else selectedItem = nullptr;
         }
         if (IsKeyPressed(KEY_A) && selectedInventorySlot > 0)
         {
@@ -95,6 +96,7 @@ namespace UI
             selectedInventorySlot--;
             // if there is an item on the slot, store it in the selectedItem
             if (playerChar->inventory.itemContainer[selectedInventorySlot] != nullptr) selectedItem = playerChar->inventory.itemContainer[selectedInventorySlot];
+            else selectedItem = nullptr;
         }
     }
 

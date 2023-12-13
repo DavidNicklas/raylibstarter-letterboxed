@@ -41,7 +41,6 @@ namespace Char
         int portableWeight = strength * strengthMultiplier; // Defines the weight he can max carry
         int health = 20;
 
-        bool PlayerOnItemTile();
         void PickUpItem();
         void DropItem();
         void EquipItem();

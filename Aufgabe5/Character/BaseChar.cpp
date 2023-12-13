@@ -34,4 +34,11 @@ namespace Char
         this->arrayPosY = this->map->GetStartRow();
     }
 
+    /* Checks if the player is standing on a tile which carries an item */
+    bool BaseChar::PlayerOnItemTile()
+    {
+        if (this->map->map[this->arrayPosX][this->arrayPosY] == Game::TileState::ITEM) return true;
+        else return false;
+    }
+
 }

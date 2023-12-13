@@ -27,6 +27,8 @@ namespace Char
         Game::Map* map = nullptr;
 
     protected:
+        bool PlayerOnItemTile();
+
         // Is needed to move player correctly
         int arrayPosX;
         int arrayPosY;

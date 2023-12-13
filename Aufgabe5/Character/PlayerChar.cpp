@@ -86,13 +86,6 @@ namespace Char
         }
     }
 
-    /* Checks if the player is standing on a tile which carries an item */
-    bool PlayerChar::PlayerOnItemTile()
-    {
-        if (this->map->map[this->arrayPosX][this->arrayPosY] == Game::TileState::ITEM) return true;
-        else return false;
-    }
-
     void PlayerChar::PickUpItem()
     {
         try
