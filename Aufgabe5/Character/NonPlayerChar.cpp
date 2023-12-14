@@ -11,21 +11,33 @@ namespace Char
         this->playerSprite.ChangeTexture(nonPlayerTex);
         this->health = 10;
         currentProgressOnGraph = 0;
+        inventoryUi = new UI::InventoryUI(this);
     }
 
     void NonPlayerChar::Update()
     {
-        if (IsKeyPressed(KEY_M)) allowMovement = !allowMovement;
+        // Logic when inventory is shown
+        if (this->GetInventoryUI()->ShowInventory())
+        {
+            this->GetInventoryUI()->Update();
+        }
+        // Logic when inventory is hidden
+        else
+        {
+            if (IsKeyPressed(KEY_M)) allowMovement = !allowMovement;
+            if (allowMovement) this->Move();
+            if (PlayerOnExitTile()) this->reachedGoal = true;
+        }
 
-        if (allowMovement) this->Move();
-
-        if (PlayerOnExitTile()) this->reachedGoal = true;
+        OpenInventory();
     }
 
     void NonPlayerChar::Draw()
     {
         DrawTexture(playerSprite.GetTexture(), (int)currentPosition.x, (int)currentPosition.y, WHITE);
         if (totalWeight >= portableWeight) DrawText("Robot carries to many items.", 40, 30, 30, RED);
+
+        this->GetInventoryUI()->Draw();
     }
 
     void NonPlayerChar::Move()
@@ -135,6 +147,15 @@ namespace Char
     bool NonPlayerChar::PlayerOnExitTile()
     {
         return (int)currentPosition.x == this->map->GetEndCol() && (int)currentPosition.y == this->map->GetEndRow();
+    }
+
+    void NonPlayerChar::OpenInventory()
+    {
+        if (IsKeyPressed(KEY_T))
+        {
+            if (this->GetInventoryUI()->ShowInventory()) this->GetInventoryUI()->SetShowInventory(false);
+            else this->GetInventoryUI()->SetShowInventory(true);
+        }
     }
 
 

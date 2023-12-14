@@ -3,7 +3,7 @@
 namespace UI
 {
 
-    InventoryUI::InventoryUI()
+    InventoryUI::InventoryUI(Char::BaseChar* character) : character(character)
     {
         selectedInventorySlot = 0;
         showInventory = false;
@@ -13,21 +13,6 @@ namespace UI
 
     void InventoryUI::Update()
     {
-        if (IsKeyPressed(KEY_E))
-        {
-            if (!showInventory) showInventory = true;
-            else
-            {
-                showInventory = false;
-                showSortMenu = false;
-                // Reset the box to first slot
-                highlightBox.posX = 0;
-                highlightBox.posY = 0;
-                selectedInventorySlot = 0;
-                selectedItem = nullptr;
-            }
-        }
-
         if (showInventory)
         {
             if (IsKeyPressed(KEY_P))
@@ -38,8 +23,22 @@ namespace UI
 
             if (!showSortMenu) NavigateInventory();
             else NavigateSortMenu();
-
         }
+        else
+        {
+            ResetUI();
+        }
+    }
+
+    void InventoryUI::ResetUI()
+    {
+        showInventory = false;
+        showSortMenu = false;
+        // Reset the box to first slot
+        highlightBox.posX = 0;
+        highlightBox.posY = 0;
+        selectedInventorySlot = 0;
+        selectedItem = nullptr;
     }
 
     void InventoryUI::Draw()
@@ -79,7 +78,7 @@ namespace UI
 
             selectedInventorySlot++;
             // if there is an item on the slot, store it in the selectedItem
-            if (playerChar->inventory.itemContainer[selectedInventorySlot] != nullptr) selectedItem = playerChar->inventory.itemContainer[selectedInventorySlot];
+            if (character->inventory.itemContainer[selectedInventorySlot] != nullptr) selectedItem = character->inventory.itemContainer[selectedInventorySlot];
             else selectedItem = nullptr;
         }
         if (IsKeyPressed(KEY_A) && selectedInventorySlot > 0)
@@ -95,7 +94,7 @@ namespace UI
 
             selectedInventorySlot--;
             // if there is an item on the slot, store it in the selectedItem
-            if (playerChar->inventory.itemContainer[selectedInventorySlot] != nullptr) selectedItem = playerChar->inventory.itemContainer[selectedInventorySlot];
+            if (character->inventory.itemContainer[selectedInventorySlot] != nullptr) selectedItem = character->inventory.itemContainer[selectedInventorySlot];
             else selectedItem = nullptr;
         }
     }
@@ -121,10 +120,10 @@ namespace UI
 
     void InventoryUI::DrawPlayerStats()
     {
-        DrawText(("Health: " + std::to_string(playerChar->GetHealth())).c_str(), 48, 190, 8, BLACK);
-        DrawText(("Strength: " + std::to_string(playerChar->GetStrength())).c_str(), 48, 205, 8, BLACK);
-        DrawText(("Weight: " + std::to_string(playerChar->GetCurrentWeight()) + "/" +
-                  std::to_string(playerChar->GetPortableWeight())).c_str(), 130, 205, 8, BLACK);
+        DrawText(("Health: " + std::to_string(character->GetHealth())).c_str(), 48, 190, 8, BLACK);
+        DrawText(("Strength: " + std::to_string(character->GetStrength())).c_str(), 48, 205, 8, BLACK);
+        DrawText(("Weight: " + std::to_string(character->GetCurrentWeight()) + "/" +
+                  std::to_string(character->GetPortableWeight())).c_str(), 130, 205, 8, BLACK);
     }
 
     void InventoryUI::DrawItemsInfo()
@@ -145,45 +144,45 @@ namespace UI
     {
         try
         {
-            if (playerChar->inventory.GetItem(0))
+            if (character->inventory.GetItem(0))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(0)->texture.GetTexture(), slot0Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(0)->texture.GetTexture(), slot0Pos, 0, 1.9, WHITE);
             }
-            if (playerChar->inventory.GetItem(1))
+            if (character->inventory.GetItem(1))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(1)->texture.GetTexture(), slot1Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(1)->texture.GetTexture(), slot1Pos, 0, 1.9, WHITE);
             }
-            if (playerChar->inventory.GetItem(2))
+            if (character->inventory.GetItem(2))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(2)->texture.GetTexture(), slot2Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(2)->texture.GetTexture(), slot2Pos, 0, 1.9, WHITE);
             }
-            if (playerChar->inventory.GetItem(3))
+            if (character->inventory.GetItem(3))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(3)->texture.GetTexture(), slot3Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(3)->texture.GetTexture(), slot3Pos, 0, 1.9, WHITE);
             }
-            if (playerChar->inventory.GetItem(4))
+            if (character->inventory.GetItem(4))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(4)->texture.GetTexture(), slot4Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(4)->texture.GetTexture(), slot4Pos, 0, 1.9, WHITE);
             }
-            if (playerChar->inventory.GetItem(5))
+            if (character->inventory.GetItem(5))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(5)->texture.GetTexture(), slot5Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(5)->texture.GetTexture(), slot5Pos, 0, 1.9, WHITE);
             }
-            if (playerChar->inventory.GetItem(6))
+            if (character->inventory.GetItem(6))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(6)->texture.GetTexture(), slot6Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(6)->texture.GetTexture(), slot6Pos, 0, 1.9, WHITE);
             }
-            if (playerChar->inventory.GetItem(7))
+            if (character->inventory.GetItem(7))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(7)->texture.GetTexture(), slot7Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(7)->texture.GetTexture(), slot7Pos, 0, 1.9, WHITE);
             }
-            if (playerChar->inventory.GetItem(8))
+            if (character->inventory.GetItem(8))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(8)->texture.GetTexture(), slot8Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(8)->texture.GetTexture(), slot8Pos, 0, 1.9, WHITE);
             }
-            if (playerChar->inventory.GetItem(9))
+            if (character->inventory.GetItem(9))
             {
-                DrawTextureEx(playerChar->inventory.GetItem(9)->texture.GetTexture(), slot9Pos, 0, 1.9, WHITE);
+                DrawTextureEx(character->inventory.GetItem(9)->texture.GetTexture(), slot9Pos, 0, 1.9, WHITE);
             }
         }
         catch (Error::InventoryFull& e)
@@ -194,17 +193,17 @@ namespace UI
 
     void InventoryUI::DrawEquipmentItems()
     {
-        if (playerChar->inventory.equipmentContainer[0] != nullptr)
+        if (character->inventory.equipmentContainer[0] != nullptr)
         {
-            DrawTextureEx(playerChar->inventory.equipmentContainer[0]->texture.GetTexture(), hatPos, 0, 1.9, WHITE);
+            DrawTextureEx(character->inventory.equipmentContainer[0]->texture.GetTexture(), hatPos, 0, 1.9, WHITE);
         }
-        if (playerChar->inventory.equipmentContainer[1] != nullptr)
+        if (character->inventory.equipmentContainer[1] != nullptr)
         {
-            DrawTextureEx(playerChar->inventory.equipmentContainer[1]->texture.GetTexture(), honeyPos, 0, 1.9, WHITE);
+            DrawTextureEx(character->inventory.equipmentContainer[1]->texture.GetTexture(), honeyPos, 0, 1.9, WHITE);
         }
-        if (playerChar->inventory.equipmentContainer[2] != nullptr)
+        if (character->inventory.equipmentContainer[2] != nullptr)
         {
-            DrawTextureEx(playerChar->inventory.equipmentContainer[2]->texture.GetTexture(), shoesPos, 0, 1.9, WHITE);
+            DrawTextureEx(character->inventory.equipmentContainer[2]->texture.GetTexture(), shoesPos, 0, 1.9, WHITE);
         }
     }
 

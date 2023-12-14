@@ -7,7 +7,6 @@ namespace Game
     {
         map->Update();
         playerChar->Update();
-        inventoryUi->Update();
         menu->Update(playerChar);
         robot->Update();
         gameOver->Update();
@@ -16,11 +15,10 @@ namespace Game
     void World::Draw()
     {
         map->Draw();
+        gameOver->Draw();
         robot->Draw();
         playerChar->Draw();
         menu->Draw();
-        gameOver->Draw();
-        inventoryUi->Draw();
     }
 
     void World::CreateObjects()
@@ -28,7 +26,6 @@ namespace Game
         map = new Map();
         playerChar = new Char::PlayerChar();
         robot = new Char::NonPlayerChar();
-        inventoryUi = new UI::InventoryUI();
         menu = new UI::Menu();
         gameOver = new UI::GameOver();
 
@@ -36,12 +33,8 @@ namespace Game
         map->playerChar = playerChar;
         map->nonPlayerChar = robot;
 
-        // inventory need player for drawing stats
-        inventoryUi->playerChar = playerChar;
-
         // player needs map for moving on it and inventoryUI for dropping items
         playerChar->map = map;
-        playerChar->inventoryUi = inventoryUi;
         playerChar->SetStartPosition();
 
         // robot needs map and path for moving
@@ -60,7 +53,6 @@ namespace Game
         delete map;
         delete playerChar;
         delete robot;
-        delete inventoryUi;
         delete menu;
         delete gameOver;
     }

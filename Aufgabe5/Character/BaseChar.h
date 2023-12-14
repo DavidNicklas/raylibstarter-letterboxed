@@ -38,7 +38,7 @@ namespace Char
         Game::Map* map = nullptr;
 
         Inventory::Inventory<std::shared_ptr<Items::BaseItem>, 10> inventory;
-        UI::InventoryUI* inventoryUi = nullptr;
+        UI::InventoryUI* GetInventoryUI() { return this->inventoryUi; }
 
     protected:
         bool PlayerOnItemTile();
@@ -50,6 +50,8 @@ namespace Char
         int arrayPosX = 0;
         int arrayPosY = 0;
         Direction direction;
+
+        UI::InventoryUI* inventoryUi = nullptr;
 
         bool reachedGoal = false; // Stores if the player has reached the exit tile
         int health = 0;

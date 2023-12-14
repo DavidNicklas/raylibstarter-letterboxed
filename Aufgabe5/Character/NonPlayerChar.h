@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "BaseChar.h"
+#include "../UI/InventoryUI.h"
 
 namespace Char
 {
@@ -28,6 +29,7 @@ namespace Char
 
         void PickUpItem() override;
         bool PlayerOnExitTile() override;
+        void OpenInventory();
 
         std::vector<std::pair<int, int>> path;
         int currentProgressOnGraph = 0; // stores at which index of the graph the player currently is

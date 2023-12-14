@@ -9,16 +9,18 @@ namespace Char
     {
         this->playerSprite.ChangeTexture(playerTex);
         this->health = 20;
+        inventoryUi = new UI::InventoryUI(this);
     }
 
     void PlayerChar::Update()
     {
         // Logic when inventory is shown
-        if (inventoryUi->ShowInventory())
+        if (this->GetInventoryUI()->ShowInventory())
         {
-            if (IsKeyPressed(KEY_ENTER) && !inventoryUi->ShowSortMenu()) EquipItem();
+            this->GetInventoryUI()->Update();
+            if (IsKeyPressed(KEY_ENTER) && !this->GetInventoryUI()->ShowSortMenu()) EquipItem();
             if (IsKeyPressed(KEY_BACKSPACE)) DropItem();
-            if (inventoryUi->ShowSortMenu() && IsKeyPressed(KEY_ENTER)) SortItems();
+            if (this->GetInventoryUI()->ShowSortMenu() && IsKeyPressed(KEY_ENTER)) SortItems();
         }
         // Logic when inventory is hidden
         else
@@ -27,12 +29,16 @@ namespace Char
             if (PlayerOnItemTile()) PickUpItem();
             if (PlayerOnExitTile()) this->reachedGoal = true;
         }
+
+        OpenInventory();
     }
 
     void PlayerChar::Draw()
     {
         DrawTexture(playerSprite.GetTexture(), playerSprite.posX, playerSprite.posY, WHITE);
         if (totalWeight >= portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
+
+        this->GetInventoryUI()->Draw();
     }
 
     void PlayerChar::ResetPlayerStats()
@@ -140,6 +146,15 @@ namespace Char
     bool PlayerChar::PlayerOnExitTile()
     {
         return this->arrayPosX == this->map->GetEndCol() && this->arrayPosY == this->map->GetEndRow();
+    }
+
+    void PlayerChar::OpenInventory()
+    {
+        if (IsKeyPressed(KEY_E))
+        {
+            if (this->GetInventoryUI()->ShowInventory()) this->GetInventoryUI()->SetShowInventory(false);
+            else this->GetInventoryUI()->SetShowInventory(true);
+        }
     }
 
 }

@@ -47,7 +47,8 @@ namespace UI
                     ResetUI();
                     break;
                 case CurrentGameOverOption::SHOW_INVENTORY:
-                    if (playerChar->ReachedGoal()) playerChar->inventoryUi->SetShowInventory(true);
+                    if (playerChar->ReachedGoal()) playerChar->GetInventoryUI()->SetShowInventory(true);
+                    else if (nonPlayerChar->ReachedGoal()) nonPlayerChar->GetInventoryUI()->SetShowInventory(true);
                     break;
             }
         }

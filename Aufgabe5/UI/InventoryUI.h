@@ -2,7 +2,7 @@
 
 #include "config.h"
 #include "../Sprite.h"
-#include "../Character/PlayerChar.h"
+#include "../Character/BaseChar.h"
 
 namespace UI
 {
@@ -10,12 +10,12 @@ namespace UI
     class InventoryUI
     {
     public:
-        InventoryUI();
+        InventoryUI(Char::BaseChar* character);
 
         void Update();
         void Draw();
 
-        Char::PlayerChar* playerChar = nullptr;
+        Char::BaseChar* character = nullptr;
 
         int GetSelectedInventorySlot() { return this->selectedInventorySlot; }
         bool ShowInventory() { return this->showInventory; }
@@ -38,6 +38,7 @@ namespace UI
         void DrawItemsInfo();
         void DrawEquipmentItems();
         void DrawSortMenu();
+        void ResetUI();
 
         // The box that shows which slot is currently highlighted
         Sprite highlightBox = Sprite(0, 0, "../../assets/graphics/invHighlightBox.png");

@@ -20,7 +20,7 @@ namespace Game
     //================================================================================================================//
     void Map::Update()
     {
-        if (IsKeyPressed(KEY_G) && !playerChar->inventoryUi->ShowInventory())
+        if (IsKeyPressed(KEY_G) && !playerChar->GetInventoryUI()->ShowInventory())
         {
             ResetMap();
         }

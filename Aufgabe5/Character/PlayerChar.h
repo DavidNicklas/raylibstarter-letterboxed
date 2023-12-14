@@ -20,12 +20,12 @@ namespace Char
 
     private:
         void DropItem();
-
-        std::shared_ptr<Items::BaseItem> markedForDropItem = nullptr;
         void DropItemOnGround();
         void SortItems();
-
         bool PlayerOnExitTile() override;
+        void OpenInventory();
+
+        std::shared_ptr<Items::BaseItem> markedForDropItem = nullptr;
 
         Texture2D playerTex = LoadTexture("../../assets/graphics/bear.png");
     };
