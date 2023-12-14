@@ -142,7 +142,44 @@ namespace Char
 
     void NonPlayerChar::PickUpItem()
     {
-        BaseChar::PickUpItem();
+        try
+        {
+            inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);
+            totalWeight += (int)map->itemTiles[arrayPosX][arrayPosY].item->GetWeight();
+            // if the item is an equippable item, it automatically equips
+            EquipItem();
+
+            map->itemTiles[arrayPosX][arrayPosY].item = nullptr;
+            map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE; // only resets tile to passable if item was added (because of exception it jumps directly into catch block)
+        }
+        catch (Error::InventoryFull &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
+    }
+
+    void NonPlayerChar::EquipItem()
+    {
+        try
+        {
+            std::shared_ptr<Items::BaseItem> temporaryItem = map->itemTiles[arrayPosX][arrayPosY].item;
+            inventory.EquipItem(temporaryItem);
+            // make a dynamic cast to get the strength attribute
+            std::shared_ptr<Items::EquippableItem> equippableItem = std::dynamic_pointer_cast<Items::EquippableItem>(temporaryItem);
+            if (equippableItem != nullptr)
+            {
+                this->strength += equippableItem->GetAdditionalStrength();
+                this->portableWeight = strength * strengthMultiplier;
+            }
+        }
+        catch (Error::InventoryFull& e)
+        {
+            std::cout << e.what() << std::endl;
+        }
+        catch (Error::EquipmentError& e)
+        {
+            std::cout << e.what() << std::endl;
+        }
     }
 
     bool NonPlayerChar::PlayerOnExitTile()
@@ -168,6 +205,5 @@ namespace Char
             case UI::CurrentSortButton::COST: inventory.SortForCost(); break;
         }
     }
-
 
 }

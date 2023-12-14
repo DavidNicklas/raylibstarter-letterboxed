@@ -28,6 +28,7 @@ namespace Char
         void CheckGoalReached();
 
         void PickUpItem() override;
+        void EquipItem() override;
         bool PlayerOnExitTile() override;
         void OpenInventory();
         void SortItems();
