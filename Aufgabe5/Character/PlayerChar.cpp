@@ -1,6 +1,5 @@
 #include "PlayerChar.h"
 #include "../World/Map.h"
-#include "../UI/InventoryUI.h"
 
 namespace Char
 {
@@ -9,7 +8,7 @@ namespace Char
     {
         this->playerSprite.ChangeTexture(playerTex);
         this->health = 20;
-        inventoryUi = new UI::InventoryUI(this);
+        inventoryUi = new UI::InventoryUI(this, true);
     }
 
     void PlayerChar::Update()

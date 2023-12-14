@@ -247,6 +247,7 @@ namespace Game
         playerChar->inventory.ResetInventory();
         // Reset NPC
         nonPlayerChar->ResetPlayerStats();
+        nonPlayerChar->inventory.ResetInventory();
         // Reset path
         path.showPath = false;
     }

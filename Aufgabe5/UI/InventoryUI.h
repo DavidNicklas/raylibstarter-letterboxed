@@ -10,7 +10,7 @@ namespace UI
     class InventoryUI
     {
     public:
-        InventoryUI(Char::BaseChar* character);
+        InventoryUI(Char::BaseChar* character, bool playerInvTexture);
 
         void Update();
         void Draw();
@@ -47,6 +47,7 @@ namespace UI
 
         // All textures that are needed
         Sprite invTex = Sprite(0, 0, "../../assets/graphics/inventoryScreen.png");
+        Texture2D robotInvTex = LoadTexture("../../assets/graphics/inventoryScreenRobot.png");
         Sprite equipmentSlotKeys = Sprite(0, 0, "../../assets/graphics/EquipmentSlotKeyBinds.png");
 
         Sprite invSortMenu = Sprite(0, 0, "../../assets/graphics/Inventory/inventorySortWindow.png");

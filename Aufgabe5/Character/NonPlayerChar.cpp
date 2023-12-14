@@ -11,7 +11,7 @@ namespace Char
         this->playerSprite.ChangeTexture(nonPlayerTex);
         this->health = 10;
         currentProgressOnGraph = 0;
-        inventoryUi = new UI::InventoryUI(this);
+        inventoryUi = new UI::InventoryUI(this, false);
     }
 
     void NonPlayerChar::Update()

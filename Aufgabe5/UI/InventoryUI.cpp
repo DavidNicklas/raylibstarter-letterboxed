@@ -3,12 +3,13 @@
 namespace UI
 {
 
-    InventoryUI::InventoryUI(Char::BaseChar* character) : character(character)
+    InventoryUI::InventoryUI(Char::BaseChar* character, bool playerInvTexture) : character(character)
     {
         selectedInventorySlot = 0;
         showInventory = false;
         showSortMenu = false;
         currentSortButton = CurrentSortButton::WEIGHT;
+        if (!playerInvTexture) invTex.ChangeTexture(robotInvTex);
     }
 
     void InventoryUI::Update()
