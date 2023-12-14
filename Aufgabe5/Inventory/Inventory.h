@@ -4,6 +4,7 @@
 #include "../Exceptions/OutOfRange.h"
 #include "../Exceptions/EquipmentError.h"
 #include "../Items/BaseItem.h"
+#include "../Items/Equipment/EquippableItem.h"
 
 namespace Inventory
 {
@@ -25,6 +26,8 @@ namespace Inventory
         int GetCapacity() { return this->capacity; }
         int GetCurrentNumberOfItems() { return this->numberOfItems; }
         int GetFirstEmptySlot();
+        void DeleteItemFromInventory(T item);
+        void SwapEquipmentItem(T& itemToSwap, T& itemInSlot, Items::DesiredEquipmentSlot slot);
 
         // Sort algorithms, using bubblesort
         void SortForWeight();

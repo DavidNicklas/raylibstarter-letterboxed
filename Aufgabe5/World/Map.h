@@ -12,6 +12,7 @@
 #include "../Items/Equipment/Hat.h"
 #include "../Items/Equipment/Shoes.h"
 #include "../Items/Equipment/Honey.h"
+#include "../Items/Equipment/MysticalHoney.h"
 #include "../Items/Steak.h"
 #include "../Items/Fish.h"
 #include "../Items/Stick.h"
@@ -79,6 +80,7 @@ namespace Game
         Sprite sprite_shoes = Sprite(0, 0, "../../assets/graphics/boots.png");
         Sprite sprite_fish = Sprite(0, 0, "../../assets/graphics/fish.png");
         Sprite sprite_stick = Sprite(0, 0, "../../assets/graphics/stick.png");
+        Sprite sprite_mysticalHoney = Sprite(0, 0, "../../assets/graphics/mysticalHoney.png");
     };
 
 }

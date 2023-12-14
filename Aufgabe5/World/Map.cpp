@@ -142,7 +142,7 @@ namespace Game
     /* Creates a random item on the current ITEM tile and puts it in the container for all item tiles */
     void Map::RandomizeItem(int col, int row)
     {
-        int randomValue = GetRandomValue(0, 6);
+        int randomValue = GetRandomValue(0, 7);
 
         itemTiles[col][row].x = col;
         itemTiles[col][row].y = row;
@@ -155,6 +155,7 @@ namespace Game
             case 4: itemTiles[col][row].item = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
             case 5: itemTiles[col][row].item = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
             case 6: itemTiles[col][row].item = std::make_shared<Items::Stick>(sprite_stick.GetTexture()); break;
+            case 7: itemTiles[col][row].item = std::make_shared<Items::MysticalHoney>(sprite_mysticalHoney.GetTexture()); break;
         }
     }
 
@@ -216,7 +217,7 @@ namespace Game
         for (int i = 0; i < playerChar->inventory.GetCapacity(); ++i)
         {
             std::shared_ptr<Items::BaseItem> testItem = nullptr;
-            int randomValue = GetRandomValue(0, 6);
+            int randomValue = GetRandomValue(0, 7);
             switch (randomValue)
             {
                 case 0: testItem = std::make_shared<Items::Coffee>(sprite_coffee.GetTexture()); break;
@@ -226,6 +227,7 @@ namespace Game
                 case 4: testItem = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
                 case 5: testItem = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
                 case 6: testItem = std::make_shared<Items::Stick>(sprite_stick.GetTexture()); break;
+                case 7: testItem = std::make_shared<Items::MysticalHoney>(sprite_mysticalHoney.GetTexture()); break;
             }
 
             try

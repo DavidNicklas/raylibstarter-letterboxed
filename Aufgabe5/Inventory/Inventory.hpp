@@ -68,31 +68,80 @@ namespace Inventory
             switch (item->GetDesiredEquipmentSlot()) // set item into slot
             {
                 case Items::DesiredEquipmentSlot::HAT:
-                    if (equipmentContainer[0] == nullptr) equipmentContainer[Items::DesiredEquipmentSlot::HAT] = item;
-                    else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
+                    if (equipmentContainer[0] == nullptr)
+                    {
+                        equipmentContainer[Items::DesiredEquipmentSlot::HAT] = item;
+                        DeleteItemFromInventory(item);
+                    }
+                    // If there is already an item, they can be swapped out if newItem has more strength
+                    // than the item in the slot
+                    else if (std::dynamic_pointer_cast<Items::EquippableItem>(equipmentContainer[0]) && std::dynamic_pointer_cast<Items::EquippableItem>(item))
+                    {
+                        // If the items can be cast correctly, compare the strength values
+                        SwapEquipmentItem(item, equipmentContainer[0], Items::DesiredEquipmentSlot::HAT);
+                    }
                     break;
-                case Items::DesiredEquipmentSlot::HONEY:
-                    if (equipmentContainer[1] == nullptr) equipmentContainer[Items::DesiredEquipmentSlot::HONEY] = item;
-                    else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
-                    break;
-                case Items::DesiredEquipmentSlot::SHOES:
-                    if (equipmentContainer[2] == nullptr) equipmentContainer[Items::DesiredEquipmentSlot::SHOES] = item;
-                    else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
-                    break;
-            }
 
-            // delete the item from the inventory
-            for (int i = 0; i < capacity; ++i)
-            {
-                if (itemContainer[i] == item)
-                {
-                    itemContainer[i] = nullptr;
-                    numberOfItems--;
+                case Items::DesiredEquipmentSlot::HONEY:
+                    if (equipmentContainer[1] == nullptr)
+                    {
+                        equipmentContainer[Items::DesiredEquipmentSlot::HONEY] = item;
+                        DeleteItemFromInventory(item);
+                    }
+                    // If there is already an item, they can be swapped out if newItem has more strength
+                    // than the item in the slot
+                    else if (std::dynamic_pointer_cast<Items::EquippableItem>(equipmentContainer[1]) && std::dynamic_pointer_cast<Items::EquippableItem>(item))
+                    {
+                        // If the items can be cast correctly, compare the strength values
+                        SwapEquipmentItem(item, equipmentContainer[1], Items::DesiredEquipmentSlot::HONEY);
+                    }
                     break;
-                }
+
+                case Items::DesiredEquipmentSlot::SHOES:
+                    if (equipmentContainer[2] == nullptr)
+                    {
+                        equipmentContainer[Items::DesiredEquipmentSlot::SHOES] = item;
+                        DeleteItemFromInventory(item);
+                    }
+                    // If there is already an item, they can be swapped out if newItem has more strength
+                    // than the item in the slot
+                    else if (std::dynamic_pointer_cast<Items::EquippableItem>(equipmentContainer[2]) && std::dynamic_pointer_cast<Items::EquippableItem>(item))
+                    {
+                        // If the items can be cast correctly, compare the strength values
+                        SwapEquipmentItem(item, equipmentContainer[2], Items::DesiredEquipmentSlot::SHOES);
+                    }
+                    break;
             }
         }
         else throw Error::EquipmentError(__FILE__, __FUNCTION__, __LINE__);
+    }
+
+    template<typename T, int size>
+    void Inventory<T, size>::DeleteItemFromInventory(T item)
+    {
+        for (int i = 0; i < capacity; ++i)
+        {
+            if (itemContainer[i] == item)
+            {
+                itemContainer[i] = nullptr;
+                numberOfItems--;
+                break;
+            }
+        }
+    }
+
+    template<typename T, int size>
+    void Inventory<T, size>::SwapEquipmentItem(T& itemToSwap, T& itemInSlot, Items::DesiredEquipmentSlot slot)
+    {
+        std::shared_ptr<Items::EquippableItem> slotItem = std::dynamic_pointer_cast<Items::EquippableItem>(itemInSlot);
+        std::shared_ptr<Items::EquippableItem> pickedUpItem = std::dynamic_pointer_cast<Items::EquippableItem>(itemToSwap);
+        if (slotItem->GetAdditionalStrength() < pickedUpItem->GetAdditionalStrength())
+        {
+            AddItem(itemInSlot); // Add the item currently in the equipment slot to the inventory
+            equipmentContainer[slot] = itemToSwap; // Put the new item in the equipment slot
+            DeleteItemFromInventory(itemToSwap); // Delete the new item from the inventory
+        }
+        else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
     }
 
     template<typename T, int size>
