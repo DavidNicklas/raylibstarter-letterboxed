@@ -6,9 +6,13 @@ namespace Game
     void World::Update()
     {
         map->Update();
-        playerChar->Update();
+        // Only update the player if robot is not in inventory & if the robot has not reached the goal
+        if (!robot->GetInventoryUI()->ShowInventory() && !robot->ReachedGoal())
+            playerChar->Update();
+        // Only update the robot if player is not in inventory & if the player has not reached the goal
+        if (!playerChar->GetInventoryUI()->ShowInventory() && !playerChar->ReachedGoal())
+            robot->Update();
         menu->Update(playerChar);
-        robot->Update();
         gameOver->Update();
     }
 

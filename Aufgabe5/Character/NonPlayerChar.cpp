@@ -20,6 +20,7 @@ namespace Char
         if (this->GetInventoryUI()->ShowInventory())
         {
             this->GetInventoryUI()->Update();
+            if (this->GetInventoryUI()->ShowSortMenu() && IsKeyPressed(KEY_ENTER)) SortItems();
         }
         // Logic when inventory is hidden
         else
@@ -155,6 +156,16 @@ namespace Char
         {
             if (this->GetInventoryUI()->ShowInventory()) this->GetInventoryUI()->SetShowInventory(false);
             else this->GetInventoryUI()->SetShowInventory(true);
+        }
+    }
+
+    void NonPlayerChar::SortItems()
+    {
+        switch (this->GetInventoryUI()->GetCurrentSortButton())
+        {
+            case UI::CurrentSortButton::WEIGHT: inventory.SortForWeight(); break;
+            case UI::CurrentSortButton::NAME: inventory.SortForName(); break;
+            case UI::CurrentSortButton::COST: inventory.SortForCost(); break;
         }
     }
 

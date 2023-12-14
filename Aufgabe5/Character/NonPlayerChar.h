@@ -30,6 +30,7 @@ namespace Char
         void PickUpItem() override;
         bool PlayerOnExitTile() override;
         void OpenInventory();
+        void SortItems();
 
         std::vector<std::pair<int, int>> path;
         int currentProgressOnGraph = 0; // stores at which index of the graph the player currently is

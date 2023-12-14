@@ -135,7 +135,7 @@ namespace Char
 
     void PlayerChar::SortItems()
     {
-        switch (inventoryUi->GetCurrentSortButton())
+        switch (this->GetInventoryUI()->GetCurrentSortButton())
         {
             case UI::CurrentSortButton::WEIGHT: inventory.SortForWeight(); break;
             case UI::CurrentSortButton::NAME: inventory.SortForName(); break;
