@@ -2,7 +2,6 @@
 
 #include "NonPlayerChar.h"
 #include "../World/Map.h"
-#include "raylib.h"
 
 namespace Char
 {
@@ -10,6 +9,7 @@ namespace Char
     NonPlayerChar::NonPlayerChar()
     {
         this->playerSprite.ChangeTexture(nonPlayerTex);
+        this->health = 10;
         currentProgressOnGraph = 0;
     }
 

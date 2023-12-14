@@ -26,6 +26,12 @@ namespace Char
         bool CanMove(Direction direction);
         bool ReachedGoal() const { return this->reachedGoal; }
 
+        // Gets for stats
+        int GetStrength() const { return this->strength; }
+        int GetHealth() const { return this->health; }
+        int GetPortableWeight() const { return this->portableWeight; }
+        int GetCurrentWeight() const { return this->totalWeight; }
+
         // Position of Player is implemented by Sprite
         Sprite playerSprite = Sprite();
 
@@ -46,6 +52,7 @@ namespace Char
         Direction direction;
 
         bool reachedGoal = false; // Stores if the player has reached the exit tile
+        int health = 0;
         int strength = 10; // Defines the weight, the player can carry in his inventory
         int totalWeight = 0; // Defines the current weight of all his items in his inventory
         int strengthMultiplier = 2;

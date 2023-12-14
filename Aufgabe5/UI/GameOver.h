@@ -21,6 +21,7 @@ namespace UI
 
         void NavigateGameOverMenu();
         void DrawGameOverMenu();
+        void ResetUI();
 
         Sprite gameOverScreen = Sprite(0, 0, "../../assets/graphics/backgrounds/goalMessage.png");
         Sprite playAgainHighlight = Sprite(0, 0, "../../assets/graphics/backgrounds/playAgainHighlight.png");

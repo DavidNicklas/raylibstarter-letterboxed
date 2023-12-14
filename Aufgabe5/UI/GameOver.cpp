@@ -1,9 +1,11 @@
 #include "GameOver.h"
 #include "config.h"
 #include "../World/Map.h"
+#include "../UI/InventoryUI.h"
 
 namespace UI
 {
+
     void GameOver::Update()
     {
         if (playerChar->ReachedGoal() || nonPlayerChar->ReachedGoal())
@@ -42,9 +44,10 @@ namespace UI
             {
                 case CurrentGameOverOption::PLAY_AGAIN:
                     map->ResetMap();
+                    ResetUI();
                     break;
                 case CurrentGameOverOption::SHOW_INVENTORY:
-                    
+                    if (playerChar->ReachedGoal()) playerChar->inventoryUi->SetShowInventory(true);
                     break;
             }
         }
@@ -60,4 +63,10 @@ namespace UI
             case CurrentGameOverOption::SHOW_INVENTORY: DrawTexture(showInventoryHighlight.GetTexture(), showInventoryHighlight.posX, showInventoryHighlight.posY, WHITE); break;
         }
     }
+
+    void GameOver::ResetUI()
+    {
+        currentGameOverOption = CurrentGameOverOption::PLAY_AGAIN;
+    }
+
 }

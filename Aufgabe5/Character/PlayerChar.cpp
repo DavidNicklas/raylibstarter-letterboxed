@@ -8,6 +8,7 @@ namespace Char
     PlayerChar::PlayerChar()
     {
         this->playerSprite.ChangeTexture(playerTex);
+        this->health = 20;
     }
 
     void PlayerChar::Update()

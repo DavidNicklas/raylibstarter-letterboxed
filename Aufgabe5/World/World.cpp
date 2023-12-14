@@ -19,8 +19,8 @@ namespace Game
         robot->Draw();
         playerChar->Draw();
         menu->Draw();
-        inventoryUi->Draw();
         gameOver->Draw();
+        inventoryUi->Draw();
     }
 
     void World::CreateObjects()

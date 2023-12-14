@@ -19,6 +19,7 @@ namespace UI
 
         int GetSelectedInventorySlot() { return this->selectedInventorySlot; }
         bool ShowInventory() { return this->showInventory; }
+        void SetShowInventory(bool shouldShow) { this->showInventory = shouldShow; }
         bool ShowSortMenu() { return this->showSortMenu; }
         CurrentSortButton GetCurrentSortButton() { return this->currentSortButton; }
 
