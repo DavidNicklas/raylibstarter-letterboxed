@@ -35,6 +35,7 @@ namespace Game
         void Draw();
 
         void GenerateMap();
+        void ResetMap();
 
         int GetStartRow() const { return startRow; }
         int GetStartCol() const { return startCol; }

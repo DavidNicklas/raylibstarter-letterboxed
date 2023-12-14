@@ -10,7 +10,7 @@ namespace Char
     class NonPlayerChar : public BaseChar
     {
     public:
-        NonPlayerChar(Texture2D newTexture);
+        NonPlayerChar();
 
         void Update();
         void Draw();
@@ -32,9 +32,11 @@ namespace Char
         std::vector<std::pair<int, int>> path;
         int currentProgressOnGraph = 0; // stores at which index of the graph the player currently is
 
-        Vector2 currentPosition;
+        Vector2 currentPosition = {0, 0};
         bool allowMovement = false;
         bool isMoving = false;
+
+        Texture2D nonPlayerTex = LoadTexture("../../assets/graphics/robotBear.png");
     };
 
 }

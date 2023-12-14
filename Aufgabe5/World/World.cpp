@@ -26,8 +26,8 @@ namespace Game
     void World::CreateObjects()
     {
         map = new Map();
-        playerChar = new Char::PlayerChar(playerTex);
-        robot = new Char::NonPlayerChar(playerTex);
+        playerChar = new Char::PlayerChar();
+        robot = new Char::NonPlayerChar();
         inventoryUi = new UI::InventoryUI();
         menu = new UI::Menu();
         gameOver = new UI::GameOver();
@@ -49,8 +49,10 @@ namespace Game
         robot->SetPath(map->path.path);
         robot->SetStartPosition();
 
+        // gameOver need characters to check if its active, needs the map to reset it if player presses play again
         gameOver->playerChar = playerChar;
         gameOver->nonPlayerChar = robot;
+        gameOver->map = map;
     }
 
     void World::DeleteObjects()

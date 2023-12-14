@@ -22,14 +22,7 @@ namespace Game
     {
         if (IsKeyPressed(KEY_G) && !playerChar->inventoryUi->ShowInventory())
         {
-            GenerateMap();
-            // Resets player stats
-            playerChar->ResetPlayerStats();
-            playerChar->inventory.ResetInventory();
-            // Reset NPC
-            nonPlayerChar->ResetPlayerStats();
-            // Reset path
-            path.showPath = false;
+            ResetMap();
         }
 
         if (IsKeyPressed(KEY_L)) FillInventoryForDemonstrationPurpose();
@@ -244,6 +237,18 @@ namespace Game
                 std::cout << e.what() << std::endl;
             }
         }
+    }
+
+    void Map::ResetMap()
+    {
+        GenerateMap();
+        // Resets player stats
+        playerChar->ResetPlayerStats();
+        playerChar->inventory.ResetInventory();
+        // Reset NPC
+        nonPlayerChar->ResetPlayerStats();
+        // Reset path
+        path.showPath = false;
     }
 
 }

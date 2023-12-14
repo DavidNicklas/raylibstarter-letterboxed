@@ -5,9 +5,9 @@
 namespace Char
 {
 
-    PlayerChar::PlayerChar(Texture2D newTexture)
+    PlayerChar::PlayerChar()
     {
-        this->playerSprite.ChangeTexture(newTexture);
+        this->playerSprite.ChangeTexture(playerTex);
     }
 
     void PlayerChar::Update()
@@ -40,6 +40,7 @@ namespace Char
         this->totalWeight = 0;
         this->strength = 10;
         this->portableWeight = strength * strengthMultiplier;
+        this->reachedGoal = false;
     }
 
     void PlayerChar::Move()

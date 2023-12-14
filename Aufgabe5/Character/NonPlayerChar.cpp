@@ -7,9 +7,9 @@
 namespace Char
 {
 
-    NonPlayerChar::NonPlayerChar(Texture2D newTexture)
+    NonPlayerChar::NonPlayerChar()
     {
-        this->playerSprite.ChangeTexture(newTexture);
+        this->playerSprite.ChangeTexture(nonPlayerTex);
         currentProgressOnGraph = 0;
     }
 
@@ -25,7 +25,7 @@ namespace Char
     void NonPlayerChar::Draw()
     {
         DrawTexture(playerSprite.GetTexture(), (int)currentPosition.x, (int)currentPosition.y, WHITE);
-        if (totalWeight >= portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
+        if (totalWeight >= portableWeight) DrawText("Robot carries to many items.", 40, 30, 30, RED);
     }
 
     void NonPlayerChar::Move()

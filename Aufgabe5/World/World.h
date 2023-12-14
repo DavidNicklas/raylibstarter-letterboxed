@@ -29,8 +29,6 @@ namespace Game
         UI::Menu* menu;
         UI::GameOver* gameOver;
 
-        Texture2D playerTex = LoadTexture("../../assets/graphics/bear.png");
-
         void CreateObjects();
     };
 

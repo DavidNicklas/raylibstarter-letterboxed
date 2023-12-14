@@ -10,7 +10,7 @@ namespace Char
     class PlayerChar : public BaseChar
     {
     public:
-        PlayerChar(Texture2D newTexture);
+        PlayerChar();
 
         void Update();
         void Draw();
@@ -35,6 +35,7 @@ namespace Char
 
         bool PlayerOnExitTile() override;
 
+        Texture2D playerTex = LoadTexture("../../assets/graphics/bear.png");
     };
 
 }

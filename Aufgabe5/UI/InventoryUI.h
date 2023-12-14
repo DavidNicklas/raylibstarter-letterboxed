@@ -7,8 +7,6 @@
 namespace UI
 {
 
-    enum CurrentSortButton {WEIGHT, NAME, COST};
-
     class InventoryUI
     {
     public:
@@ -25,20 +23,12 @@ namespace UI
         CurrentSortButton GetCurrentSortButton() { return this->currentSortButton; }
 
     private:
-        bool showInventory;
-        bool showSortMenu;
-        int selectedInventorySlot;
-        CurrentSortButton currentSortButton;
+        bool showInventory = false;
+        bool showSortMenu = false;
+        int selectedInventorySlot = 0;
+        CurrentSortButton currentSortButton = CurrentSortButton::WEIGHT;
 
         std::shared_ptr<Items::BaseItem> selectedItem = nullptr; // stores the current item which is selected in the inventory
-
-        Sprite invTex = Sprite(0, 0, "../../assets/graphics/inventoryScreen.png");
-        Sprite equipmentSlotKeys = Sprite(0, 0, "../../assets/graphics/EquipmentSlotKeyBinds.png");
-
-        Sprite invSortMenu = Sprite(0, 0, "../../assets/graphics/Inventory/inventorySortWindow.png");
-        Sprite weightHighlight = Sprite(0, 0, "../../assets/graphics/Inventory/weightHighlight.png");
-        Sprite nameHighlight = Sprite(0, 0, "../../assets/graphics/Inventory/nameHighlight.png");
-        Sprite costHighlight = Sprite(0, 0, "../../assets/graphics/Inventory/costHighlight.png");
 
         void NavigateInventory(); // logic for navigating threw inventory
         void NavigateSortMenu(); // logic for navigating threw sort menu
@@ -52,6 +42,15 @@ namespace UI
         Sprite highlightBox = Sprite(0, 0, "../../assets/graphics/invHighlightBox.png");
         void DrawHighlightBox();
         Vector2 highlightBoxOffset = {44, 50};
+
+        // All textures that are needed
+        Sprite invTex = Sprite(0, 0, "../../assets/graphics/inventoryScreen.png");
+        Sprite equipmentSlotKeys = Sprite(0, 0, "../../assets/graphics/EquipmentSlotKeyBinds.png");
+
+        Sprite invSortMenu = Sprite(0, 0, "../../assets/graphics/Inventory/inventorySortWindow.png");
+        Sprite weightHighlight = Sprite(0, 0, "../../assets/graphics/Inventory/weightHighlight.png");
+        Sprite nameHighlight = Sprite(0, 0, "../../assets/graphics/Inventory/nameHighlight.png");
+        Sprite costHighlight = Sprite(0, 0, "../../assets/graphics/Inventory/costHighlight.png");
 
         // Those vectors are needed to draw the items at the right position in the inventory
         Vector2 slot0Pos = {227, 61};
