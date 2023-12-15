@@ -12,8 +12,8 @@ namespace Items
         {
             texture.ChangeTexture(newTexture);
 
-            SetWeight(4);
-            SetCost(8);
+            SetWeight(3);
+            SetCost(13);
             SetName("Fish");
             SetDesc("It is good for mental health");
             SetItemType(ItemType::NOT_EQUIPPABLE);

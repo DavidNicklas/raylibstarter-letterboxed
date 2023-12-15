@@ -1,5 +1,5 @@
+#include <algorithm>
 #include "Map.h"
-#include "../UI/InventoryUI.h"
 #include "../Helper.h"
 
 namespace Game
@@ -70,6 +70,19 @@ namespace Game
 
     /**** MAP-GENERATION-FUNCTIONS ****/
     //================================================================================================================//
+    void Map::ResetMap()
+    {
+        GenerateMap();
+        // Resets player stats
+        playerChar->ResetPlayerStats();
+        playerChar->inventory.ResetInventory();
+        // Reset NPC
+        nonPlayerChar->ResetPlayerStats();
+        nonPlayerChar->inventory.ResetInventory();
+        // Reset path
+        path.showPath = false;
+    }
+
     /* Resets the map and initializes it with 0 */
     void Map::ClearMap()
     {
@@ -125,36 +138,54 @@ namespace Game
 
     void Map::GenerateItems()
     {
+        // The following block spawns every item one single time
+        std::vector<int> itemIndex = {0, 1, 2, 3, 4, 5, 6, 7};
+        for (int i = 0; i < itemIndex.size(); ++i)
+        {
+            std::pair<int, int> spawnPoint = GetRandomItemSpawn();
+
+            map[spawnPoint.first][spawnPoint.second] = TileState::ITEM;
+            RandomizeItem(spawnPoint.first, spawnPoint.second, itemIndex[i]);
+            itemsOnMap++;
+        }
+
+        // The following block spawns random non equippable items till maxItemsOnMap is reached
         while (itemsOnMap < maxItemsOnMap)
         {
-            int col = GetRandomValue(0, mapWidth);
-            int row = GetRandomValue(0, mapHeight);
+            std::pair<int, int> spawnPoint = GetRandomItemSpawn();
 
-            if (map[col][row] == TileState::PASSABLE && map[col][row] != TileState::ITEM)
-            {
-                map[col][row] = TileState::ITEM;
-                RandomizeItem(col, row);
-                itemsOnMap++;
-            }
+            map[spawnPoint.first][spawnPoint.second] = TileState::ITEM;
+            RandomizeItem(spawnPoint.first, spawnPoint.second, GetRandomValue(0, 3));
+            itemsOnMap++;
         }
     }
 
-    /* Creates a random item on the current ITEM tile and puts it in the container for all item tiles */
-    void Map::RandomizeItem(int col, int row)
+    std::pair<int, int> Map::GetRandomItemSpawn()
     {
-        int randomValue = GetRandomValue(0, 7);
+        std::pair<int, int> spawnPoint;
+        do
+        {
+            spawnPoint.first = GetRandomValue(0, mapWidth);
+            spawnPoint.second = GetRandomValue(0, mapHeight);
+        } while (map[spawnPoint.first][spawnPoint.second] != TileState::PASSABLE || map[spawnPoint.first][spawnPoint.second] == TileState::ITEM);
 
+        return spawnPoint;
+    }
+
+    /* Creates a random item on the current ITEM tile and puts it in the container for all item tiles */
+    void Map::RandomizeItem(int col, int row, int randomItemValue)
+    {
         itemTiles[col][row].x = col;
         itemTiles[col][row].y = row;
-        switch (randomValue)
+        switch (randomItemValue)
         {
             case 0: itemTiles[col][row].item = std::make_shared<Items::Coffee>(sprite_coffee.GetTexture()); break;
-            case 1: itemTiles[col][row].item = std::make_shared<Items::Hat>(sprite_hat.GetTexture()); break;
-            case 2: itemTiles[col][row].item = std::make_shared<Items::Shoes>(sprite_shoes.GetTexture()); break;
-            case 3: itemTiles[col][row].item = std::make_shared<Items::Honey>(sprite_honey.GetTexture()); break;
-            case 4: itemTiles[col][row].item = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
-            case 5: itemTiles[col][row].item = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
-            case 6: itemTiles[col][row].item = std::make_shared<Items::Stick>(sprite_stick.GetTexture()); break;
+            case 1: itemTiles[col][row].item = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
+            case 2: itemTiles[col][row].item = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
+            case 3: itemTiles[col][row].item = std::make_shared<Items::Stick>(sprite_stick.GetTexture()); break;
+            case 4: itemTiles[col][row].item = std::make_shared<Items::Hat>(sprite_hat.GetTexture()); break;
+            case 5: itemTiles[col][row].item = std::make_shared<Items::Honey>(sprite_honey.GetTexture()); break;
+            case 6: itemTiles[col][row].item = std::make_shared<Items::Shoes>(sprite_shoes.GetTexture()); break;
             case 7: itemTiles[col][row].item = std::make_shared<Items::MysticalHoney>(sprite_mysticalHoney.GetTexture()); break;
         }
     }
@@ -214,11 +245,11 @@ namespace Game
 
     void Map::FillInventoryForDemonstrationPurpose()
     {
+        std::vector<int> itemIndex = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
         for (int i = 0; i < playerChar->inventory.GetCapacity(); ++i)
         {
             std::shared_ptr<Items::BaseItem> testItem = nullptr;
-            int randomValue = GetRandomValue(0, 7);
-            switch (randomValue)
+            switch (itemIndex[i])
             {
                 case 0: testItem = std::make_shared<Items::Coffee>(sprite_coffee.GetTexture()); break;
                 case 1: testItem = std::make_shared<Items::Hat>(sprite_hat.GetTexture()); break;
@@ -228,6 +259,8 @@ namespace Game
                 case 5: testItem = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
                 case 6: testItem = std::make_shared<Items::Stick>(sprite_stick.GetTexture()); break;
                 case 7: testItem = std::make_shared<Items::MysticalHoney>(sprite_mysticalHoney.GetTexture()); break;
+                case 8: testItem = std::make_shared<Items::MysticalHoney>(sprite_mysticalHoney.GetTexture()); break;
+                case 9: testItem = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
             }
 
             try
@@ -239,19 +272,6 @@ namespace Game
                 std::cout << e.what() << std::endl;
             }
         }
-    }
-
-    void Map::ResetMap()
-    {
-        GenerateMap();
-        // Resets player stats
-        playerChar->ResetPlayerStats();
-        playerChar->inventory.ResetInventory();
-        // Reset NPC
-        nonPlayerChar->ResetPlayerStats();
-        nonPlayerChar->inventory.ResetInventory();
-        // Reset path
-        path.showPath = false;
     }
 
 }

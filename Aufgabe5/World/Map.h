@@ -61,7 +61,8 @@ namespace Game
         void ClearMap();
         void GenerateStartAndEnd();
         void GenerateItems();
-        void RandomizeItem(int col, int row);
+        void RandomizeItem(int col, int row, int randomItemValue);
+        std::pair<int, int> GetRandomItemSpawn();
         void GenerateValidPath(int endRow, int endCol);
         void GenerateShortestPath();
         bool IsTileInBounds(int row, int col);
