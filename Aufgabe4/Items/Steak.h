@@ -12,9 +12,9 @@ namespace Items
         {
             texture.ChangeTexture(newTexture);
 
-            SetWeight(3);
+            SetWeight(4);
             SetCost(5);
-            SetName("Steak");
+            SetName("Raw Meat");
             SetDesc("A delicious meal to safe proteins");
             SetItemType(ItemType::NOT_EQUIPPABLE);
         }

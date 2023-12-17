@@ -109,8 +109,9 @@ namespace Algorithm
         return {};
     }
 
-/* // TODO Test A* function
-    vector<pair<int, int>> AStarTest(int grid[][17], pair<int, int> start, pair<int, int> goal)
+    /*
+ // TODO Test A* function
+    vector<pair<int, int>> AStarTest(const vector<vector<int>>& grid, pair<int, int> start, pair<int, int> goal)
     {
         // Define possible movement directions (4 directions: up, down, left, right)
         const vector<pair<int, int>> directions =
@@ -160,11 +161,6 @@ namespace Algorithm
 
                 return path;
             }
-
-            // Mark the current node as visited
-            closedNodes.push_back(current);
-
-            CreateNeighbours(current);
 
             // Explore neighbors
             for (const auto& dir : directions)

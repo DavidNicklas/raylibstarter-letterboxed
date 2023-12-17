@@ -5,7 +5,7 @@
 struct Node
 {
     Node(int col, int row, int gCost, int hCost)
-    : col(col), row(row), gCost(gCost), hCost(hCost) {}
+    : col(col), row(row), gCost(gCost), hCost(hCost), parent(nullptr) {}
 
     int col;
     int row;
@@ -19,4 +19,5 @@ struct Node
 
     // TODO For test A* function
     std::vector<Node> neighbours;
+    Node* parent;
 };
