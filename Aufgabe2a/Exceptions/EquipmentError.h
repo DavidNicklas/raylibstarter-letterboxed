@@ -2,6 +2,9 @@
 
 #include "iostream"
 #include <sstream>
+#include <memory>
+
+#include "../Items/BaseItem.h"
 
 namespace Error
 {
@@ -14,14 +17,16 @@ namespace Error
         std::string desc;
         int line;
         std::string outputMsg;
+        std::shared_ptr<Items::BaseItem> equipItem;
 
     public:
-        EquipmentError(const char *inFile, const char *inFunction, int inLine)
+        EquipmentError(const char *inFile, const char *inFunction, int inLine, std::shared_ptr<Items::BaseItem> equipItem)
         {
-            this->desc = "Can't equip/unequip this item";
+            this->equipItem = equipItem;
             this->file = inFile;
             this->function = inFunction;
             this->line = inLine;
+            this->desc = "Can't equip/unequip item: " + equipItem->GetName();
 
             std::stringstream outputMsgSS;
             outputMsgSS << "*****************************\n" << "Error: " << desc << "\nException in file: " << file << "\nFunction: " << function

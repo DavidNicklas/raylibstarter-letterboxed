@@ -1,4 +1,5 @@
 #include "Inventory.h"
+#include "../Items/Equipment/EquippableItem.h"
 
 namespace Inventory
 {
@@ -33,34 +34,38 @@ namespace Inventory
     {
         if (item->GetItemType() == Items::ItemType::EQUIPPABLE) // check if item can be equipped
         {
-            switch (item->GetDesiredEquipmentSlot()) // set item into slot
+            std::shared_ptr<Items::EquippableItem> equippableItem = std::dynamic_pointer_cast<Items::EquippableItem>(item);
+            if (equippableItem)
             {
-                case Items::DesiredEquipmentSlot::HAT:
-                    if (equipmentContainer[0] == nullptr) equipmentContainer[Items::DesiredEquipmentSlot::HAT] = item;
-                    else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
-                    break;
-                case Items::DesiredEquipmentSlot::HONEY:
-                    if (equipmentContainer[1] == nullptr) equipmentContainer[Items::DesiredEquipmentSlot::HONEY] = item;
-                    else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
-                    break;
-                case Items::DesiredEquipmentSlot::SHOES:
-                    if (equipmentContainer[2] == nullptr) equipmentContainer[Items::DesiredEquipmentSlot::SHOES] = item;
-                    else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
-                    break;
-            }
-
-            // delete the item from the inventory
-            for (int i = 0; i < capacity; ++i)
-            {
-                if (itemContainer[i] == item)
+                switch (equippableItem->GetDesiredEquipmentSlot()) // set item into slot
                 {
-                    itemContainer[i] = nullptr;
-                    numberOfItems--;
-                    break;
+                    case Items::DesiredEquipmentSlot::HAT:
+                        if (equipmentContainer[0] == nullptr) equipmentContainer[Items::DesiredEquipmentSlot::HAT] = item;
+                        else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
+                        break;
+                    case Items::DesiredEquipmentSlot::HONEY:
+                        if (equipmentContainer[1] == nullptr) equipmentContainer[Items::DesiredEquipmentSlot::HONEY] = item;
+                        else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
+                        break;
+                    case Items::DesiredEquipmentSlot::SHOES:
+                        if (equipmentContainer[2] == nullptr) equipmentContainer[Items::DesiredEquipmentSlot::SHOES] = item;
+                        else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
+                        break;
+                }
+
+                // delete the item from the inventory
+                for (int i = 0; i < capacity; ++i)
+                {
+                    if (itemContainer[i] == item)
+                    {
+                        itemContainer[i] = nullptr;
+                        numberOfItems--;
+                        break;
+                    }
                 }
             }
         }
-        else throw Error::EquipmentError(__FILE__, __FUNCTION__, __LINE__);
+        else throw Error::EquipmentError(__FILE__, __FUNCTION__, __LINE__, item);
     }
 
     template<typename T, int size>
@@ -77,7 +82,7 @@ namespace Inventory
                 }
                 else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
             }
-            else throw Error::EquipmentError(__FILE__, __FUNCTION__, __LINE__);
+            else throw Error::EquipmentError(__FILE__, __FUNCTION__, __LINE__, equipmentContainer[slot]);
         }
         else throw Error::OutOfRange(__FILE__, __FUNCTION__, __LINE__);
     }

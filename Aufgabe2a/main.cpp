@@ -31,6 +31,7 @@ int main()
         inventory.AddItem(coffee);
         inventory.AddItem(coffee);
         inventory.AddItem(hat);
+        inventory.EquipItem(coffee);
         inventory.EquipItem(hat);
         inventory.AddItem(coffee);
         inventory.UnequipItem(0);
