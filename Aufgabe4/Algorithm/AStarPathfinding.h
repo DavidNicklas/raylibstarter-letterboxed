@@ -17,7 +17,18 @@ namespace Algorithm
     std::vector<std::pair<int, int>> AStar(const std::vector<std::vector<int>>& grid, std::pair<int, int> start, std::pair<int, int> goal);
     int CalculateHeuristic(int col, int row, int endCol, int endRow);
 
-    // TODO For test A* Function
-    bool CompareFCost(Node node1, Node node2, std::pair<int, int> goal);
+    struct pair_hash
+    {
+        template <class T1, class T2>
+        std::size_t operator () (const std::pair<T1, T2>& p) const
+        {
+            auto h1 = std::hash<T1>{}(p.first);
+            auto h2 = std::hash<T2>{}(p.second);
+
+            // Hier eine einfache Kombination der Hash-Werte
+            // Sie können dies je nach Anforderungen ändern
+            return h1 ^ h2;
+        }
+    };
 
 }
