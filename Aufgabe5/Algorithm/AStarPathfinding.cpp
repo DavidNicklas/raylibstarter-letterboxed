@@ -21,9 +21,9 @@ namespace Algorithm
     {
         // Define possible movement directions (4 directions: up, down, left, right)
         const vector<pair<int, int>> directions =
-                {
-                        {-1, 0}, {1, 0}, {0, -1}, {0, 1}
-                };
+        {
+            {-1, 0}, {1, 0}, {0, -1}, {0, 1}
+        };
 
         // Priority queue to store nodes with the minimum total cost (f)
         priority_queue<Node, vector<Node>, greater<Node>> openSet;
@@ -32,12 +32,13 @@ namespace Algorithm
         vector<vector<bool>> closedSet(grid.size(), vector<bool>(grid[0].size(), false));
 
         // Set to store nodes that are currently in the open set
+        // 1. Argument: key (data type of the values)
+        // 2. Argument: hash_function (the way the values are converted to a hash value)
         unordered_set<pair<int, int>, pair_hash> inOpenSet;
 
         // Grid for storing the parents
         vector<vector<Node>> nodeGrid(grid.size(), vector<Node>(grid[0].size(), Node(0, 0, 0, 0)));
 
-        // Initialize the start node
         Node startNode(start.first, start.second, 0, CalculateHeuristic(start.first, start.second, goal.first, goal.second));
         openSet.push(startNode);
 
@@ -85,7 +86,6 @@ namespace Algorithm
                         // Calculate the Euclidean heuristic (estimated cost to reach the goal from the neighbor)
                         int newH = CalculateHeuristic(newX, newY, goal.first, goal.second);
 
-                        // Create a new node for the neighbor
                         Node neighbor(newX, newY, newG, newH);
 
                         // Check if the neighbor is not in the open set or the new path is better

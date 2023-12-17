@@ -19,14 +19,18 @@ namespace Algorithm
 
     struct pair_hash
     {
+        // Overwrite the function call operator for use as a hash function
+        // Overwriting the function call operator allows to call "objects like functions"
+        // e.g.
         template <class T1, class T2>
         std::size_t operator () (const std::pair<T1, T2>& p) const
         {
+            // Create a hash values for the elements of the pair
             auto h1 = std::hash<T1>{}(p.first);
             auto h2 = std::hash<T2>{}(p.second);
 
-            // Hier eine einfache Kombination der Hash-Werte
-            // Sie können dies je nach Anforderungen ändern
+            // Combine both hash values
+            // It uses bitwise XOR-operator (^)
             return h1 ^ h2;
         }
     };
