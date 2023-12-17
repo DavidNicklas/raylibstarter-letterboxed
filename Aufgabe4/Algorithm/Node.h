@@ -5,7 +5,7 @@
 struct Node
 {
     Node(int col, int row, int gCost, int hCost)
-    : col(col), row(row), gCost(gCost), hCost(hCost), parent(nullptr) {}
+    : col(col), row(row), gCost(gCost), hCost(hCost) {}
 
     int col;
     int row;
@@ -16,8 +16,4 @@ struct Node
 
     // Overload the comparison operator for the priority queue
     bool operator>(const Node& other) const { return GetFCost() > other.GetFCost(); }
-
-    // TODO For test A* function
-    std::vector<Node> neighbours;
-    Node* parent;
 };

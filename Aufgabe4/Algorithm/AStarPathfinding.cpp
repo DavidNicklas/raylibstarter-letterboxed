@@ -17,20 +17,21 @@ using namespace std;
 namespace Algorithm
 {
 
-    // A* algorithm function
     vector<pair<int, int>> AStar(const vector<vector<int>>& grid, pair<int, int> start, pair<int, int> goal)
     {
         // Define possible movement directions (4 directions: up, down, left, right)
         const vector<pair<int, int>> directions =
-        {
-            {-1, 0}, {1, 0}, {0, -1}, {0, 1}
-        };
+                {
+                        {-1, 0}, {1, 0}, {0, -1}, {0, 1}
+                };
 
         // Priority queue to store nodes with the minimum total cost (f)
         priority_queue<Node, vector<Node>, greater<Node>> openSet;
 
         // Closed set to store nodes that have already been visited
         vector<vector<bool>> closedSet(grid.size(), vector<bool>(grid[0].size(), false));
+
+        // Set to store nodes that are currently in the open set
         unordered_set<pair<int, int>, pair_hash> inOpenSet;
 
         // Grid for storing the parents
@@ -76,7 +77,6 @@ namespace Algorithm
                 // Check if the new position is within the grid bounds
                 if (newX >= 0 && newX < grid.size() && newY >= 0 && newY < grid[0].size())
                 {
-                    // Check if the neighbor is not an obstacle and has not been visited
                     if (grid[newX][newY] != Game::TileState::BLOCKED && !closedSet[newX][newY])
                     {
                         // Calculate the cost to reach the neighbor from the start
