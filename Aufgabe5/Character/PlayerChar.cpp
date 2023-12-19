@@ -24,7 +24,7 @@ namespace Char
         // Logic when inventory is hidden
         else
         {
-            if (totalWeight < portableWeight && !this->reachedGoal) Move();
+            if (totalWeight <= portableWeight && !this->reachedGoal) Move();
             if (PlayerOnItemTile()) PickUpItem();
             if (PlayerOnExitTile()) this->reachedGoal = true;
         }
@@ -35,7 +35,7 @@ namespace Char
     void PlayerChar::Draw()
     {
         DrawTexture(playerSprite.GetTexture(), playerSprite.posX, playerSprite.posY, WHITE);
-        if (totalWeight >= portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
+        if (totalWeight > portableWeight) DrawText("You carry to many items.", 50, 0, 30, RED);
 
         this->GetInventoryUI()->Draw();
     }

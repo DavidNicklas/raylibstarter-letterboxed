@@ -36,7 +36,6 @@ namespace Char
     void NonPlayerChar::Draw()
     {
         DrawTexture(playerSprite.GetTexture(), (int)currentPosition.x, (int)currentPosition.y, WHITE);
-        if (totalWeight >= portableWeight) DrawText("Robot carries to many items.", 40, 30, 30, RED);
 
         this->GetInventoryUI()->Draw();
     }
@@ -61,7 +60,7 @@ namespace Char
 
                     currentProgressOnGraph++;
                 }
-                else if (totalWeight < portableWeight) UpdateCurrentPosition();
+                else if (totalWeight <= portableWeight) UpdateCurrentPosition();
 
                 CheckGoalReached();
             }
@@ -144,13 +143,18 @@ namespace Char
     {
         try
         {
-            inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);
-            totalWeight += (int)map->itemTiles[arrayPosX][arrayPosY].item->GetWeight();
-            // if the item is an equippable item, it automatically equips
-            EquipItem();
+            // Only pick up the item if he can carry it, otherwise he keeps walking
+            if ((GetCurrentWeight() + (int)map->itemTiles[arrayPosX][arrayPosY].item->GetWeight()) <= GetPortableWeight())
+            {
+                inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);
+                totalWeight += (int)map->itemTiles[arrayPosX][arrayPosY].item->GetWeight();
+                // if the item is an equippable item, it automatically equips
+                EquipItem();
 
-            map->itemTiles[arrayPosX][arrayPosY].item = nullptr;
-            map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE; // only resets tile to passable if item was added (because of exception it jumps directly into catch block)
+                map->itemTiles[arrayPosX][arrayPosY].item = nullptr;
+                map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE; // only resets tile to passable if item was added (because of exception it jumps directly into catch block)
+            }
+            else std::cout << "Robot can't carry this item." << std::endl;
         }
         catch (Error::InventoryFull &e)
         {
