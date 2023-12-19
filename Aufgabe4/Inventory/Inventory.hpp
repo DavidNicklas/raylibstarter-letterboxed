@@ -1,4 +1,6 @@
 #include "Inventory.h"
+#include "../Algorithm/Bubblesort.hpp"
+#include "../Algorithm/ItemComparators.hpp"
 
 namespace Inventory
 {
@@ -128,82 +130,19 @@ namespace Inventory
     template<typename T, int size>
     void Inventory<T, size>::SortForWeight()
     {
-        for (int i = capacity; i > 1; --i)
-        {
-            for (int j = 0; j < i - 1; ++j)
-            {
-                // if both slots have an item, swap them
-                if (itemContainer[j] != nullptr && itemContainer[j + 1] != nullptr)
-                {
-                    if (itemContainer[j]->GetWeight() < itemContainer[j + 1]->GetWeight())
-                    {
-                        T temporaryItem = itemContainer[j];
-                        itemContainer[j] = itemContainer[j + 1];
-                        itemContainer[j + 1] = temporaryItem;
-                    }
-                }
-                // if the current slot does not contain an item, but the next one does, put the item one slot further
-                else if (itemContainer[j] == nullptr && itemContainer[j + 1] != nullptr)
-                {
-                    itemContainer[j] = itemContainer[j + 1];
-                    itemContainer[j + 1] = nullptr;
-                }
-            }
-        }
+        Algorithm::BubbleSort(itemContainer, capacity, CompareByWeight<T>);
     }
 
     template<typename T, int size>
     void Inventory<T, size>::SortForName()
     {
-        for (int i = capacity; i > 1; --i)
-        {
-            for (int j = 0; j < i - 1; ++j)
-            {
-                // if both slots have an item, swap them
-                if (itemContainer[j] != nullptr && itemContainer[j + 1] != nullptr)
-                {
-                    if (itemContainer[j]->GetName() > itemContainer[j + 1]->GetName())
-                    {
-                        T temporaryItem = itemContainer[j];
-                        itemContainer[j] = itemContainer[j + 1];
-                        itemContainer[j + 1] = temporaryItem;
-                    }
-                }
-                // if the current slot does not contain an item, but the next one does, put the item one slot further
-                else if (itemContainer[j] == nullptr && itemContainer[j + 1] != nullptr)
-                {
-                    itemContainer[j] = itemContainer[j + 1];
-                    itemContainer[j + 1] = nullptr;
-                }
-            }
-        }
+        Algorithm::BubbleSort(itemContainer, capacity, CompareByName<T>);
     }
 
     template<typename T, int size>
     void Inventory<T, size>::SortForCost()
     {
-        for (int i = capacity; i > 1; --i)
-        {
-            for (int j = 0; j < i - 1; ++j)
-            {
-                // if both slots have an item, swap them
-                if (itemContainer[j] != nullptr && itemContainer[j + 1] != nullptr)
-                {
-                    if (itemContainer[j]->GetCost() < itemContainer[j + 1]->GetCost())
-                    {
-                        T temporaryItem = itemContainer[j];
-                        itemContainer[j] = itemContainer[j + 1];
-                        itemContainer[j + 1] = temporaryItem;
-                    }
-                }
-                // if the current slot does not contain an item, but the next one does, put the item one slot further
-                else if (itemContainer[j] == nullptr && itemContainer[j + 1] != nullptr)
-                {
-                    itemContainer[j] = itemContainer[j + 1];
-                    itemContainer[j + 1] = nullptr;
-                }
-            }
-        }
+        Algorithm::BubbleSort(itemContainer, capacity, CompareByCost<T>);
     }
 
 }
