@@ -145,43 +145,43 @@ namespace UI
     {
         try
         {
-            if (character->inventory.GetItem(0))
+            if (character->inventory.GetItem(0) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(0)->texture.GetTexture(), slot0Pos, 0, 1.9, WHITE);
             }
-            if (character->inventory.GetItem(1))
+            if (character->inventory.GetItem(1) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(1)->texture.GetTexture(), slot1Pos, 0, 1.9, WHITE);
             }
-            if (character->inventory.GetItem(2))
+            if (character->inventory.GetItem(2) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(2)->texture.GetTexture(), slot2Pos, 0, 1.9, WHITE);
             }
-            if (character->inventory.GetItem(3))
+            if (character->inventory.GetItem(3) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(3)->texture.GetTexture(), slot3Pos, 0, 1.9, WHITE);
             }
-            if (character->inventory.GetItem(4))
+            if (character->inventory.GetItem(4) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(4)->texture.GetTexture(), slot4Pos, 0, 1.9, WHITE);
             }
-            if (character->inventory.GetItem(5))
+            if (character->inventory.GetItem(5) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(5)->texture.GetTexture(), slot5Pos, 0, 1.9, WHITE);
             }
-            if (character->inventory.GetItem(6))
+            if (character->inventory.GetItem(6) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(6)->texture.GetTexture(), slot6Pos, 0, 1.9, WHITE);
             }
-            if (character->inventory.GetItem(7))
+            if (character->inventory.GetItem(7) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(7)->texture.GetTexture(), slot7Pos, 0, 1.9, WHITE);
             }
-            if (character->inventory.GetItem(8))
+            if (character->inventory.GetItem(8) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(8)->texture.GetTexture(), slot8Pos, 0, 1.9, WHITE);
             }
-            if (character->inventory.GetItem(9))
+            if (character->inventory.GetItem(9) != nullptr)
             {
                 DrawTextureEx(character->inventory.GetItem(9)->texture.GetTexture(), slot9Pos, 0, 1.9, WHITE);
             }

@@ -18,6 +18,7 @@ namespace Inventory
         {
             itemContainer[numberOfItems] = item;
             numberOfItems++;
+            std::cout << "added item: " << item->GetName() << std::endl;
         }
         else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
     }
@@ -25,7 +26,12 @@ namespace Inventory
     template<typename T, int size>
     T &Inventory<T, size>::GetItem(int slot)
     {
-        if (slot >= 0 && slot < capacity) return itemContainer[slot];
+        if (slot >= 0 && slot < capacity)
+        {
+            // Check if there is an item in this slot
+            if (itemContainer[slot] != nullptr) return itemContainer[slot];
+            else throw Error::SlotIsEmpty(__FILE__, __FUNCTION__ , __LINE__);
+        }
         else throw Error::OutOfRange(__FILE__, __FUNCTION__, __LINE__);
     }
 
@@ -53,6 +59,8 @@ namespace Inventory
                         break;
                 }
 
+                std::cout << "Equipped item: " << item->GetName() << std::endl;
+
                 // delete the item from the inventory
                 for (int i = 0; i < capacity; ++i)
                 {
@@ -77,12 +85,13 @@ namespace Inventory
             {
                 if (numberOfItems < capacity) // check if inventory has capacity to catch unequipped item
                 {
+                    AddItem(equipmentContainer[slot]);
+                    std::cout << "Unequipped item: " << equipmentContainer[slot]->GetName() << std::endl;
                     equipmentContainer[slot] = nullptr;
-                    numberOfItems++;
                 }
                 else throw Error::InventoryFull(__FILE__, __FUNCTION__, __LINE__);
             }
-            else throw Error::EquipmentError(__FILE__, __FUNCTION__, __LINE__, equipmentContainer[slot]);
+            else throw Error::UnequipError(__FILE__, __FUNCTION__, __LINE__);
         }
         else throw Error::OutOfRange(__FILE__, __FUNCTION__, __LINE__);
     }

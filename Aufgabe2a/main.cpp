@@ -26,37 +26,42 @@ int main()
     std::shared_ptr<Items::BaseItem> coffee = std::make_shared<Items::Coffee>();
     std::shared_ptr<Items::BaseItem> hat = std::make_shared<Items::Hat>();
 
-    try
-    {
-        inventory.AddItem(coffee);
-        inventory.AddItem(coffee);
-        inventory.AddItem(hat);
-        inventory.EquipItem(coffee);
-        inventory.EquipItem(hat);
-        inventory.AddItem(coffee);
-        inventory.UnequipItem(0);
-
-        std::cout << inventory.GetItem(2)->GetName();
-    }
-    catch (Error::OutOfRange &e)
-    {
-        std::cout << e.what() << std::endl;
-    }
-    catch (Error::InventoryFull &e)
-    {
-        std::cout << e.what() << std::endl;
-    }
-    catch (Error::EquipmentError &e)
-    {
-        std::cout << e.what() << std::endl;
-    }
-
     while (!WindowShouldClose())
     {
         /*** Logic ***/
         CheckFullscreen();
 
         game.Update();
+
+        try
+        {
+            if (IsKeyPressed(KEY_U)) inventory.AddItem(coffee);
+            if (IsKeyPressed(KEY_O)) inventory.AddItem(hat);
+            if (IsKeyPressed(KEY_L)) inventory.EquipItem(hat);
+            if (IsKeyPressed(KEY_J)) inventory.EquipItem(coffee);
+            if (IsKeyPressed(KEY_K)) std::cout << inventory.GetItem(2)->GetName() << std::endl;
+            if (IsKeyPressed(KEY_I)) inventory.UnequipItem(Items::DesiredEquipmentSlot::HAT);
+        }
+        catch (Error::OutOfRange &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
+        catch (Error::InventoryFull &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
+        catch (Error::EquipmentError &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
+        catch (Error::UnequipError &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
+        catch (Error::SlotIsEmpty &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
 
         /*** Drawing ***/
         BeginDrawing();

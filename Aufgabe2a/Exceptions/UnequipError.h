@@ -1,15 +1,12 @@
 #pragma once
 
 #include "iostream"
-#include <sstream>
-#include <memory>
-
-#include "../Items/BaseItem.h"
+#include "sstream"
 
 namespace Error
 {
 
-    class EquipmentError : public std::exception
+class UnequipError : public std::exception
     {
     private:
         std::string file;
@@ -17,16 +14,14 @@ namespace Error
         std::string desc;
         int line;
         std::string outputMsg;
-        std::shared_ptr<Items::BaseItem> equipItem;
 
     public:
-        EquipmentError(const char *inFile, const char *inFunction, int inLine, std::shared_ptr<Items::BaseItem> equipItem)
+        UnequipError(const char *inFile, const char *inFunction, int inLine)
         {
-            this->equipItem = equipItem;
             this->file = inFile;
             this->function = inFunction;
             this->line = inLine;
-            this->desc = "Can't equip item: " + equipItem->GetName();
+            this->desc = "Equipment slot is empty. Can't unequip.";
 
             std::stringstream outputMsgSS;
             outputMsgSS << "*****************************\n" << "Error: " << desc << "\nException in file: " << file << "\nFunction: " << function

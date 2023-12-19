@@ -3,6 +3,8 @@
 #include "../Exceptions/InventoryFull.h"
 #include "../Exceptions/OutOfRange.h"
 #include "../Exceptions/EquipmentError.h"
+#include "../Exceptions/SlotIsEmpty.h"
+#include "../Exceptions/UnequipError.h"
 
 namespace Inventory
 {
