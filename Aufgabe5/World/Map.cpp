@@ -93,6 +93,7 @@ namespace Game
             for (int j = 0; j < mapHeight; ++j)
             {
                 map[i][j] = TileState::NONE;
+                itemTiles[i][j].item = nullptr;
             }
         }
     }
@@ -105,6 +106,7 @@ namespace Game
         GenerateStartAndEnd();
 
         GenerateValidPath(endRow, endCol);
+
         GenerateItems();
 
         // Fill the rest of the map with random tiles
@@ -118,7 +120,6 @@ namespace Game
                 }
             }
         }
-
 
         GenerateShortestPath();
     }
@@ -143,7 +144,7 @@ namespace Game
         for (int i = 0; i < itemIndex.size(); ++i)
         {
             std::pair<int, int> spawnPoint = GetRandomItemSpawn();
-
+            
             map[spawnPoint.first][spawnPoint.second] = TileState::ITEM;
             RandomizeItem(spawnPoint.first, spawnPoint.second, itemIndex[i]);
             itemsOnMap++;
@@ -167,7 +168,7 @@ namespace Game
         {
             spawnPoint.first = GetRandomValue(0, mapWidth);
             spawnPoint.second = GetRandomValue(0, mapHeight);
-        } while (map[spawnPoint.first][spawnPoint.second] != TileState::PASSABLE || map[spawnPoint.first][spawnPoint.second] == TileState::ITEM);
+        } while (map[spawnPoint.first][spawnPoint.second] != TileState::PASSABLE || itemTiles[spawnPoint.first][spawnPoint.second].item != nullptr);
 
         return spawnPoint;
     }
@@ -223,7 +224,7 @@ namespace Game
                 }
             }
 
-            map[currentCol][currentRow] = TileState::PASSABLE;
+            if (IsTileInBounds(currentRow, currentCol)) map[currentCol][currentRow] = TileState::PASSABLE;
         }
 
         // Reset start and exit so it doesn't get overwritten
@@ -231,7 +232,7 @@ namespace Game
         map[startCol][startRow] = TileState::START;
     }
 
-    void Map::GenerateShortestPath()
+        void Map::GenerateShortestPath()
     {
         std::vector<std::vector<int>> mapVector = ConvertToVector(this->map);
         path.CreateShortestPath(mapVector, {startCol, startRow}, {endCol, endRow});

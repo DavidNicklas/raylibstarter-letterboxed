@@ -65,6 +65,7 @@ namespace Game
         std::pair<int, int> GetRandomItemSpawn();
         void GenerateValidPath(int endRow, int endCol);
         void GenerateShortestPath();
+        void GenerateValidItemPath(int startRow, int startCol, int goalRow, int goalCol);
         bool IsTileInBounds(int row, int col);
 
         void FillInventoryForDemonstrationPurpose();
