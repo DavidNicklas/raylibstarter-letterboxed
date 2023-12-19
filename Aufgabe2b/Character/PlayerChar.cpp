@@ -114,7 +114,6 @@ namespace Char
         else return false;
     }
 
-    //TODO there is still a problem, if you drop an item which is not the last slot. If you pick an item up again, it will override the last one
     void PlayerChar::PickUpItem()
     {
         try
