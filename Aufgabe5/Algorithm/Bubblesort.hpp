@@ -22,7 +22,7 @@ namespace Algorithm
                         container[j + 1] = temporaryItem;
                     }
                 }
-                    // if the current slot does not contain an item, but the next one does, put the item one slot further
+                // if the current slot does not contain an item, but the next one does, put the item one slot further
                 else if (container[j] == nullptr && container[j + 1] != nullptr)
                 {
                     container[j] = container[j + 1];
