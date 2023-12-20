@@ -144,7 +144,7 @@ namespace Game
         for (int i = 0; i < itemIndex.size(); ++i)
         {
             std::pair<int, int> spawnPoint = GetRandomItemSpawn();
-            
+
             map[spawnPoint.first][spawnPoint.second] = TileState::ITEM;
             RandomizeItem(spawnPoint.first, spawnPoint.second, itemIndex[i]);
             itemsOnMap++;
