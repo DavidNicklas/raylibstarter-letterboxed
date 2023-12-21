@@ -190,26 +190,29 @@ namespace Game
 
     void Map::FillInventoryForDemonstrationPurpose()
     {
+        std::vector<int> itemIndex = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
         for (int i = 0; i < playerChar->inventory.GetCapacity(); ++i)
         {
             std::shared_ptr<Items::BaseItem> testItem = nullptr;
-            int randomValue = GetRandomValue(0, 6);
-            switch (randomValue)
+            switch (itemIndex[i])
             {
                 case 0: testItem = std::make_shared<Items::Coffee>(sprite_coffee.GetTexture()); break;
                 case 1: testItem = std::make_shared<Items::Hat>(sprite_hat.GetTexture()); break;
                 case 2: testItem = std::make_shared<Items::Shoes>(sprite_shoes.GetTexture()); break;
                 case 3: testItem = std::make_shared<Items::Honey>(sprite_honey.GetTexture()); break;
-                case 4: testItem = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
-                case 5: testItem = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
-                case 6: testItem = std::make_shared<Items::Stick>(sprite_stick.GetTexture()); break;
+                case 4: testItem = std::make_shared<Items::Honey>(sprite_honey.GetTexture()); break;
+                case 5: testItem = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
+                case 6: testItem = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
+                case 7: testItem = std::make_shared<Items::Fish>(sprite_fish.GetTexture()); break;
+                case 8: testItem = std::make_shared<Items::Stick>(sprite_stick.GetTexture()); break;
+                case 9: testItem = std::make_shared<Items::Steak>(sprite_steak.GetTexture()); break;
             }
 
             try
             {
                 playerChar->inventory.AddItem(testItem);
             }
-            catch (Error::InventoryFull& e)
+            catch (Error::InventoryFull &e)
             {
                 std::cout << e.what() << std::endl;
             }

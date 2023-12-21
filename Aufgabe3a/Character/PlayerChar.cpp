@@ -109,8 +109,6 @@ namespace Char
             inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);
             totalWeight += (int)map->itemTiles[arrayPosX][arrayPosY].item->GetWeight();
             map->itemTiles[arrayPosX][arrayPosY].item = nullptr;
-            std::cout << "Picked up Item" << std::endl; //TODO Debug
-            std::cout << inventory.GetCurrentNumberOfItems() << std::endl; // TODO Debug
             map->map[arrayPosX][arrayPosY] = Game::TileState::PASSABLE; // only resets tile to passable if item was added (because of exception it jumps directly into catch block)
         }
         catch (Error::InventoryFull &e)
