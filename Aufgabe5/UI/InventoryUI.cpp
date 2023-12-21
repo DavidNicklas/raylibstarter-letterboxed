@@ -68,6 +68,8 @@ namespace UI
     {
         if (IsKeyPressed(KEY_D) && selectedInventorySlot < 9)
         {
+            PlaySound(buttonSwitch);
+            
             highlightBox.posX += (int) highlightBoxOffset.x;
 
             // If player is at inv slot 4, push the box one below and at the beginning of the inv
@@ -84,6 +86,8 @@ namespace UI
         }
         if (IsKeyPressed(KEY_A) && selectedInventorySlot > 0)
         {
+            PlaySound(buttonSwitch);
+
             highlightBox.posX -= (int) highlightBoxOffset.x;
 
             // If player is at inv slot 5, push the box upwards and at the end of the inv

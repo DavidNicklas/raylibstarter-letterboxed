@@ -5,6 +5,8 @@
 
 int main()
 {
+    InitAudioDevice();
+
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(Config::ScreenWidth, Config::ScreenHeight, Config::PROJECT_NAME);
     SetTargetFPS(60);
@@ -40,6 +42,7 @@ int main()
 
     // Delete objects from heat
     game.DeleteObjects();
+    CloseAudioDevice();
     CloseWindow();
 
     return EXIT_SUCCESS;

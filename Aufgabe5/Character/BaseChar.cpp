@@ -44,6 +44,7 @@ namespace Char
 
     void BaseChar::PickUpItem()
     {
+        PlaySound(pickUP);
         try
         {
             inventory.AddItem(map->itemTiles[arrayPosX][arrayPosY].item);

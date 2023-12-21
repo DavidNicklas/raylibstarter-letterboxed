@@ -45,6 +45,8 @@ namespace UI
         void DrawHighlightBox();
         Vector2 highlightBoxOffset = {44, 50};
 
+        Sound buttonSwitch = LoadSound("../../assets/audio/sfx/buttonSwitch.mp3");
+
         // All textures that are needed
         Sprite invTex = Sprite(0, 0, "../../assets/graphics/inventoryScreen.png");
         Texture2D robotInvTex = LoadTexture("../../assets/graphics/inventoryScreenRobot.png");

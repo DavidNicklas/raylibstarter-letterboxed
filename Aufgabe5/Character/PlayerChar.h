@@ -28,6 +28,7 @@ namespace Char
         std::shared_ptr<Items::BaseItem> markedForDropItem = nullptr;
 
         Texture2D playerTex = LoadTexture("../../assets/graphics/bear.png");
+        Sound invOpen = LoadSound("../../assets/audio/sfx/buttonClick.mp3");
     };
 
 }

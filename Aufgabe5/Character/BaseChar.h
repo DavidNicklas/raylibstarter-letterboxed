@@ -53,6 +53,8 @@ namespace Char
 
         UI::InventoryUI* inventoryUi = nullptr;
 
+        Sound pickUP = LoadSound("../../assets/audio/sfx/SFX_ChargePickupNew.mp3");
+
         bool reachedGoal = false; // Stores if the player has reached the exit tile
         int health = 0;
         int strength = 10; // Defines the weight, the player can carry in his inventory

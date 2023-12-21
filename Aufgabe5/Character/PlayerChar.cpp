@@ -151,6 +151,7 @@ namespace Char
     {
         if (IsKeyPressed(KEY_E))
         {
+            PlaySound(invOpen);
             if (this->GetInventoryUI()->ShowInventory()) this->GetInventoryUI()->SetShowInventory(false);
             else this->GetInventoryUI()->SetShowInventory(true);
         }
